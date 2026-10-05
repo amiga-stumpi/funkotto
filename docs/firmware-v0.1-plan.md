@@ -40,11 +40,13 @@ Der Start unter 100 ms bis zur Parallelport-Bereitschaft ist ein **zu messendes
 Optimierungsziel**, keine bestätigte Eigenschaft. WLAN-Verbindungszeit wird
 separat gemessen. Höherer Durchsatz als eine Plipbox ist ein späteres Vergleichsziel.
 
-## 3. Verbindliche Hardwarebasis und offener Reset-Prüfpunkt
+## 3. Verbindliche Hardwarebasis: Rev B mit Pico-Reset
 
-Basis ist das bereits erstellte Paket `AmiWiFi_Pico2W_RevA.zip`. AmiWiFi ist der
-bisherige Dateiname des Hardwareentwurfs; FunkOtto ist der Softwareprojektname.
-Keine automatische Hardwareänderung durch diesen Plan.
+Basis ist `FunkOtto_Pico2W_RevB.zip`, abgeleitet aus der **vom Nutzer bearbeiteten**
+KiCad-10-Datei `AmiWiFi_Pico2W_RevA(1).zip`. AmiWiFi bleibt der KiCad-Dateiname.
+Kontur, bestehende Bauteilpositionen, Beschriftungen, 600 Leiterbahnsegmente,
+63 Vias und Flächeneinstellungen der Nutzerfassung bleiben erhalten; Füllungen
+werden um die neuen Bauteile und Verbindungen aktualisiert.
 
 | Funktion | Pico-GPIO | Physische Modul-Pins |
 | --- | --- | --- |
@@ -57,37 +59,73 @@ Keine automatische Hardwareänderung durch diesen Plan.
 | FW_DATA_EN | GP21 | 27 |
 | FW_CTRL_EN | GP22 | 29 |
 | ACK_N, Ausgang | GP26 | 31 |
+| Hardware-Reset RUN, aktiv Low | kein GPIO | 30 |
 
 `DATA_DIR=1` bedeutet Amiga→Pico; `DATA_DIR=0` Pico→Amiga.
 Der Datenbus darf erst nach einer bestätigten Richtungsübergabe aktiv werden.
 Die Pico-Pins 16–25 sind im Trägersockel nicht vorhanden.
 
-**Offener Punkt aus dem Netzlistenabgleich:** `HOST_PRESENT` und `RESET_IN`
-führen in Rev A nur zu den NAND-Gattern U5/U6, nicht zu einem Pico-Eingang.
-Sie sperren die Bustreiber elektrisch, setzen aber den Firmwarezustand nicht
-zurück. Nach Freigabe kann ein noch gesetztes FW_ENABLE die alten Ausgänge
-wieder aktivieren. Das ist kein bereits nachgewiesenes, sicheres Reset-Recovery.
-Auch STROBE/SEL sind bei gesperrtem U3 nicht zuverlässig als Hostsignale lesbar.
+### Gewählte Resetvariante
 
-Vor dem ersten aktiven Bustest wird deshalb M0 abgeschlossen:
+**Jeder am Adapter anliegende Hardware-Amiga-Reset setzt auch den Pico zurück.**
+U5/U6 sperren weiterhin die Bustreiber. Zusätzlich verknüpft U8, ein
+SN74LVC2G07DBVR mit zwei nichtinvertierenden Open-Drain-Ausgängen, `RESET_IN`
+und `HOST_PRESENT`. Seine Ausgänge liegen gemeinsam an `PICO_RUN_N` und
+Pico-Modulpin 30 (`RUN`). Ein Low an einem Eingang zieht RUN auf Low.
+Nur bei beiden High gibt U8 RUN frei; der interne Pico-Pullup zieht auf 3,3 V.
+Keine direkte 5-V-Verbindung an RUN; kein zusätzlicher Pico-GPIO erforderlich.
 
-1. Idle-Pegel an SEL/STROBE und allen Rückleitungen einschließlich Amiga-Reset prüfen.
-2. Verhalten bei Pico sendet + Amiga-Reset beziehungsweise Host aus/an aufzeichnen.
-3. Nachweisen, dass eine neue Sitzung vor erneutem aktivem Datentreiben erforderlich ist.
-4. Falls Rev A das nicht sicher gewährleistet: eine Hardwarekorrektur spezifizieren
-   und freigeben, etwa eine rücksetzende Freigabelatch mit erneuter Firmwarefreigabe
-   sowie eine lesbare, pegelangepasste Reset-/Hostzustandsanzeige. Eine zusätzliche
-   GPIO-Abfrage allein garantiert noch keine sichere Reaktionszeit.
+U8-Pins: 1 RESET_IN, 2 GND, 3 HOST_PRESENT, 4 PICO_RUN_N, 5 +3V3_IF,
+6 PICO_RUN_N. C11: 100 nF an VCC/GND; R36: 100 kOhm RESET_IN/GND;
+TP7: RUN-Messpunkt. Bestehende FW_ENABLE-Pulldowns R28/R29 bleiben 4,7 kOhm.
+Keinen Push-Pull-Puffer als Ersatz für U8 einsetzen.
 
-Ohne diesen Nachweis bleibt die Ausgabe auf den Amiga-Datenbus gesperrt.
-Softwarebau, Parser-, Speicher- und isolierte WLAN-Tests können parallel dazu laufen.
-Damit wird die bisherige Annahme „Warmstart erhält einfach die WLAN-Verbindung“
-zu einem konkreten Prüfziel; sie ist noch keine zugesicherte Funktion.
+Nach Reset startet die Firmware vollständig neu: sichere GPIOs, leere
+PIO-/DMA-Zustände und Queues, neue Protokollsitzung, gespeichertes WLAN-Profil
+lesen, WLAN neu initialisieren und verbinden. **Die WLAN-Verbindung bleibt bei
+einem Hardware-Amiga-Reset nicht bestehen.** Profile im Flash bleiben erhalten;
+ein unterbrochener Schreibvorgang muss auf den letzten gültigen Stand zurückfallen.
+Ein Software-Neustart ohne elektrischen Resetimpuls erfordert weiterhin die
+Protokoll-Resynchronisation. `LINK_RESET` kann eine gesunde WLAN-Verbindung erhalten.
 
-Hardware-Referenz, SHA-256:
+### USB/BOOTSEL mit eingebautem Pico
 
-- Schaltplan: `a1b539e32b062a856b8303687e4b97f0947324aad8806964d1af79df1a558aec`
-- PCB: `79ab00bed7662e5d181b707cc2fdf5ca581ea149f3d3adbf88e9204576d3dee0`
+**DB25 und USB-C-Versorgung des Trägers trennen**, dann BOOTSEL halten und den
+Pico über seinen eigenen USB-Anschluss verbinden. D1 isoliert VSYS von der
+Trägerversorgung, U8 bleibt unversorgt und seine Ioff-Ausgänge hochohmig.
+Alternativ den Pico aus dem Sockel nehmen. Ein versorgter Träger ohne Amiga
+hält RUN absichtlich Low und verhindert diesen USB-Servicebetrieb.
+Die USB-C-Buchse des Trägers liefert nur Strom, keine Firmware-Datenverbindung.
+Diese Versorgungsfolge und fehlende Rückspeisung sind am Muster zu verifizieren.
+
+### M0 bleibt die elektrische Abnahme
+
+Die Resetarchitektur ist festgelegt und in KiCad umgesetzt. Das ist noch kein
+Messnachweis. Vor dem ersten aktiven Bustest:
+
+1. RESET_IN, HOST_PRESENT, RUN/TP7 und beide OE_N-Signale aufzeichnen;
+   Pegel und RUN-Low-Dauer gegen die Datenblattanforderungen prüfen.
+2. Amiga-Reset während Pico→Amiga und Amiga→Pico testen; kein Wiederanlauf
+   alter Busausgänge nach Resetfreigabe. FW_ENABLEs bleiben beim Boot aus.
+3. Steuerpfad erst mit vorbereiteten Idle-Pegeln aktivieren; neue HELLO-Sitzung
+   und bestätigte Richtungsübergabe vor Datenausgabe verlangen.
+4. Beide Einschaltreihenfolgen, Host aus/an, Trägerversorgung und Pico-USB sowie
+   Reset während Flash-Schreiben/Löschen prüfen.
+
+Bis zur Abnahme bleiben aktive Datenbustests gesperrt. Softwarebau, Parser-,
+Speicher- und isolierte WLAN-Tests können bereits laufen.
+
+Digitale Prüfung mit KiCad 10.0.6: 0 PCB-DRC-Fehler, 0 offene Verbindungen,
+73 vorhandene Beschriftungswarnungen. ERC: 3 bereits in der Nutzerfassung
+vorhandene Fehler für nicht als getrieben erkannte Versorgungspins (U1 GND,
+U1 IN, U7 VSYS); keine zusätzlichen Meldungen. 220 angeschlossene PCB-Pads
+mit nativ exportierter Schaltplan-Netzliste abgeglichen. Keine Fertigungsfreigabe.
+
+Hardware-Referenzen, SHA-256:
+
+- Nutzer-Archiv: `923df59e6a17f6ac96b90cc4c9c0e388622e9b6f66aeec76e7cd953a6bc07e1f`
+- Rev-B-Schaltplan: `30d87fa32a20574fe839f5839d823b3b1f2fcf8a8ecf895ad6c0d82132d865de`
+- Rev-B-PCB: `b20890a57fae0c7c1573d8c3f4a35c496433d36aea16e5a9d12943aa7764c8a8`
 
 ## 4. Architektur und Build
 
@@ -126,7 +164,9 @@ als Budgetansatz; tatsächlichen Gesamtverbrauch einschließlich WLAN messen.
 1. Daten-GPIOs Eingang, beide FW_ENABLEs aus, DATA_DIR auf Amiga→Pico.
 2. Steuer-Ausgangswerte vorbereiten, insbesondere ACK_N inaktiv; PIO/FIFOs leeren.
 3. Timer, Protokoll, Linkzustand und sichere Freigabesequenz initialisieren.
-4. Parallelport-Status bereitstellen; kein Warten auf USB-Terminal oder WLAN.
+4. Steuerpfad mit sicheren Idle-Pegeln freigeben und Parallelport-Status
+   bereitstellen; Daten-Ausgabe erst nach neuer Sitzung/Richtungsübergabe.
+   Kein Warten auf USB-Terminal oder WLAN.
 5. Profil prüfen und WLAN auf seinem eigenen Ausführungspfad initialisieren.
 6. Bei gültigem Profil automatisch verbinden, sonst `UNCONFIGURED` melden.
 
@@ -185,6 +225,8 @@ wird nicht behauptet; bei unklarer TX-Zustellung Status entsprechend melden.
 Timeout, abgebrochener Rahmen und verlorene Synchronisation führen zu BUSY,
 gesperrtem Datenbus, geleerten Teilrahmen und neuer Synchronisation. Fehler beim
 Parallelport sollen eine gesunde WLAN-Verbindung möglichst nicht neu starten.
+Davon ausgenommen ist der elektrische Amiga-Reset: Er setzt über RUN den
+gesamten Pico zurück und erfordert einen neuen WLAN-Verbindungsaufbau.
 
 ## 6. WLAN und Roh-Ethernet
 
@@ -260,11 +302,11 @@ Dieses Verhalten mit dem konkreten Updateverfahren testen und dokumentieren.
 
 | Schritt | Ergebnis | Abnahme |
 | --- | --- | --- |
-| M0 Hardware-/Protokollreview | Reset-/Hostverhalten und sichere Freigaben geklärt | Kein Wiederanlauf mit altem aktiven Datenbus; korrigierte Hardwarebasis falls nötig |
+| M0 Hardware-/Protokollreview | Reset-/Hostverhalten und sichere Freigaben geklärt | Rev-B-RUN-Pfad und OE-Gating gemessen; kein Wiederanlauf mit altem Datenbus |
 | M1 Build und Grundstart | SDK-Pin, CI, UF2, sichere GPIOs, Versionsausgabe | Build aus frischem Checkout; Start ohne USB-Terminal; Datenbus bleibt gesperrt |
 | M2 Amiga-Link | PIO/DMA, Polling-Diagnosetool, HELLO/ECHO, Fehlerfälle | Nach M0 reale 68000-/OS-1.3-Transfers in beide Richtungen, kein Buskonflikt |
 | M3 WLAN-Rohdaten | Scan, Join, Stations-MAC, Roh-TX/RX | Frame-Nachweis an einem zweiten LAN-Rechner; kein Pico-IP-Stack als Ersatz |
-| M4 Konfiguration | Amiga-Kommandos, Flashprofil, Autoconnect | 100 Kaltstarts; gezielte Stromunterbrechung in jeder Schreib-/Löschphase |
+| M4 Konfiguration | Amiga-Kommandos, Flashprofil, Autoconnect | 100 Kaltstarts; gezielte Stromunterbrechung und RUN-Reset in jeder Schreib-/Löschphase |
 | M5 Integration | Ethernet-Ringe, Rückdruck, Status und Recovery | ARP/ICMP vom Amiga-Diagnosetool über FunkOtto; AP-Ausfall und Hostreset überstanden |
 | M6 Freigabe v0.1 | Releasekandidat, Installationsanleitung, Messbericht | 24-h-Dauerlauf ohne Datenkorruption/Buskollision; alle Einschränkungen dokumentiert |
 
@@ -322,7 +364,9 @@ verwendeten SDK-/Treiberstände festschreiben; Beispiele ersetzen keine Messung.
 - [Pico SDK: Flash und Multicore](https://www.raspberrypi.com/documentation/pico-sdk/high_level.html)
 - [CYW43-Treiber: Ethernet und Join](https://github.com/georgerobotics/cyw43-driver/blob/main/src/cyw43_ctrl.c)
 - [Pico SDK Architekturdefinitionen](https://github.com/raspberrypi/pico-sdk/blob/master/src/rp2_common/pico_cyw43_arch/include/pico/cyw43_arch.h)
-- Eigener Schaltplan-/PCB-Netzlistenabgleich des oben bezeichneten Rev-A-Pakets.
+- [TI SN74LVC2G07: Open-Drain-Puffer, Ioff, Pinbelegung](https://www.ti.com/lit/gpn/sn74lvc2g07)
+- Eigener Schaltplan-/PCB-Netzlistenabgleich des oben bezeichneten Rev-B-Pakets
+  und Vergleich mit der unveränderten Nutzerfassung.
 
 Vor Wiederverwendung fremden Codes dessen Lizenz prüfen und Hinweise erhalten.
 Dieser Plan entscheidet noch nicht über die Lizenz des späteren FunkOtto-Codes.
