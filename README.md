@@ -14,6 +14,15 @@ dauerhaft gespeichertes WLAN-Profil mit automatischer Wiederverbindung bieten.
 Firmwareinstallation und Updates erfolgen vorerst über USB/BOOTSEL am Pico.
 Firmwareupdates über den Amiga sind zurückgestellt.
 
-Die Hardwarebasis ist der separate KiCad-Entwurf `AmiWiFi_Pico2W_RevA`.
-Der Plan enthält einen offenen Prüfpunkt zum sicheren Wiederanlauf der
-Bustreiber nach Amiga-Reset. Dieser muss vor aktiven Bustests geklärt werden.
+Die Hardwarebasis ist der separate KiCad-10-Entwurf `FunkOtto_Pico2W_RevB`,
+auf Basis der vom Nutzer bearbeiteten Rev-A-Datei. Ein zusätzlicher
+Open-Drain-Resetpfad setzt den Pico bei Amiga-Reset oder fehlender Hostversorgung
+über RUN zurück. Nach Reset startet die Firmware neu und verbindet WLAN erneut;
+das gespeicherte Profil bleibt erhalten.
+
+Für USB/BOOTSEL im Sockel DB25 und USB-C-Trägerversorgung trennen und den
+eigenen USB-Anschluss des Pico verwenden; alternativ den Pico herausnehmen.
+
+Die Resetvariante ist in Schaltplan und Board umgesetzt. Pulsbreiten, Pegel,
+Versorgungsfolgen und sichere Bustreiberfreigabe müssen vor aktiven Bustests
+am Muster gemessen werden (M0 im Plan). Es gibt noch keine Fertigungsfreigabe.
