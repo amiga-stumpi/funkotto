@@ -1,6 +1,6 @@
 # FunkOtto: Plan für die erste funktionale Firmware v0.1
 
-Stand: 05.10.2026 · Status: Entwicklungsplan, noch keine Implementierung
+Stand: 06.10.2026 · Status: Entwicklungsplan, noch keine Implementierung
 
 ## 1. Ziel und Entscheidung
 
@@ -40,13 +40,14 @@ Der Start unter 100 ms bis zur Parallelport-Bereitschaft ist ein **zu messendes
 Optimierungsziel**, keine bestätigte Eigenschaft. WLAN-Verbindungszeit wird
 separat gemessen. Höherer Durchsatz als eine Plipbox ist ein späteres Vergleichsziel.
 
-## 3. Verbindliche Hardwarebasis: Rev B mit Pico-Reset
+## 3. Verbindliche Hardwarebasis: Rev B1 mit Pico-Reset
 
-Basis ist `FunkOtto_Pico2W_RevB.zip`, abgeleitet aus der **vom Nutzer bearbeiteten**
+Basis ist `FunkOtto_Pico2W_RevB1.zip`, abgeleitet aus der **vom Nutzer bearbeiteten**
 KiCad-10-Datei `AmiWiFi_Pico2W_RevA(1).zip`. AmiWiFi bleibt der KiCad-Dateiname.
-Kontur, bestehende Bauteilpositionen, Beschriftungen, 600 Leiterbahnsegmente,
-63 Vias und Flächeneinstellungen der Nutzerfassung bleiben erhalten; Füllungen
-werden um die neuen Bauteile und Verbindungen aktualisiert.
+Kontur, Bauteilpositionen und Kupferrouting der Nutzerfassung beziehungsweise
+der Reset-Erweiterung bleiben erhalten. B1 korrigiert KiCad-Netzmetadaten,
+Bibliothekszuordnungen und Bestückungsbeschriftungen; die Resetfunktion bleibt gleich.
+
 
 | Funktion | Pico-GPIO | Physische Modul-Pins |
 | --- | --- | --- |
@@ -115,17 +116,26 @@ Messnachweis. Vor dem ersten aktiven Bustest:
 Bis zur Abnahme bleiben aktive Datenbustests gesperrt. Softwarebau, Parser-,
 Speicher- und isolierte WLAN-Tests können bereits laufen.
 
-Digitale Prüfung mit KiCad 10.0.6: 0 PCB-DRC-Fehler, 0 offene Verbindungen,
-73 vorhandene Beschriftungswarnungen. ERC: 3 bereits in der Nutzerfassung
-vorhandene Fehler für nicht als getrieben erkannte Versorgungspins (U1 GND,
-U1 IN, U7 VSYS); keine zusätzlichen Meldungen. 220 angeschlossene PCB-Pads
-mit nativ exportierter Schaltplan-Netzliste abgeglichen. Keine Fertigungsfreigabe.
+Digitale Prüfung von B1 mit KiCad 10.0.6: **0 DRC-Fehler/0 Warnungen, 0 offene
+Verbindungen, 0 Schaltplanabweichungen; ERC 0 Fehler/0 Warnungen.** DRC ausdrücklich
+mit `--schematic-parity --all-track-errors`. Exakte Netznamen inklusive `/` und
+NC-Netzen abgeglichen; kein Entfernen von Namenspräfixen im Vergleich.
+
+Korrektur gegenüber dem zuvor gelieferten Rev-B-Paket: Der alte CLI-Lauf ließ
+den nativen Schaltplanvergleich aus. Daher blieben Netznamen- und Attributkonflikte
+unentdeckt. B1 synchronisiert diese Daten und die projektlokalen Footprints,
+kennzeichnet die realen Versorgungseinspeisungen mit PWR_FLAG und verwendet
+für U4 ein Symbol für die fest verdrahtete Richtung B→A. Das U7-Symbol bildet
+ausschließlich die 30 tatsächlich bestückten Sockelkontakte ab. Bestückungsdruck
+und Bibliothekskopien sind bereinigt, ohne neue Prüfausnahmen anzulegen.
+Physische Padgeometrien, Platzierung, Kupfer und Resetfunktion bleiben unverändert.
+Keine Fertigungsfreigabe; elektrische Musterprüfungen bleiben offen.
 
 Hardware-Referenzen, SHA-256:
 
 - Nutzer-Archiv: `923df59e6a17f6ac96b90cc4c9c0e388622e9b6f66aeec76e7cd953a6bc07e1f`
-- Rev-B-Schaltplan: `30d87fa32a20574fe839f5839d823b3b1f2fcf8a8ecf895ad6c0d82132d865de`
-- Rev-B-PCB: `b20890a57fae0c7c1573d8c3f4a35c496433d36aea16e5a9d12943aa7764c8a8`
+- Rev-B1-Schaltplan: `f0fb988d79334e68befdd067eee3bf335fcb88e4ed832d5c7ed0fed0b4c8fd65`
+- Rev-B1-PCB: `c3a6cf897fa701b54783b80b83dd6cc1cf037b86b4e3dd8d645b2d0211e7ec6f`
 
 ## 4. Architektur und Build
 
@@ -365,8 +375,9 @@ verwendeten SDK-/Treiberstände festschreiben; Beispiele ersetzen keine Messung.
 - [CYW43-Treiber: Ethernet und Join](https://github.com/georgerobotics/cyw43-driver/blob/main/src/cyw43_ctrl.c)
 - [Pico SDK Architekturdefinitionen](https://github.com/raspberrypi/pico-sdk/blob/master/src/rp2_common/pico_cyw43_arch/include/pico/cyw43_arch.h)
 - [TI SN74LVC2G07: Open-Drain-Puffer, Ioff, Pinbelegung](https://www.ti.com/lit/gpn/sn74lvc2g07)
-- Eigener Schaltplan-/PCB-Netzlistenabgleich des oben bezeichneten Rev-B-Pakets
+- Eigener Schaltplan-/PCB-Netzlistenabgleich des oben bezeichneten Rev-B1-Pakets
   und Vergleich mit der unveränderten Nutzerfassung.
 
 Vor Wiederverwendung fremden Codes dessen Lizenz prüfen und Hinweise erhalten.
 Dieser Plan entscheidet noch nicht über die Lizenz des späteren FunkOtto-Codes.
+
