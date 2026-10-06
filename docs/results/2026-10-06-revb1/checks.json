@@ -1,0 +1,19 @@
+{
+  "revision": "B1",
+  "date": "2026-10-06",
+  "tool": "KiCad 10.0.6",
+  "pcb_drc_command": "kicad-cli pcb drc --schematic-parity --all-track-errors -o DRC.rpt hardware/AmiWiFi.kicad_pcb",
+  "erc_command": "kicad-cli sch erc -o ERC.rpt hardware/AmiWiFi.kicad_sch",
+  "drc_errors": 0,
+  "drc_warnings": 0,
+  "unconnected": 0,
+  "schematic_parity_issues": 0,
+  "erc_errors": 0,
+  "erc_warnings": 0,
+  "new_rule_suppressions": 0,
+  "placements_pad_geometry_copper_and_zone_geometry_preserved": true,
+  "base_revision": "FunkOtto_Pico2W_RevB",
+  "board_footprints": 56,
+  "exact_net_names_compared_without_normalization": true,
+  "hardware_measurements_performed": false
+}

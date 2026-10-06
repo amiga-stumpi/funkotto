@@ -6,6 +6,10 @@ ein Amiga-Konfigurationsprogramm.
 
 ## Aktueller Stand
 
+[Fortschrittsbericht vom 06.10.2026](docs/results/2026-10-06-fortschritt.md):
+Hardware Rev B1, native DRC-/ERC-Prüfberichte, Reset- und Versorgungsdetails
+sowie nächste Umsetzungsschritte.
+
 Das Repository enthält zunächst den [Entwicklungsplan für Firmware v0.1](docs/firmware-v0.1-plan.md).
 Es gibt noch keine funktionsfähige Firmware oder Treiber-Binaries.
 
