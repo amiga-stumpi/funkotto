@@ -14,7 +14,7 @@ dauerhaft gespeichertes WLAN-Profil mit automatischer Wiederverbindung bieten.
 Firmwareinstallation und Updates erfolgen vorerst über USB/BOOTSEL am Pico.
 Firmwareupdates über den Amiga sind zurückgestellt.
 
-Die Hardwarebasis ist der separate KiCad-10-Entwurf `FunkOtto_Pico2W_RevB`,
+Die Hardwarebasis ist der separate KiCad-10-Entwurf `FunkOtto_Pico2W_RevB1`,
 auf Basis der vom Nutzer bearbeiteten Rev-A-Datei. Ein zusätzlicher
 Open-Drain-Resetpfad setzt den Pico bei Amiga-Reset oder fehlender Hostversorgung
 über RUN zurück. Nach Reset startet die Firmware neu und verbindet WLAN erneut;
@@ -26,3 +26,11 @@ eigenen USB-Anschluss des Pico verwenden; alternativ den Pico herausnehmen.
 Die Resetvariante ist in Schaltplan und Board umgesetzt. Pulsbreiten, Pegel,
 Versorgungsfolgen und sichere Bustreiberfreigabe müssen vor aktiven Bustests
 am Muster gemessen werden (M0 im Plan). Es gibt noch keine Fertigungsfreigabe.
+
+
+Rev B1 bereinigt die KiCad-Netznamen, Schaltplan-/Footprintattribute,
+Bibliothekskopien und Beschriftungen. DRC **mit Schaltplanvergleich** sowie ERC
+melden in KiCad 10.0.6 jeweils 0 Fehler und 0 Warnungen. Bauteilpositionen und
+Kupferrouting bleiben unverändert. Die frühere Rev-B-Prüfung war hinsichtlich
+des nativen Schaltplanabgleichs unvollständig; Details und aktuelle Hardware-
+Prüfsummen stehen im Firmwareplan.
