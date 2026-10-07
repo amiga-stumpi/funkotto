@@ -41,3 +41,22 @@ Vorschlag für eine gemeinsame TX/RX-Anzeige:
 
 Die Pins sind mit diesem Eintrag noch nicht verbindlich reserviert.
 Die Idee ist noch nicht in Hardware oder Firmware umgesetzt.
+
+## IDEA-002 – Polyfuse in der 5-V-Versorgung
+
+- **Aufgenommen:** 07.10.2026
+- **Status:** Vorgemerkt
+- **Ziel:** Rückstellende Überstromsicherung für die 5-V-Versorgung des Adapters.
+- **Möglicher Einbauort:** In Reihe zum 5-V-Eingang der USB-C-Trägerversorgung,
+  vor der Verteilung auf Pico-Versorgung und 3,3-V-Regler.
+
+### Bei Umsetzung festzulegen
+
+- Halte- und Auslösestrom anhand der gemessenen Stromaufnahme, Einschaltströme
+  und WLAN-Lastspitzen auswählen; Umgebungstemperatur berücksichtigen.
+- Spannungsabfall und verbleibende Versorgungsspannung unter Last prüfen.
+- Auslöseverhalten bei Überlast/Kurzschluss und Rückstellung nach Abkühlung prüfen.
+- Passenden Bauteiltyp, Bauform und Platzierung festlegen; dabei auch den
+  separaten Pico-USB-Servicebetrieb und dessen Versorgungspfad berücksichtigen.
+
+Die Idee ist noch nicht im Schaltplan oder Board umgesetzt.
