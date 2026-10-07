@@ -38,3 +38,8 @@ melden in KiCad 10.0.6 jeweils 0 Fehler und 0 Warnungen. Bauteilpositionen und
 Kupferrouting bleiben unverändert. Die frühere Rev-B-Prüfung war hinsichtlich
 des nativen Schaltplanabgleichs unvollständig; Details und aktuelle Hardware-
 Prüfsummen stehen im Firmwareplan.
+
+## Ideen und spätere Erweiterungen
+
+Die [Ideenliste](docs/ideenliste.md) sammelt fortlaufend Erweiterungswünsche.
+Erster Eintrag: eine später nachrüstbare Traffic-LED, optional getrennt für TX/RX.
