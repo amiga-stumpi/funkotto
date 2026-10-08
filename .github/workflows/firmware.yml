@@ -1,0 +1,52 @@
+name: Pico firmware M1
+on:
+  push:
+    paths: ['firmware/**', 'tools/**', 'tests/**', 'hardware/**', '.github/workflows/firmware.yml']
+  pull_request:
+    paths: ['firmware/**', 'tools/**', 'tests/**', 'hardware/**', '.github/workflows/firmware.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - name: Install locked build tools
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends build-essential python3-venv \
+            gcc-arm-none-eabi=15:13.2.rel1-2 \
+            binutils-arm-none-eabi=2.42-1ubuntu1+23 \
+            libnewlib-arm-none-eabi=4.4.0.20231231-2 \
+            libnewlib-dev=4.4.0.20231231-2 \
+            libstdc++-arm-none-eabi-dev=15:13.2.rel1-2+26
+          python3 -m venv .venv
+          .venv/bin/python -m pip install cmake==3.31.6 ninja==1.11.1.4
+          echo "$GITHUB_WORKSPACE/.venv/bin" >> "$GITHUB_PATH"
+      - name: Hardware contract and host tests
+        run: |
+          python tools/check_board_contract.py
+          python tests/run_host_tests.py
+          python -m unittest discover -s tests -p 'test_*.py'
+      - name: Fetch pinned SDK and build
+        run: |
+          python tools/bootstrap_sdk.py
+          cmake -S firmware -B build/m1 -G Ninja \
+            -DPICO_SDK_PATH="$GITHUB_WORKSPACE/.deps/pico-sdk" \
+            -DCMAKE_BUILD_TYPE=Release \
+            -DFUNKOTTO_SOURCE_ID="$(git rev-parse --short=12 HEAD)"
+          cmake --build build/m1 --parallel 4
+          python tools/check_firmware_artifacts.py build/m1
+      - name: Upload firmware and build manifest
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: funkotto-m1-pico2w
+          if-no-files-found: error
+          path: |
+            build/m1/funkotto_m1.uf2
+            build/m1/funkotto_m1.elf
+            build/m1/funkotto_m1.elf.map
+            build/m1/funkotto_m1.bin
+            build/m1/manifest.json

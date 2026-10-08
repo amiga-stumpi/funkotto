@@ -22,7 +22,12 @@ nativen DRC-/ERC-Prüfberichten. [Bisheriger Fortschritt](docs/results/2026-10-0
 
 Das Repository enthält den [Entwicklungsplan für Firmware v0.1](docs/firmware-v0.1-plan.md)
 und das vollständige KiCad-Projekt mit lokalen Bibliotheken, Stückliste und Prüfberichten.
-Es gibt noch keine funktionsfähige Firmware oder Treiber-Binaries.
+**Die erste Pico-Firmware M1 ist implementiert und als UF2 gebaut:** sichere
+GPIO-Zustände, USB-Diagnose (`help`, `info`, `status`) und Watchdog.
+[Build- und Testanleitung](firmware/README.md) ·
+[Prüfergebnisse M1](docs/results/2026-10-08-firmware-m1.md).
+WLAN, Parallelport-Kommunikation, Profilspeicherung und Amiga-Treiber folgen.
+Der Start auf einem realen Pico und die elektrische M0-Abnahme stehen noch aus.
 
 Die erste Firmware soll Parallelport-Kommunikation, WLAN-Rohpakete und ein
 dauerhaft gespeichertes WLAN-Profil mit automatischer Wiederverbindung bieten.
@@ -32,8 +37,8 @@ Firmwareupdates über den Amiga sind zurückgestellt.
 Die Hardwarebasis ist der Nutzerstand vom 08.10.2026 unter [hardware/](hardware/),
 auf Grundlage von Rev B2 und der zuvor bearbeiteten Rev-A-Datei. Ein zusätzlicher
 Open-Drain-Resetpfad setzt den Pico bei Amiga-Reset oder fehlender Hostversorgung
-über RUN zurück. Nach Reset startet die Firmware neu und verbindet WLAN erneut;
-das gespeicherte Profil bleibt erhalten.
+über RUN zurück. Für v0.1 ist vorgesehen: Nach Reset startet die Firmware neu und verbindet WLAN
+erneut; das gespeicherte Profil bleibt erhalten. M1 enthält diese WLAN-Funktion noch nicht.
 
 Für USB/BOOTSEL im Sockel DB25 und USB-C-Trägerversorgung trennen und den
 eigenen USB-Anschluss des Pico verwenden; alternativ den Pico herausnehmen.

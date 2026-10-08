@@ -1,6 +1,6 @@
 # FunkOtto: Plan für die erste funktionale Firmware v0.1
 
-Stand: 07.10.2026 · Status: Entwicklungsplan, noch keine Implementierung
+Stand: 08.10.2026 · Status: M1 implementiert und lokal gebaut/getestet; Hardwareabnahme offen
 
 ## 1. Ziel und Entscheidung
 
@@ -40,15 +40,14 @@ Der Start unter 100 ms bis zur Parallelport-Bereitschaft ist ein **zu messendes
 Optimierungsziel**, keine bestätigte Eigenschaft. WLAN-Verbindungszeit wird
 separat gemessen. Höherer Durchsatz als eine Plipbox ist ein späteres Vergleichsziel.
 
-## 3. Verbindliche Hardwarebasis: Rev B2 mit Pico-Reset
+## 3. Verbindliche Hardwarebasis: Nutzerstand vom 08.10.2026
 
-Basis ist `FunkOtto_Pico2W_RevB2.zip`, abgeleitet aus der **vom Nutzer bearbeiteten**
-KiCad-10-Datei `AmiWiFi_Pico2W_RevA(1).zip`. AmiWiFi bleibt der KiCad-Dateiname.
-Kontur und Bauteilpositionen bleiben erhalten. B2 wechselt U8 auf SC70-6
-mit angepasstem Lötbild, zehn lokalen Leiterbahnsegmenten und einem versetzten
-GND-Via; alle anderen Footprints und das übrige Routing bleiben erhalten. B1 korrigiert KiCad-Netzmetadaten,
-Bibliothekszuordnungen und Bestückungsbeschriftungen; die Resetfunktion bleibt gleich.
-
+Basis ist das vom Nutzer bearbeitete `AmiWiFi_Pico2W.zip`, unverändert importiert
+mit Commit `d47ea64065e99507edfb3ae9dc4aa1727e00eb0b`. Es ersetzt den bisherigen
+Rev-B2-Stand. [Importnachweis](results/2026-10-08-nutzer-kicad-import.md).
+M1 prüft die folgende GPIO-Zuordnung und die Reset-/Freigabenetze direkt gegen
+das aktuelle PCB. Dieser Netzabgleich ersetzt weder DRC/ERC noch Messungen.
+Die Firmwarearbeit verändert keine KiCad-Dateien.
 
 | Funktion | Pico-GPIO | Physische Modul-Pins |
 | --- | --- | --- |
@@ -117,6 +116,7 @@ Messnachweis. Vor dem ersten aktiven Bustest:
 Bis zur Abnahme bleiben aktive Datenbustests gesperrt. Softwarebau, Parser-,
 Speicher- und isolierte WLAN-Tests können bereits laufen.
 
+**Historischer Nachweis, nicht für das aktuelle Nutzerboard:**
 Digitale Prüfung von B2 mit KiCad 10.0.6: **0 DRC-Fehler/0 Warnungen, 0 offene
 Verbindungen, 0 Schaltplanabweichungen; ERC 0 Fehler/0 Warnungen.** DRC ausdrücklich
 mit `--schematic-parity --all-track-errors`. Exakte Netznamen inklusive `/` und
@@ -134,17 +134,17 @@ B2 ändert ausschließlich das U8-Gehäuse und sein lokales Routing; die Resetfu
 bleibt gleich. [B2-Prüfbericht](results/2026-10-07-revb2.md).
 Keine Fertigungsfreigabe; elektrische Musterprüfungen bleiben offen.
 
-Hardware-Referenzen, SHA-256:
+Aktuelle Hardware-Referenzen, SHA-256:
 
-- Nutzer-Archiv: `923df59e6a17f6ac96b90cc4c9c0e388622e9b6f66aeec76e7cd953a6bc07e1f`
-- Rev-B2-Schaltplan: `7c79beedb5473c872b8ad4855c7a03fb04484a50e73ab5bca5bac22929186a50`
-- Rev-B2-PCB: `a7a9cbb19c9f8817d6666fb08a87a784668ab8e951d3fde8aa5edc5f07c89981`
+- Schaltplan: `7c79beedb5473c872b8ad4855c7a03fb04484a50e73ab5bca5bac22929186a50`
+- PCB: `b2f32df78c15e37ceb1bc0433f0356848106e7a86a1e82df63c3da5a7e26928c`
+- Frühere Rev-B2-PCB-Prüfsumme: `a7a9cbb19c9f8817d6666fb08a87a784668ab8e951d3fde8aa5edc5f07c89981`
 
 ## 4. Architektur und Build
 
 C/C++ mit Raspberry Pi Pico SDK, Ziel `PICO_BOARD=pico2_w`, Arm-Build für RP2350.
-SDK-Release, Commit, Submodule, Compiler und CMake-Version in M1 festlegen und
-versionieren. Kein gleitendes `master` als reproduzierbare Buildabhängigkeit.
+M1 legt SDK 2.2.0, TinyUSB, picotool und Buildwerkzeuge in
+[`firmware/dependencies.json`](../firmware/dependencies.json) fest. Kein gleitendes `master` als reproduzierbare Buildabhängigkeit.
 CI liefert UF2, ELF, MAP und ein Manifest mit Versions- und Prüfsummenangaben.
 Keine WLAN-Zugangsdaten im Quelltext, Repository, Buildartefakt oder Testlog.
 
@@ -284,6 +284,12 @@ Flashsektoren mit jeweils 4096 Bytes am Flashende reservieren; Kapazität aus de
 Board-/SDK-Ziel übernehmen und im Build prüfen. Linkerskript und UF2 dürfen diese
 8192 Bytes nicht als Firmware belegen. CI prüft die Adressbereiche.
 
+In M1 bereits reserviert: Profile ab XIP `0x103FE000`; zusätzlich der davorliegende
+4-KiB-Sektor ab `0x103FD000` ausschließlich für den RP2350-E10-UF2-Block bei
+`0x103FDF00`. Der normale Firmwarebereich endet davor. Damit liegt auch dieser
+SDK-Kompatibilitätsblock außerhalb der Profile. Der UF2-Prüfer kontrolliert
+beide Blocktypen. Ein realer Profilerhalt über BOOTSEL-Updates ist in M4 zu testen.
+
 `SET_PROFILE` ändert nur die RAM-Konfiguration, `CONNECT` testet sie.
 `SAVE_PROFILE` speichert nach ausdrücklicher Benutzeraktion. Ablauf:
 
@@ -322,6 +328,13 @@ Dieses Verhalten mit dem konkreten Updateverfahren testen und dokumentieren.
 | M4 Konfiguration | Amiga-Kommandos, Flashprofil, Autoconnect | 100 Kaltstarts; gezielte Stromunterbrechung und RUN-Reset in jeder Schreib-/Löschphase |
 | M5 Integration | Ethernet-Ringe, Rückdruck, Status und Recovery | ARP/ICMP vom Amiga-Diagnosetool über FunkOtto; AP-Ausfall und Hostreset überstanden |
 | M6 Freigabe v0.1 | Releasekandidat, Installationsanleitung, Messbericht | 24-h-Dauerlauf ohne Datenkorruption/Buskollision; alle Einschränkungen dokumentiert |
+
+**Fortschritt am 08.10.2026:** M1-Quellen, USB-Konsole, GPIO-Sperre, Watchdog,
+Buildworkflow und automatisierte Prüfungen sind vorhanden. Zwei lokale Builds
+aus getrennten Quellverzeichnissen liefern bytegleiche UF2/BIN-Dateien.
+GPIO-/Parser-Hosttests und Artefaktprüfungen bestehen. Der reale Pico-Starttest
+ist noch offen; M1 ist damit noch nicht vollständig am Muster abgenommen.
+M0 sowie M2–M6 sind offen. [Prüfbericht](results/2026-10-08-firmware-m1.md).
 
 M1 und isolierte M3-Arbeiten können vor Abschluss M0 beginnen. M2-Bustests sind
 von M0 abhängig; M5 benötigt M2–M4. Keine Kalenderzusage ohne verfügbares Muster,
@@ -364,8 +377,9 @@ Oszilloskop nötig; eine digitale 24-MHz-Abtastung beweist keine analoge Signalg
 
 Später: `amiga/device/` für SANA-II und `amiga/prefs/` für die OS-1.3-GUI.
 Es werden keine Dummy-Treiber oder leeren Tests als fertige Funktionen ausgegeben.
-Dieser Commit enthält ausschließlich den Plan; die beschriebenen Module existieren
-noch nicht als funktionsfähige Implementierung.
+Implementiert sind bisher `firmware/` mit M1-Grundstart/USB-Diagnose, passende
+Hosttests und Build-/Prüfwerkzeuge. Protokoll, WLAN, Profile und Amiga-Software
+sind weiterhin geplante Arbeitspakete.
 
 ## 10. Quellen und Referenzen
 
@@ -378,8 +392,8 @@ verwendeten SDK-/Treiberstände festschreiben; Beispiele ersetzen keine Messung.
 - [CYW43-Treiber: Ethernet und Join](https://github.com/georgerobotics/cyw43-driver/blob/main/src/cyw43_ctrl.c)
 - [Pico SDK Architekturdefinitionen](https://github.com/raspberrypi/pico-sdk/blob/master/src/rp2_common/pico_cyw43_arch/include/pico/cyw43_arch.h)
 - [TI SN74LVC2G07: Open-Drain-Puffer, Ioff, Pinbelegung](https://www.ti.com/lit/gpn/sn74lvc2g07)
-- Eigener Schaltplan-/PCB-Netzlistenabgleich des oben bezeichneten Rev-B2-Pakets
-  und Vergleich mit der unveränderten Nutzerfassung.
+- Eigener PCB-Netzabgleich des Nutzerstands vom 08.10.2026 für die M1-Pinbelegung.
+- [Festgelegter SDK-Stand und Werkzeuge](../firmware/dependencies.json).
 
 Vor Wiederverwendung fremden Codes dessen Lizenz prüfen und Hinweise erhalten.
 Dieser Plan entscheidet noch nicht über die Lizenz des späteren FunkOtto-Codes.

@@ -8,3 +8,9 @@ fp-info-cache
 # Host OS files
 .DS_Store
 Thumbs.db
+# Firmware build dependencies and outputs
+.deps/
+.venv/
+build/
+__pycache__/
+*.pyc
