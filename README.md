@@ -29,8 +29,9 @@ GPIO-Zustände, USB-Diagnose (`help`, `info`, `status`) und Watchdog.
 **W1/W2 ist jetzt als WLAN-Testfirmware implementiert:** Scan, RAM-Konfiguration,
 WPA2-Verbindung und Wiederverbindung. [Bedienung und Testablauf](firmware/WLAN_TEST.md).
 Scan und erster WPA2-Join wurden am 08.10.2026 auf dem Pico bestätigt
-(`LINK_UP`, erster Versuch, Join 2679 ms). Wiederverbindung und Dauerlauf
-sind noch zu prüfen. Ethernet-Rohtransport, Parallelport-Kommunikation,
+(`LINK_UP`, erster Versuch, Join 2679 ms). Manuelles Wiederverbinden und automatische Erholung
+nach AP-Ausfall sind ebenfalls bestätigt. Dauerlauf und weitere Fehlerfälle
+bleiben offen. Ethernet-Rohtransport, Parallelport-Kommunikation,
 Profilspeicherung und Amiga-Treiber folgen.
 USB-Diagnose und Kaltstart ohne geöffnetes Terminal wurden am 08.10.2026 vom
 Nutzer auf einem realen Pico bestätigt. Die elektrische M0-Abnahme bleibt offen.
