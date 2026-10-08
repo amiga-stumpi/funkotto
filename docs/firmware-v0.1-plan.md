@@ -337,7 +337,9 @@ und Kaltstart ohne geöffnetes Terminal am realen Pico bestätigt. Watchdog-
 Fehlerinjektion und elektrische Musterabnahme bleiben offen.
 Die vorgezogene isolierte M3-Entwicklung beschreibt der
 [WLAN-Entwicklungsplan](wlan-entwicklungsplan.md).
-M0 sowie M2–M6 sind offen. [Prüfbericht](results/2026-10-08-firmware-m1.md).
+M3 ist mit W1/W2 begonnen: Scan, RAM-Profil und Verbindung sind implementiert
+und softwareseitig geprüft; reale WLAN-Abnahme und Rohframe-Transport bleiben offen.
+M0, M2 sowie M4–M6 sind offen. [Prüfbericht](results/2026-10-08-firmware-m1.md).
 
 M1 und isolierte M3-Arbeiten können vor Abschluss M0 beginnen. M2-Bustests sind
 von M0 abhängig; M5 benötigt M2–M4. Keine Kalenderzusage ohne verfügbares Muster,

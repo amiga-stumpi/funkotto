@@ -1,4 +1,11 @@
-# FunkOtto – erste Pico-Firmware (M1)
+# FunkOtto – Pico-Firmware
+
+**Neu: [W1/W2-WLAN-Testfirmware und Bedienung](WLAN_TEST.md).**
+Der Standardbuild erzeugt zusätzlich `funkotto_w12.uf2` mit Scan, RAM-Profil
+und WPA2-Verbindung auf Core 1. M1 bleibt als eigenes Diagnoseziel erhalten.
+WLAN ist softwareseitig gebaut/getestet; der reale Funk-Test steht noch aus.
+
+## M1-Grundversion
 
 `0.1.0-m1` ist die erste USB-Diagnose-Firmware für **Pico 2 W / RP2350 Arm**.
 Sie ist noch kein Netzwerkadapter. M1 liefert Build, sicheren Grundstart,
@@ -58,18 +65,22 @@ cmake -S firmware -B build/m1 -G Ninja \
   -DFUNKOTTO_SOURCE_ID="$(git rev-parse --short=12 HEAD)"
 cmake --build build/m1 --parallel
 python tools/check_firmware_artifacts.py build/m1
+python tools/check_firmware_artifacts.py build/m1 --target funkotto_w12
 ```
 
-Beim ersten Build werden SDK, TinyUSB und picotool benötigt; Netzwerkzugang ist
-dafür erforderlich. Warnungen zu nicht initialisierten WLAN/Bluetooth-Submodulen
-sind bei M1 erwartbar: Diese Bibliotheken werden noch nicht eingebunden.
+Beim ersten Build werden SDK, TinyUSB, CYW43 und picotool benötigt; Netzwerkzugang ist
+dafür erforderlich. Warnungen zu nicht initialisierten lwIP-/Bluetooth-Submodulen sind erwartbar:
+W1/W2 nutzt CYW43 ohne diese Bibliotheken. Das SDK meldet dabei pauschal fehlende
+volle WLAN-Unterstützung; unser eigenes Poll-Target wird trotzdem gebaut.
 In einer Umgebung ohne Zugriff auf `/proc` kann LeakSanitizer nicht arbeiten;
 für die heapfreien C-Tests dort `ASAN_OPTIONS=detect_leaks=0` setzen.
 AddressSanitizer und UndefinedBehaviorSanitizer bleiben dabei aktiv.
 
 Ergebnisse: `funkotto_m1.uf2`, `funkotto_m1.elf`, `funkotto_m1.elf.map`,
 `funkotto_m1.bin` und `manifest.json` mit Quellen-/Artefaktprüfsummen und
-Werkzeugversionen. Die CI baut und prüft dieselben Ziele. SDK-Dateipfade werden
+Werkzeugversionen. W1/W2 liefert gleichnamige Dateien mit Präfix
+`funkotto_w12` und `funkotto_w12-manifest.json`. Mit
+`-DFUNKOTTO_BUILD_WIFI=OFF` lässt sich ausschließlich M1 bauen. Die CI baut und prüft dieselben Ziele. SDK-Dateipfade werden
 im Zielcode normalisiert; eine Zusage für beliebige andere Toolchainstände
 oder bitidentische Debug-Dateien ergibt sich daraus nicht.
 

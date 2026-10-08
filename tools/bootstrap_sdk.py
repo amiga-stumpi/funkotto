@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fetch exactly the SDK and USB submodule used by the M1 firmware."""
+"""Fetch exactly the SDK, USB and CYW43 submodules used by the firmware."""
 import argparse
 import json
 from pathlib import Path
@@ -23,10 +23,11 @@ def main():
     head = subprocess.check_output(["git", "-C", str(dest), "rev-parse", "HEAD"], text=True).strip()
     if head != sdk["commit"]:
         raise SystemExit("SDK commit differs; choose a fresh destination (nothing overwritten)")
-    run("git", "-C", str(dest), "submodule", "update", "--init", "--depth", "1", "lib/tinyusb")
-    usb = subprocess.check_output(["git", "-C", str(dest / "lib/tinyusb"), "rev-parse", "HEAD"], text=True).strip()
-    if usb != lock["tinyusb"]["commit"]:
-        raise SystemExit("TinyUSB commit mismatch")
+    for path, key in [("lib/tinyusb", "tinyusb"), ("lib/cyw43-driver", "cyw43_driver")]:
+        run("git", "-C", str(dest), "submodule", "update", "--init", "--depth", "1", path)
+        actual = subprocess.check_output(["git", "-C", str(dest / path), "rev-parse", "HEAD"], text=True).strip()
+        if actual != lock[key]["commit"]:
+            raise SystemExit(key + " commit mismatch")
     print(f"PICO_SDK_PATH={dest}")
 
 if __name__ == "__main__":

@@ -1,7 +1,17 @@
 {
-  "pico_sdk": {"url": "https://github.com/raspberrypi/pico-sdk.git", "tag": "2.2.0", "commit": "a1438dff1d38bd9c65dbd693f0e5db4b9ae91779"},
-  "tinyusb": {"commit": "86ad6e56c1700e85f1c5678607a762cfe3aa2f47"},
-  "picotool": {"url": "https://github.com/raspberrypi/picotool.git", "tag": "2.2.0", "commit": "a7eb3988f0645239185fadb4e25d8279478c2dbb"},
+  "pico_sdk": {
+    "url": "https://github.com/raspberrypi/pico-sdk.git",
+    "tag": "2.2.0",
+    "commit": "a1438dff1d38bd9c65dbd693f0e5db4b9ae91779"
+  },
+  "tinyusb": {
+    "commit": "86ad6e56c1700e85f1c5678607a762cfe3aa2f47"
+  },
+  "picotool": {
+    "url": "https://github.com/raspberrypi/picotool.git",
+    "tag": "2.2.0",
+    "commit": "a7eb3988f0645239185fadb4e25d8279478c2dbb"
+  },
   "cmake": "3.31.6",
   "ninja": "1.11.1.4",
   "ubuntu_24_04_packages": {
@@ -10,5 +20,8 @@
     "libnewlib-arm-none-eabi": "4.4.0.20231231-2",
     "libnewlib-dev": "4.4.0.20231231-2",
     "libstdc++-arm-none-eabi-dev": "15:13.2.rel1-2+26"
+  },
+  "cyw43_driver": {
+    "commit": "dd7568229f3bf7a37737b9e1ef250c26efe75b23"
   }
 }

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate the built M1 image and write its reproducibility manifest."""
+"""Validate the built image and write its reproducibility manifest."""
 import argparse
 import hashlib
 import json
@@ -54,10 +54,11 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("build_dir", type=Path)
     parser.add_argument("--tool-prefix", default="arm-none-eabi-")
+    parser.add_argument("--target", choices=["funkotto_m1", "funkotto_w12"], default="funkotto_m1")
     args = parser.parse_args()
     build = args.build_dir.resolve()
-    elf = build / "funkotto_m1.elf"
-    uf2 = build / "funkotto_m1.uf2"
+    elf = build / (args.target + ".elf")
+    uf2 = build / (args.target + ".uf2")
     info = validate_uf2(uf2.read_bytes())
     nm = output(args.tool_prefix + "nm", "-n", str(elf))
     symbols = {m[3]: int(m[1], 16) for line in nm.splitlines()
@@ -70,7 +71,15 @@ def main():
         raise SystemExit("ELF flash range invalid")
     if "stdio_uart_init" in symbols or "uart_init" in symbols:
         raise SystemExit("Unexpected UART linked: GP0/GP1 are parallel data pins")
-    header = (build / "generated/funkotto/build_info.h").read_text()
+    callback_names = ["cyw43_cb_tcpip_init", "cyw43_cb_tcpip_deinit", "cyw43_cb_tcpip_set_link_up",
+                      "cyw43_cb_tcpip_set_link_down", "cyw43_cb_process_ethernet"]
+    if args.target == "funkotto_w12":
+        for name in callback_names:
+            if not re.search(r"^[0-9a-fA-F]+ T " + name + r"$", nm, re.M):
+                raise SystemExit("Missing strong WLAN callback: " + name)
+        if any(name in symbols for name in ("lwip_init", "tcpip_init", "dhcp_start", "netif_add")):
+            raise SystemExit("Unexpected IP stack in WLAN adapter")
+    header = (build / ("generated/" + args.target + "/funkotto/build_info.h")).read_text()
     defines = dict(re.findall(r'#define\s+(\w+)\s+"([^"\n]*)"', header))
     source_paths = [p for d in ("firmware", "tools", "tests") for p in (ROOT / d).rglob("*")
                     if p.is_file() and "__pycache__" not in p.parts]
@@ -78,11 +87,12 @@ def main():
                for p in sorted(source_paths)}
     artifacts = {}
     for suffix in ("elf", "uf2", "bin", "elf.map"):
-        p = build / ("funkotto_m1." + suffix)
+        p = build / (args.target + "." + suffix)
         artifacts[p.name] = {"size": p.stat().st_size, "sha256": hashlib.sha256(p.read_bytes()).hexdigest()}
     manifest = {
         "version": defines["FUNKOTTO_VERSION"], "source_id": defines["FUNKOTTO_SOURCE_ID"],
-        "stage": "M1 USB diagnostics; no active parallel bus or WLAN",
+        "stage": ("W1/W2 WLAN; RAM profile only; no parallel or Ethernet transport"
+                  if args.target == "funkotto_w12" else "M1 USB diagnostics; no active parallel bus or WLAN"),
         "board": "pico2_w", "platform": "rp2350-arm-s", "build_type": "Release",
         "dependencies": json.loads((ROOT / "firmware/dependencies.json").read_text()),
         "compiler": output(args.tool_prefix + "gcc", "--version").splitlines()[0],
@@ -94,7 +104,20 @@ def main():
         "uart_absent": True, "uf2": info, "sources_sha256": sources, "artifacts": artifacts,
         "hardware_tested": False,
     }
-    (build / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
+    if args.target == "funkotto_w12":
+        cache = (build / "CMakeCache.txt").read_text()
+        sdk_match = re.search(r"^PICO_SDK_PATH:[^=]+=([^\n]+)$", cache, re.M)
+        if not sdk_match:
+            raise SystemExit("SDK path missing from cache")
+        sdk = Path(sdk_match[1])
+        firmware_files = ["firmware/w43439A0_7_95_49_00_combined.h", "firmware/wifi_nvram_43439.h"]
+        manifest["cyw43_firmware_sha256"] = {
+            name: hashlib.sha256((sdk / "lib/cyw43-driver" / name).read_bytes()).hexdigest()
+            for name in firmware_files}
+        manifest["strong_callbacks"] = callback_names
+        manifest["lwip_absent"] = True
+    manifest_name = "manifest.json" if args.target == "funkotto_m1" else args.target + "-manifest.json"
+    (build / manifest_name).write_text(json.dumps(manifest, indent=2) + "\n")
     print(json.dumps({"uf2": info, "elf_flash_end": hex(symbols["__flash_binary_end"]),
                       "profile_sectors_untouched": True, "uart_absent": True}, indent=2))
 

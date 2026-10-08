@@ -1,7 +1,9 @@
 # FunkOtto: Entwicklungsplan WLAN
 
 Stand: 08.10.2026. Planung auf Grundlage von M1 (`ae67bce3b2dc`), Pico SDK 2.2.0
-und dem unveränderten Nutzerboard. Dieser Plan implementiert noch keine WLAN-Funktion.
+und dem unveränderten Nutzerboard. W1/W2 sind inzwischen softwareseitig umgesetzt; reale WLAN-Abnahme offen.
+[Implementierungsbericht](results/2026-10-08-wlan-w12.md) ·
+[Testanleitung](../firmware/WLAN_TEST.md).
 
 ## Ziel und Ausgangspunkt
 

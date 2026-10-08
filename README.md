@@ -26,7 +26,10 @@ und das vollständige KiCad-Projekt mit lokalen Bibliotheken, Stückliste und Pr
 GPIO-Zustände, USB-Diagnose (`help`, `info`, `status`) und Watchdog.
 [Build- und Testanleitung](firmware/README.md) ·
 [Prüfergebnisse M1](docs/results/2026-10-08-firmware-m1.md).
-WLAN, Parallelport-Kommunikation, Profilspeicherung und Amiga-Treiber folgen.
+**W1/W2 ist jetzt als WLAN-Testfirmware implementiert:** Scan, RAM-Konfiguration,
+WPA2-Verbindung und Wiederverbindung. [Bedienung und Testablauf](firmware/WLAN_TEST.md).
+Der reale WLAN-Test steht noch aus. Ethernet-Rohtransport, Parallelport-Kommunikation,
+Profilspeicherung und Amiga-Treiber folgen.
 USB-Diagnose und Kaltstart ohne geöffnetes Terminal wurden am 08.10.2026 vom
 Nutzer auf einem realen Pico bestätigt. Die elektrische M0-Abnahme bleibt offen.
 Nächster Schritt: [WLAN-Entwicklungsplan](docs/wlan-entwicklungsplan.md).

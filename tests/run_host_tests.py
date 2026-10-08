@@ -16,3 +16,26 @@ with tempfile.TemporaryDirectory(prefix="funkotto-tests-") as tmp:
         str(ROOT / "firmware/src/console.c"), "-o", binary,
     ], check=True)
     subprocess.run([binary], check=True)
+
+with tempfile.TemporaryDirectory(prefix="funkotto-wifi-tests-") as tmp:
+    binary = str(Path(tmp) / "test_wifi")
+    subprocess.run([
+        os.environ.get("CC", "cc"), "-std=c11", "-Wall", "-Wextra", "-Werror",
+        "-Wconversion", "-Wshadow", "-g", "-fno-omit-frame-pointer",
+        "-fsanitize=address,undefined", "-I" + str(ROOT / "firmware/include"),
+        str(ROOT / "tests/test_wifi.c"), str(ROOT / "firmware/src/wifi_model.c"),
+        str(ROOT / "firmware/src/wifi_console.c"), "-o", binary,
+    ], check=True)
+    subprocess.run([binary], check=True)
+
+with tempfile.TemporaryDirectory(prefix="funkotto-service-tests-") as tmp:
+    binary = str(Path(tmp) / "test_wifi_service")
+    subprocess.run([
+        os.environ.get("CC", "cc"), "-std=c11", "-Wall", "-Wextra", "-Werror",
+        "-Wconversion", "-Wshadow", "-g", "-fno-omit-frame-pointer",
+        "-fsanitize=address,undefined", "-I" + str(ROOT / "tests/wifi_fakes"),
+        "-I" + str(ROOT / "firmware/include"),
+        str(ROOT / "tests/test_wifi_service.c"), str(ROOT / "firmware/src/wifi_model.c"),
+        "-o", binary,
+    ], check=True)
+    subprocess.run([binary], check=True)

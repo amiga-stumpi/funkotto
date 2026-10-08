@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.31)
 
-# M1 is intentionally a Pico 2 W / Arm diagnostic image only.
+# Pico 2 W / Arm only; all targets keep the parallel bus locked.
 set(PICO_BOARD pico2_w CACHE STRING "Board")
 set(PICO_PLATFORM rp2350-arm-s CACHE STRING "Platform")
 if(NOT PICO_BOARD STREQUAL "pico2_w" OR NOT PICO_PLATFORM STREQUAL "rp2350-arm-s")
@@ -17,11 +17,19 @@ file(READ "${CMAKE_CURRENT_LIST_DIR}/dependencies.json" FO_DEPS)
 string(JSON FO_SDK_SHA GET "${FO_DEPS}" pico_sdk commit)
 string(JSON FO_USB_SHA GET "${FO_DEPS}" tinyusb commit)
 string(JSON FO_PICOTOOL_SHA GET "${FO_DEPS}" picotool commit)
-foreach(ITEM IN ITEMS SDK USB)
+option(FUNKOTTO_BUILD_WIFI "Build W1/W2 alongside M1" ON)
+set(FO_CHECKS SDK USB)
+if(FUNKOTTO_BUILD_WIFI)
+    string(JSON FO_WIFI_SHA GET "${FO_DEPS}" cyw43_driver commit)
+    list(APPEND FO_CHECKS WIFI)
+endif()
+foreach(ITEM IN LISTS FO_CHECKS)
     if(ITEM STREQUAL "SDK")
         set(FO_CHECK_PATH "${PICO_SDK_PATH}")
-    else()
+    elseif(ITEM STREQUAL "USB")
         set(FO_CHECK_PATH "${PICO_SDK_PATH}/lib/tinyusb")
+    else()
+        set(FO_CHECK_PATH "${PICO_SDK_PATH}/lib/cyw43-driver")
     endif()
     execute_process(COMMAND "${GIT_EXECUTABLE}" -C "${FO_CHECK_PATH}" rev-parse HEAD
         OUTPUT_VARIABLE FO_ACTUAL OUTPUT_STRIP_TRAILING_WHITESPACE RESULT_VARIABLE FO_RESULT)
@@ -36,6 +44,10 @@ foreach(ITEM IN ITEMS SDK USB)
 endforeach()
 set(PICOTOOL_GIT_BRANCH "${FO_PICOTOOL_SHA}" CACHE STRING "Pinned picotool" FORCE)
 set(PICOTOOL_FORCE_FETCH_FROM_GIT ON CACHE BOOL "Use pinned picotool source" FORCE)
+if(FUNKOTTO_BUILD_WIFI)
+    # Prevent an environment override from substituting an unverified driver.
+    set(PICO_CYW43_DRIVER_PATH "${PICO_SDK_PATH}/lib/cyw43-driver" CACHE PATH "Pinned CYW43" FORCE)
+endif()
 include("${PICO_SDK_PATH}/pico_sdk_init.cmake")
 project(funkotto VERSION 0.1.0 LANGUAGES C CXX ASM)
 set(CMAKE_C_STANDARD 11)
@@ -56,34 +68,46 @@ string(REPLACE "INCLUDE \"pico_flash_region.ld\""
     "FLASH(rx) : ORIGIN = 0x10000000, LENGTH = ${FO_IMAGE_BYTES}" FO_LD "${FO_LD}")
 file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/funkotto.ld" "${FO_LD}\n__funkotto_config_start = ${FO_CONFIG_START};\n__funkotto_image_limit = 0x103fd000;\nASSERT(__flash_binary_end <= __funkotto_image_limit, \"Firmware overlaps reserved sectors\")\n")
 
-set(FUNKOTTO_VERSION "0.1.0-m1")
 set(FUNKOTTO_SOURCE_ID "development" CACHE STRING "Source commit or candidate ID")
 if(NOT FUNKOTTO_SOURCE_ID MATCHES "^[A-Za-z0-9._-]+$")
     message(FATAL_ERROR "Invalid source ID")
 endif()
-configure_file(include/funkotto/build_info.h.in generated/funkotto/build_info.h @ONLY)
-add_executable(funkotto_m1 src/main.c src/board.c src/console.c)
-target_include_directories(funkotto_m1 PRIVATE include "${CMAKE_CURRENT_BINARY_DIR}/generated")
-target_link_libraries(funkotto_m1 PRIVATE pico_stdlib hardware_watchdog)
-target_compile_options(funkotto_m1 PRIVATE
-    "-ffile-prefix-map=${PICO_SDK_PATH}=pico-sdk"
-    "-ffile-prefix-map=${CMAKE_CURRENT_LIST_DIR}=firmware"
-    "-ffile-prefix-map=${CMAKE_CURRENT_BINARY_DIR}=build")
-set_source_files_properties(src/main.c src/board.c src/console.c PROPERTIES
-    COMPILE_OPTIONS "-Wall;-Wextra;-Werror;-Wconversion;-Wshadow")
-set_target_properties(funkotto_m1 PROPERTIES LINKER_LANGUAGE C)
-target_compile_definitions(funkotto_m1 PRIVATE
-    PICO_STDIO_USB_CONNECT_WAIT_TIMEOUT_MS=0
-    PICO_STDIO_USB_POST_CONNECT_WAIT_DELAY_MS=0
-    PICO_STDIO_USB_STDOUT_TIMEOUT_US=1000
-    PICO_STDIO_USB_ENABLE_RESET_VIA_BAUD_RATE=0
-    PICO_STDIO_USB_ENABLE_RESET_VIA_VENDOR_INTERFACE=0)
-pico_set_linker_script(funkotto_m1 "${CMAKE_CURRENT_BINARY_DIR}/funkotto.ld")
-pico_enable_stdio_uart(funkotto_m1 0) # GP0/GP1 belong to the parallel data bus!
-pico_enable_stdio_usb(funkotto_m1 1)
-pico_set_program_name(funkotto_m1 "FunkOtto M1")
-pico_set_program_version(funkotto_m1 "${FUNKOTTO_VERSION}")
-# SDK's default RP2350-E10 absolute block targets 0x10ffff00, which can
-# alias the last sector on a 4 MiB flash. Give it its own reserved sector.
-set_target_properties(funkotto_m1 PROPERTIES PICOTOOL_EXTRA_UF2_ARGS "--abs-block;0x103fdf00")
-pico_add_extra_outputs(funkotto_m1)
+function(fo_target NAME VERSION)
+    set(FUNKOTTO_VERSION "${VERSION}")
+    configure_file(include/funkotto/build_info.h.in "generated/${NAME}/funkotto/build_info.h" @ONLY)
+    add_executable(${NAME} ${ARGN} src/board.c)
+    target_include_directories(${NAME} PRIVATE include "${CMAKE_CURRENT_BINARY_DIR}/generated/${NAME}")
+    target_link_libraries(${NAME} PRIVATE pico_stdlib hardware_watchdog)
+    target_compile_options(${NAME} PRIVATE
+        "-ffile-prefix-map=${PICO_SDK_PATH}=pico-sdk"
+        "-ffile-prefix-map=${CMAKE_CURRENT_LIST_DIR}=firmware"
+        "-ffile-prefix-map=${CMAKE_CURRENT_BINARY_DIR}=build")
+    set_source_files_properties(${ARGN} src/board.c PROPERTIES
+        COMPILE_OPTIONS "-Wall;-Wextra;-Werror;-Wconversion;-Wshadow")
+    set_target_properties(${NAME} PROPERTIES LINKER_LANGUAGE C)
+    target_compile_definitions(${NAME} PRIVATE
+        PICO_STDIO_USB_CONNECT_WAIT_TIMEOUT_MS=0
+        PICO_STDIO_USB_POST_CONNECT_WAIT_DELAY_MS=0
+        PICO_STDIO_USB_STDOUT_TIMEOUT_US=1000
+        PICO_STDIO_USB_ENABLE_RESET_VIA_BAUD_RATE=0
+        PICO_STDIO_USB_ENABLE_RESET_VIA_VENDOR_INTERFACE=0)
+    pico_set_linker_script(${NAME} "${CMAKE_CURRENT_BINARY_DIR}/funkotto.ld")
+    pico_enable_stdio_uart(${NAME} 0)
+    pico_enable_stdio_usb(${NAME} 1)
+    pico_set_program_name(${NAME} "FunkOtto ${NAME}")
+    pico_set_program_version(${NAME} "${VERSION}")
+    set_target_properties(${NAME} PROPERTIES PICOTOOL_EXTRA_UF2_ARGS "--abs-block;0x103fdf00")
+    pico_add_extra_outputs(${NAME})
+endfunction()
+fo_target(funkotto_m1 "0.1.0-m1" src/main.c src/console.c)
+if(FUNKOTTO_BUILD_WIFI)
+    # SDK 2.2.0 gates its convenience poll target on lwIP availability. Compose
+    # the same libraries explicitly, without a TCP/IP stack or SDK source edits.
+    add_library(fo_cyw43_poll INTERFACE)
+    target_link_libraries(fo_cyw43_poll INTERFACE pico_cyw43_arch pico_async_context_poll)
+    target_compile_definitions(fo_cyw43_poll INTERFACE
+        PICO_CYW43_ARCH_POLL=1 CYW43_LWIP=0 CYW43_ENABLE_BLUETOOTH=0)
+    fo_target(funkotto_w12 "0.1.0-w12" src/main_wifi.c src/wifi_model.c src/wifi_console.c src/wifi_service.c)
+    target_link_libraries(funkotto_w12 PRIVATE fo_cyw43_poll pico_multicore)
+    target_compile_definitions(funkotto_w12 PRIVATE PICO_STACK_SIZE=0x1000)
+endif()
