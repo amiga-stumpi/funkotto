@@ -107,7 +107,7 @@ if(FUNKOTTO_BUILD_WIFI)
     target_link_libraries(fo_cyw43_poll INTERFACE pico_cyw43_arch pico_async_context_poll)
     target_compile_definitions(fo_cyw43_poll INTERFACE
         PICO_CYW43_ARCH_POLL=1 CYW43_LWIP=0 CYW43_ENABLE_BLUETOOTH=0)
-    fo_target(funkotto_w12 "0.1.0-w12" src/main_wifi.c src/wifi_model.c src/wifi_console.c src/wifi_service.c)
+    fo_target(funkotto_w12 "0.1.0-w12.1" src/main_wifi.c src/wifi_model.c src/wifi_console.c src/wifi_service.c)
     target_link_libraries(funkotto_w12 PRIVATE fo_cyw43_poll pico_multicore)
     target_compile_definitions(funkotto_w12 PRIVATE PICO_STACK_SIZE=0x1000)
 endif()

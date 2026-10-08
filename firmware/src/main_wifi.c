@@ -36,6 +36,12 @@ static void wifi_status(void) {
         (unsigned)snapshot.rssi_valid, (long)snapshot.rssi, (unsigned)snapshot.scanning,
         (unsigned long)snapshot.attempts, (unsigned long)snapshot.links, (unsigned long)snapshot.epoch,
         (unsigned long long)snapshot.retry_at_ms);
+    printf("profile_ssid_len=%u profile_ssid=", (unsigned)snapshot.ssid_len);
+    escaped(snapshot.ssid, snapshot.ssid_len);
+    printf(" ssid_hex=");
+    for (unsigned i = 0; i < snapshot.ssid_len; ++i) printf("%02x", snapshot.ssid[i]);
+    printf(" last_link_error=%ld failed_attempt=%lu\n", (long)snapshot.last_link_error,
+        (unsigned long)snapshot.failed_attempt);
 }
 static void submit(enum fo_request r, const struct fo_profile *p) {
     puts(fo_wifi_submit(r, p) ? "QUEUED (completion follows)" : "BUSY: previous command still running");

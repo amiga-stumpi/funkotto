@@ -5,7 +5,7 @@
 #include <stdint.h>
 struct fo_profile { uint8_t ssid[32], key[63]; uint8_t ssid_len, key_len; };
 enum fo_wifi_state { FO_INITIALIZING, FO_UNCONFIGURED, FO_DISCONNECTED, FO_CONNECTING, FO_LINK_UP, FO_RETRY_WAIT, FO_ERROR };
-enum fo_wifi_error { FO_OK, FO_NO_PROFILE, FO_TIMEOUT, FO_BAD_AUTH, FO_NO_NETWORK, FO_DRIVER_ERROR, FO_LINK_LOST };
+enum fo_wifi_error { FO_OK, FO_NO_PROFILE, FO_TIMEOUT, FO_BAD_AUTH, FO_NO_NETWORK, FO_DRIVER_ERROR, FO_LINK_LOST, FO_JOIN_FAILED };
 struct fo_wifi_model {
     struct fo_profile profile;
     enum fo_wifi_state state;

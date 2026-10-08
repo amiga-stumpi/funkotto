@@ -70,11 +70,20 @@ int main(void) {
     cyw43_cb_tcpip_set_link_up(&cyw43_state, 0); service_step(); assert(model.state == FO_RETRY_WAIT);
     clock_ms += 1000; service_step(); assert(joins == 2 && model.state == FO_CONNECTING);
     cyw43_state.join_state = CYW43_LINK_BADAUTH; service_step(); assert(model.error == FO_BAD_AUTH && !driver_up);
+    assert(status.last_link_error == CYW43_LINK_BADAUTH && status.failed_attempt == 2);
     assert(fo_wifi_submit(REQ_DISCONNECT, NULL)); service_step();
     clock_ms += 60000; service_step(); assert(joins == 2 && !model.wanted);
     init_fail = true; assert(fo_wifi_submit(REQ_SCAN, NULL)); service_step();
     assert(model.state == FO_ERROR && status.reply == REPLY_DRIVER && status.sdk_error == -7);
     init_fail = false; assert(fo_wifi_submit(REQ_CONNECT, NULL)); service_step();
     assert(model.state == FO_CONNECTING && joins == 3 && !lock_depth && inits >= 5 && stops >= 3);
+    assert(status.last_link_error == CYW43_LINK_BADAUTH && status.failed_attempt == 2);
+    cyw43_state.join_state = CYW43_LINK_FAIL; service_step();
+    assert(model.error == FO_JOIN_FAILED && status.sdk_error == 0);
+    assert(status.last_link_error == -1 && status.failed_attempt == 3);
+    assert(!strcmp(fo_error_name(model.error), "JOIN_FAILED"));
+    assert(fo_wifi_submit(REQ_SET, &p)); service_step();
+    assert(status.last_link_error == 0 && status.failed_attempt == 0);
+    assert(status.ssid_len == 1 && status.ssid[0] == 'T');
     puts("PASS: actual WLAN service init, scan bounds/cancel/timeout, mailbox wiping, link loss/retry and SDK failure recovery");
 }

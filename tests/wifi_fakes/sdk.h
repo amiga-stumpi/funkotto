@@ -15,6 +15,7 @@ typedef struct { uint8_t ssid[32], bssid[6], ssid_len, auth_mode; uint16_t chann
 #define CYW43_NONE_PM 0
 #define CYW43_AUTH_WPA2_AES_PSK 0x400004
 #define CYW43_CHANNEL_NONE 0
+#define CYW43_LINK_FAIL (-1)
 #define CYW43_LINK_BADAUTH (-3)
 #define CYW43_LINK_NONET (-2)
 #define PICO_ERROR_TIMEOUT (-1)

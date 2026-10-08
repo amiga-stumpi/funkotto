@@ -44,6 +44,6 @@ const char *fo_state_name(enum fo_wifi_state s) {
     return (unsigned)s < sizeof(names)/sizeof(names[0]) ? names[s] : "INVALID";
 }
 const char *fo_error_name(enum fo_wifi_error e) {
-    static const char *const names[] = {"OK", "NO_PROFILE", "TIMEOUT", "BADAUTH", "NONET", "DRIVER", "LINK_LOST"};
+    static const char *const names[] = {"OK", "NO_PROFILE", "TIMEOUT", "BADAUTH", "NONET", "DRIVER", "LINK_LOST", "JOIN_FAILED"};
     return (unsigned)e < sizeof(names)/sizeof(names[0]) ? names[e] : "INVALID";
 }

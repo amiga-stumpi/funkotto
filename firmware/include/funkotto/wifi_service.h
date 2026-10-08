@@ -9,7 +9,8 @@ struct fo_wifi_status {
     enum fo_wifi_state state; enum fo_wifi_error error; enum fo_reply reply;
     bool configured, wanted, mac_valid, scanning, scan_truncated, sdk_busy, rssi_valid;
     uint8_t mac[6], ssid[32], ssid_len, scan_count;
-    int32_t rssi, sdk_error;
+    int32_t rssi, sdk_error, last_link_error;
+    uint32_t failed_attempt;
     uint32_t heartbeat_ms, attempts, links, epoch, completed, scan_generation, scan_done;
     uint32_t init_ms, join_ms, rx_dropped, rx_invalid, pio_mask, dma_mask;
     uint64_t retry_at_ms;

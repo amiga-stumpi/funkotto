@@ -111,6 +111,7 @@ static enum fo_reply command(enum fo_request kind, const struct fo_profile *p) {
     if (kind == REQ_SET) {
         if (!fo_profile_valid(p)) return REPLY_INVALID;
         fo_model_disconnect(&model); driver_stop();
+        status.last_link_error = 0; status.failed_attempt = 0;
         return fo_model_profile(&model, p) ? REPLY_OK : REPLY_INVALID;
     }
     if (kind == REQ_CONNECT) {
@@ -158,7 +159,12 @@ static void service_step(void) {
         if (pending_up) { pending_up = false; fo_model_link_up(&model, link_epoch); status.join_ms = (uint32_t)(now - join_started); }
         if (model.state == FO_CONNECTING && driver_up) {
             int s = cyw43_wifi_link_status(&cyw43_state, CYW43_ITF_STA);
-            if (s < 0) fo_model_fail(&model, s == CYW43_LINK_BADAUTH ? FO_BAD_AUTH : s == CYW43_LINK_NONET ? FO_NO_NETWORK : FO_DRIVER_ERROR, now);
+            if (s < 0) {
+                status.last_link_error = s; status.failed_attempt = model.attempts;
+                fo_model_fail(&model, s == CYW43_LINK_BADAUTH ? FO_BAD_AUTH :
+                    s == CYW43_LINK_NONET ? FO_NO_NETWORK :
+                    s == CYW43_LINK_FAIL ? FO_JOIN_FAILED : FO_DRIVER_ERROR, now);
+            }
         }
         if (status.scanning) {
             if (!cyw43_wifi_scan_active(&cyw43_state)) { status.scanning = false; status.scan_done = status.scan_generation; }

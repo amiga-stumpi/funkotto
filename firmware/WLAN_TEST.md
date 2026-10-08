@@ -1,6 +1,6 @@
 # FunkOtto W1/W2 – erste WLAN-Testfirmware
 
-Version `0.1.0-w12`, Ziel Pico 2 W. Enthält WLAN-Initialisierung, Scan, ein
+Version `0.1.0-w12.1`, Ziel Pico 2 W. Enthält WLAN-Initialisierung, Scan, ein
 RAM-Profil und WPA2-Personal-Verbindung im 2,4-GHz-Netz (Länderkennung DE).
 **Noch keine Netzwerkfunktion am Amiga und keine dauerhafte Speicherung.**
 Empfangene Ethernet-Pakete werden in dieser Stufe gezählt und verworfen.
@@ -103,3 +103,20 @@ M1 bleibt als separates Buildziel erhalten. SDK, CYW43 und Funkfirmware sind
 festgelegt; Details stehen in `dependencies.json` und im Buildmanifest. Warnungen
 über fehlendes lwIP/Bluetooth sind beim absichtlichen Build ohne diese Module
 bekannt. Die elektrische M0-Abnahme bleibt Voraussetzung für aktive Amiga-Bustests.
+
+## Erweiterte Diagnose in W12.1
+
+`wifi status` zeigt jetzt die tatsächlich übernommene SSID mit Länge und Hexbytes.
+Damit sind versehentlich eingegebene Anführungszeichen (`22`) und zusätzliche
+Leerzeichen (`20`) erkennbar. Diese Anzeige enthält kein Passwort.
+
+Ein allgemeines Scheitern des Join wird als `JOIN_FAILED` statt `DRIVER` gemeldet.
+`last_link_error` bewahrt den letzten negativen SDK-Linkstatus über weitere
+Versuche hinweg, `failed_attempt` nennt den betreffenden Versuch. Werte:
+`-1` allgemeiner Verbindungsfehler, `-2` kein passendes Netz, `-3` Authentifizierung
+fehlgeschlagen. `0` bedeutet hier: noch kein negativer Linkstatus aufgezeichnet.
+Ein neues RAM-Profil setzt diese beiden Diagnosewerte zurück.
+`sdk_error` bleibt getrennt der Rückgabewert des jeweiligen SDK-Aufrufs.
+
+Die Änderung verbessert die Fehlerdiagnose; sie ist keine bestätigte Behebung
+eines fehlgeschlagenen Funk-Verbindungsaufbaus.
