@@ -1,0 +1,29 @@
+FunkOtto / AmiWiFi Pico 2 W – Rev B2, 07.10.2026
+
+Vollständig in einen neuen Ordner entpacken und hardware/AmiWiFi.kicad_pro
+mit KiCad 10 öffnen. Projektlokale Bibliotheken in hardware/ gehören dazu.
+
+U8 jetzt SN74LVC2G07DCKR im SC70-6-Gehäuse. Schaltplan, PCB, Bibliotheken,
+Stückliste und Vorschauen sind aktualisiert. Das bisherige DBVR-Gehäuse passt
+nicht auf das neue U8-Lötbild. U5/U6 bleiben unverändert SN74LVC1G10DBVR.
+Details: docs/U8_DCK_REV_B2.txt. Die Korrekturen aus B1 bleiben enthalten.
+Basis ist die zuletzt gelieferte B1, auf Grundlage der Nutzerplatine.
+Der ältere Aufdruck „AmiWiFi A“ bleibt erhalten; dieses Paket ist Rev B2.
+
+KiCad 10.0.6: DRC einschließlich Schaltplanvergleich und ERC jeweils
+0 Fehler/0 Warnungen; keine offenen Verbindungen oder Schaltplanabweichungen.
+Berichte: validation/. Bestehende ignorierte Kategorien stehen in den Berichten;
+für diese Änderung wurden keine zusätzlichen Regeln deaktiviert.
+
+Zum Nachprüfen im Projektordner:
+kicad-cli pcb drc --schematic-parity --all-track-errors -o DRC.rpt hardware/AmiWiFi.kicad_pcb
+kicad-cli sch erc -o ERC.rpt hardware/AmiWiFi.kicad_sch
+
+Resetfunktion unverändert: Amiga-Reset oder fehlende Hostversorgung zieht Pico
+RUN über U8 auf Low. Firmware, Treiber und GUI sind noch nicht implementiert.
+USB/BOOTSEL im Sockel: DB25 UND USB-C-Trägerversorgung abziehen; danach Pico
+über seinen eigenen USB-Port bei gedrücktem BOOTSEL verbinden. Alternativ Pico
+herausnehmen. Ein versorgter Träger ohne Amiga hält RUN absichtlich Low.
+
+Historische Produktionsdateien unter reference/ sind NICHT für diese Revision.
+Keine Fertigungsfreigabe: elektrische Messungen und Prototypabnahme bleiben offen.

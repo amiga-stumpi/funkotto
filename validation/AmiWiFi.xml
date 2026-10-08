@@ -1,0 +1,2616 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<export version="E">
+  <design>
+    <source>/workspace/scratch/7fac94f07ba3/output/FunkOtto_Pico2W_RevB2/hardware/AmiWiFi.kicad_sch</source>
+    <date>2026-10-07T12:56:15</date>
+    <tool>Eeschema 10.0.6-10.0.6~ubuntu24.04.1</tool>
+    <sheet number="1" name="/" tstamps="/">
+      <title_block>
+        <title>AmiWiFi Pico 2 W - MAS carrier</title>
+        <company>Amiga Parallel WLAN</company>
+        <rev>B1 / KiCad consistency fixes</rev>
+        <date>2026-10-05</date>
+        <source>AmiWiFi.kicad_sch</source>
+        <comment number="1" value="Prototype / Antenna overhang: 11.35 mm"/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+        <comment number="5" value=""/>
+        <comment number="6" value=""/>
+        <comment number="7" value=""/>
+        <comment number="8" value=""/>
+        <comment number="9" value=""/>
+      </title_block>
+    </sheet>
+  </design>
+  <components>
+    <comp ref="C1">
+      <value>1uF</value>
+      <footprint>AmiWiFi:C0603_MAS_C1</footprint>
+      <fields>
+        <field name="Footprint">AmiWiFi:C0603_MAS_C1</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="AmiWiFi" part="Part_C1" description=""/>
+      <property name="Sheetname" value="AmiWiFi"/>
+      <property name="Sheetfile" value="AmiWiFi.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>f2cd3fc0-79eb-4cb7-ac99-d3f5fbc0bdda</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C2">
+      <value>2.2uF</value>
+      <footprint>AmiWiFi:C0603_MAS_C2</footprint>
+      <fields>
+        <field name="Footprint">AmiWiFi:C0603_MAS_C2</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="AmiWiFi" part="Part_C2" description=""/>
+      <property name="Sheetname" value="AmiWiFi"/>
+      <property name="Sheetfile" value="AmiWiFi.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>8dcd3e27-11bd-42b0-87db-88aad16f2c2c</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C3">
+      <value>10uF 10V</value>
+      <footprint>AmiWiFi:C0805_C3</footprint>
+      <fields>
+        <field name="Footprint">AmiWiFi:C0805_C3</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="AmiWiFi" part="Part_C3" description=""/>
+      <property name="Sheetname" value="AmiWiFi"/>
+      <property name="Sheetfile" value="AmiWiFi.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>4fab5b96-6667-4536-a8a3-e6bcd6241461</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C4">
+      <value>100nF</value>
+      <footprint>AmiWiFi:C0603_C4</footprint>
+      <fields>
+        <field name="Footprint">AmiWiFi:C0603_C4</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="AmiWiFi" part="Part_C4" description=""/>
+      <property name="Sheetname" value="AmiWiFi"/>
+      <property name="Sheetfile" value="AmiWiFi.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>98aac0de-a51b-4725-a6eb-32f07e9b48b4</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C5">
+      <value>100nF</value>
+      <footprint>AmiWiFi:C0603_C5</footprint>
+      <fields>
+        <field name="Footprint">AmiWiFi:C0603_C5</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="AmiWiFi" part="Part_C5" description=""/>
+      <property name="Sheetname" value="AmiWiFi"/>
+      <property name="Sheetfile" value="AmiWiFi.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>5d526ce7-a1fa-4ac9-9680-9f471abbf8cf</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C6">
+      <value>100nF</value>
+      <footprint>AmiWiFi:C0603_C6</footprint>
+      <fields>
+        <field name="Footprint">AmiWiFi:C0603_C6</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="AmiWiFi" part="Part_C6" description=""/>
+      <property name="Sheetname" value="AmiWiFi"/>
+      <property name="Sheetfile" value="AmiWiFi.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>dcf9bc43-5c7f-4cbe-8549-d75a71b716e4</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C7">
+      <value>100nF</value>
+      <footprint>AmiWiFi:C0603_C7</footprint>
+      <fields>
+        <field name="Footprint">AmiWiFi:C0603_C7</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="AmiWiFi" part="Part_C7" description=""/>
+      <property name="Sheetname" value="AmiWiFi"/>
+      <property name="Sheetfile" value="AmiWiFi.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>e0502096-2bad-4828-b593-44b46994dacc</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C8">
+      <value>100nF</value>
+      <footprint>AmiWiFi:C0603_C8</footprint>
+      <fields>
+        <field name="Footprint">AmiWiFi:C0603_C8</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="AmiWiFi" part="Part_C8" description=""/>
+      <property name="Sheetname" value="AmiWiFi"/>
+      <property name="Sheetfile" value="AmiWiFi.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>5f70641a-e653-4113-ac08-3d6ba954aed5</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C9">
+      <value>100nF</value>
+      <footprint>AmiWiFi:C0603_C9</footprint>
+      <fields>
+        <field name="Footprint">AmiWiFi:C0603_C9</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="AmiWiFi" part="Part_C9" description=""/>
+      <property name="Sheetname" value="AmiWiFi"/>
+      <property name="Sheetfile" value="AmiWiFi.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>7133691e-32d9-4292-b037-70d215dc1b32</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C10">
+      <value>100nF</value>
+      <footprint>AmiWiFi:C0603_C10</footprint>
+      <fields>
+        <field name="Footprint">AmiWiFi:C0603_C10</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="AmiWiFi" part="Part_C10" description=""/>
+      <property name="Sheetname" value="AmiWiFi"/>
+      <property name="Sheetfile" value="AmiWiFi.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>7354dc47-8176-4c2d-a426-514d71120bd0</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="C11">
+      <value>100nF</value>
+      <footprint>AmiWiFi:C0603_C11</footprint>
+      <fields>
+        <field name="Footprint">AmiWiFi:C0603_C11</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="AmiWiFi" part="Part_C11" description=""/>
+      <property name="Sheetname" value="AmiWiFi"/>
+      <property name="Sheetfile" value="AmiWiFi.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>d69a1293-b333-4ee9-9b4c-f879de572389</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="D1">
+      <value>SS14</value>
+      <footprint>AmiWiFi:SOD123_D1</footprint>
+      <fields>
+        <field name="Footprint">AmiWiFi:SOD123_D1</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="AmiWiFi" part="Part_D1" description=""/>
+      <property name="Sheetname" value="AmiWiFi"/>
+      <property name="Sheetfile" value="AmiWiFi.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>3fcb8f6a-f582-4b07-ba24-c96f9fbe83df</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="J1">
+      <value>TYPE-C 6P</value>
+      <footprint>AmiWiFi:USB_C_MAS_Original_J1</footprint>
+      <fields>
+        <field name="LCSC">C456012</field>
+        <field name="Footprint">AmiWiFi:USB_C_MAS_Original_J1</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="AmiWiFi" part="Part_J1" description=""/>
+      <property name="LCSC" value="C456012"/>
+      <property name="Sheetname" value="AmiWiFi"/>
+      <property name="Sheetfile" value="AmiWiFi.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>2694190c-d49d-4ca7-8f0c-c2e19743556a</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+            <pin num="3"/>
+            <pin num="4"/>
+            <pin num="5"/>
+            <pin num="6"/>
+            <pin num="7"/>
+            <pin num="8"/>
+            <pin num="9"/>
+            <pin num="10"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="J2">
+      <value>DB25 MALE / MAS original</value>
+      <footprint>AmiWiFi:DB25_MAS_Original_J2</footprint>
+      <fields>
+        <field name="Footprint">AmiWiFi:DB25_MAS_Original_J2</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="AmiWiFi" part="Part_J2" description=""/>
+      <property name="Sheetname" value="AmiWiFi"/>
+      <property name="Sheetfile" value="AmiWiFi.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>f2501f80-c7bd-4845-a1fd-d593124d8947</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+            <pin num="3"/>
+            <pin num="4"/>
+            <pin num="5"/>
+            <pin num="6"/>
+            <pin num="7"/>
+            <pin num="8"/>
+            <pin num="9"/>
+            <pin num="10"/>
+            <pin num="11"/>
+            <pin num="12"/>
+            <pin num="13"/>
+            <pin num="14"/>
+            <pin num="15"/>
+            <pin num="16"/>
+            <pin num="17"/>
+            <pin num="18"/>
+            <pin num="19"/>
+            <pin num="20"/>
+            <pin num="21"/>
+            <pin num="22"/>
+            <pin num="23"/>
+            <pin num="24"/>
+            <pin num="25"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R6">
+      <value>5.1k</value>
+      <footprint>AmiWiFi:R0603_MAS_R6</footprint>
+      <fields>
+        <field name="Footprint">AmiWiFi:R0603_MAS_R6</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="AmiWiFi" part="Part_R6" description=""/>
+      <property name="Sheetname" value="AmiWiFi"/>
+      <property name="Sheetfile" value="AmiWiFi.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>f832db38-84a5-4e35-a9c7-5c7efeeb86d2</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R7">
+      <value>5.1k</value>
+      <footprint>AmiWiFi:R0603_MAS_R7</footprint>
+      <fields>
+        <field name="Footprint">AmiWiFi:R0603_MAS_R7</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="AmiWiFi" part="Part_R7" description=""/>
+      <property name="Sheetname" value="AmiWiFi"/>
+      <property name="Sheetfile" value="AmiWiFi.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>818e34b4-63e9-4e3c-a9f6-1e474f480de4</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R10">
+      <value>100</value>
+      <footprint>AmiWiFi:R0402_R10</footprint>
+      <fields>
+        <field name="Footprint">AmiWiFi:R0402_R10</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="AmiWiFi" part="Part_R10" description=""/>
+      <property name="Sheetname" value="AmiWiFi"/>
+      <property name="Sheetfile" value="AmiWiFi.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>2beac1ec-d13f-44db-a01d-069b13025043</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R11">
+      <value>100</value>
+      <footprint>AmiWiFi:R0402_R11</footprint>
+      <fields>
+        <field name="Footprint">AmiWiFi:R0402_R11</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="AmiWiFi" part="Part_R11" description=""/>
+      <property name="Sheetname" value="AmiWiFi"/>
+      <property name="Sheetfile" value="AmiWiFi.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>bc054fd1-4655-4b52-b9d4-22eab9db8bfb</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R12">
+      <value>100</value>
+      <footprint>AmiWiFi:R0402_R12</footprint>
+      <fields>
+        <field name="Footprint">AmiWiFi:R0402_R12</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="AmiWiFi" part="Part_R12" description=""/>
+      <property name="Sheetname" value="AmiWiFi"/>
+      <property name="Sheetfile" value="AmiWiFi.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>7b04facb-3dc1-4a17-b139-5c9fbc8fddf3</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R13">
+      <value>100</value>
+      <footprint>AmiWiFi:R0402_R13</footprint>
+      <fields>
+        <field name="Footprint">AmiWiFi:R0402_R13</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="AmiWiFi" part="Part_R13" description=""/>
+      <property name="Sheetname" value="AmiWiFi"/>
+      <property name="Sheetfile" value="AmiWiFi.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>8672c7b9-08f9-47ef-bbd4-72949d4e793a</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R14">
+      <value>100</value>
+      <footprint>AmiWiFi:R0402_R14</footprint>
+      <fields>
+        <field name="Footprint">AmiWiFi:R0402_R14</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="AmiWiFi" part="Part_R14" description=""/>
+      <property name="Sheetname" value="AmiWiFi"/>
+      <property name="Sheetfile" value="AmiWiFi.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>2cc62336-6a2d-416e-be5c-f8a3b50486da</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R15">
+      <value>100</value>
+      <footprint>AmiWiFi:R0402_R15</footprint>
+      <fields>
+        <field name="Footprint">AmiWiFi:R0402_R15</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="AmiWiFi" part="Part_R15" description=""/>
+      <property name="Sheetname" value="AmiWiFi"/>
+      <property name="Sheetfile" value="AmiWiFi.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>6c6733f7-5a5d-4f25-8e18-36b9b4ea11e0</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R16">
+      <value>100</value>
+      <footprint>AmiWiFi:R0402_R16</footprint>
+      <fields>
+        <field name="Footprint">AmiWiFi:R0402_R16</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="AmiWiFi" part="Part_R16" description=""/>
+      <property name="Sheetname" value="AmiWiFi"/>
+      <property name="Sheetfile" value="AmiWiFi.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>28c2617f-dd07-4701-9081-d7f5bbbedb22</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R17">
+      <value>100</value>
+      <footprint>AmiWiFi:R0402_R17</footprint>
+      <fields>
+        <field name="Footprint">AmiWiFi:R0402_R17</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="AmiWiFi" part="Part_R17" description=""/>
+      <property name="Sheetname" value="AmiWiFi"/>
+      <property name="Sheetfile" value="AmiWiFi.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>cd1a2513-df2d-485f-a96f-b081590ef319</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R20">
+      <value>100</value>
+      <footprint>AmiWiFi:R0402_R20</footprint>
+      <fields>
+        <field name="Footprint">AmiWiFi:R0402_R20</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="AmiWiFi" part="Part_R20" description=""/>
+      <property name="Sheetname" value="AmiWiFi"/>
+      <property name="Sheetfile" value="AmiWiFi.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>32c43f8b-cbe2-4273-9855-1aad3dd821de</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R21">
+      <value>100</value>
+      <footprint>AmiWiFi:R0402_R21</footprint>
+      <fields>
+        <field name="Footprint">AmiWiFi:R0402_R21</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="AmiWiFi" part="Part_R21" description=""/>
+      <property name="Sheetname" value="AmiWiFi"/>
+      <property name="Sheetfile" value="AmiWiFi.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>32604192-9236-4272-aa33-148e069e9c98</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R22">
+      <value>330</value>
+      <footprint>AmiWiFi:R0402_R22</footprint>
+      <fields>
+        <field name="Footprint">AmiWiFi:R0402_R22</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="AmiWiFi" part="Part_R22" description=""/>
+      <property name="Sheetname" value="AmiWiFi"/>
+      <property name="Sheetfile" value="AmiWiFi.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>d6a654f1-01ce-444e-8a3f-9180cca315c7</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R23">
+      <value>330</value>
+      <footprint>AmiWiFi:R0402_R23</footprint>
+      <fields>
+        <field name="Footprint">AmiWiFi:R0402_R23</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="AmiWiFi" part="Part_R23" description=""/>
+      <property name="Sheetname" value="AmiWiFi"/>
+      <property name="Sheetfile" value="AmiWiFi.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>8af05bb0-a7d7-46c6-8476-ced32370bfe0</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R24">
+      <value>330</value>
+      <footprint>AmiWiFi:R0402_R24</footprint>
+      <fields>
+        <field name="Footprint">AmiWiFi:R0402_R24</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="AmiWiFi" part="Part_R24" description=""/>
+      <property name="Sheetname" value="AmiWiFi"/>
+      <property name="Sheetfile" value="AmiWiFi.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>0aeba81a-64b4-4afc-98fe-6a8abd0616c3</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R25">
+      <value>10k</value>
+      <footprint>AmiWiFi:R0402_R25</footprint>
+      <fields>
+        <field name="Footprint">AmiWiFi:R0402_R25</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="AmiWiFi" part="Part_R25" description=""/>
+      <property name="Sheetname" value="AmiWiFi"/>
+      <property name="Sheetfile" value="AmiWiFi.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>e8bce10d-3e33-45de-bffa-4b84cb695db7</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R26">
+      <value>100k</value>
+      <footprint>AmiWiFi:R0402_R26</footprint>
+      <fields>
+        <field name="Footprint">AmiWiFi:R0402_R26</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="AmiWiFi" part="Part_R26" description=""/>
+      <property name="Sheetname" value="AmiWiFi"/>
+      <property name="Sheetfile" value="AmiWiFi.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>c6749d6e-2cc8-47ad-a554-c02f0e68a6de</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R27">
+      <value>100</value>
+      <footprint>AmiWiFi:R0402_R27</footprint>
+      <fields>
+        <field name="Footprint">AmiWiFi:R0402_R27</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="AmiWiFi" part="Part_R27" description=""/>
+      <property name="Sheetname" value="AmiWiFi"/>
+      <property name="Sheetfile" value="AmiWiFi.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>65cfd450-f3af-4a8f-b342-383301eef62e</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R28">
+      <value>4.7k</value>
+      <footprint>AmiWiFi:R0402_R28</footprint>
+      <fields>
+        <field name="Footprint">AmiWiFi:R0402_R28</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="AmiWiFi" part="Part_R28" description=""/>
+      <property name="Sheetname" value="AmiWiFi"/>
+      <property name="Sheetfile" value="AmiWiFi.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>56816c0c-e3c1-49e3-956b-b37a421c65c6</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R29">
+      <value>4.7k</value>
+      <footprint>AmiWiFi:R0402_R29</footprint>
+      <fields>
+        <field name="Footprint">AmiWiFi:R0402_R29</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="AmiWiFi" part="Part_R29" description=""/>
+      <property name="Sheetname" value="AmiWiFi"/>
+      <property name="Sheetfile" value="AmiWiFi.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>0b8ea55a-9ed8-4440-8c20-62e47ff1515f</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R30">
+      <value>10k</value>
+      <footprint>AmiWiFi:R0402_R30</footprint>
+      <fields>
+        <field name="Footprint">AmiWiFi:R0402_R30</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="AmiWiFi" part="Part_R30" description=""/>
+      <property name="Sheetname" value="AmiWiFi"/>
+      <property name="Sheetfile" value="AmiWiFi.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>3f452dc5-f1c7-4e31-ac8f-ea4e7e3dfbb9</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R31">
+      <value>10k</value>
+      <footprint>AmiWiFi:R0402_R31</footprint>
+      <fields>
+        <field name="Footprint">AmiWiFi:R0402_R31</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="AmiWiFi" part="Part_R31" description=""/>
+      <property name="Sheetname" value="AmiWiFi"/>
+      <property name="Sheetfile" value="AmiWiFi.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>9d9dff81-f3e0-4766-ad51-ebc3dcc3916e</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R32">
+      <value>10k</value>
+      <footprint>AmiWiFi:R0402_R32</footprint>
+      <fields>
+        <field name="Footprint">AmiWiFi:R0402_R32</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="AmiWiFi" part="Part_R32" description=""/>
+      <property name="Sheetname" value="AmiWiFi"/>
+      <property name="Sheetfile" value="AmiWiFi.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>f21e1cc6-d214-4cfc-bee6-a7ca6708648f</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R33">
+      <value>10k</value>
+      <footprint>AmiWiFi:R0402_R33</footprint>
+      <fields>
+        <field name="Footprint">AmiWiFi:R0402_R33</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="AmiWiFi" part="Part_R33" description=""/>
+      <property name="Sheetname" value="AmiWiFi"/>
+      <property name="Sheetfile" value="AmiWiFi.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>22994450-e87f-411d-98f2-2d37d1b0f0f2</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R34">
+      <value>10k</value>
+      <footprint>AmiWiFi:R0402_R34</footprint>
+      <fields>
+        <field name="Footprint">AmiWiFi:R0402_R34</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="AmiWiFi" part="Part_R34" description=""/>
+      <property name="Sheetname" value="AmiWiFi"/>
+      <property name="Sheetfile" value="AmiWiFi.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>d0c9b576-ec42-4b1b-a923-d287bb39649d</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R35">
+      <value>10k</value>
+      <footprint>AmiWiFi:R0402_R35</footprint>
+      <fields>
+        <field name="Footprint">AmiWiFi:R0402_R35</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="AmiWiFi" part="Part_R35" description=""/>
+      <property name="Sheetname" value="AmiWiFi"/>
+      <property name="Sheetfile" value="AmiWiFi.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>c732496c-9a93-4417-bddf-0d987ef9bd3d</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="R36">
+      <value>100k</value>
+      <footprint>AmiWiFi:R0402_R36</footprint>
+      <fields>
+        <field name="Footprint">AmiWiFi:R0402_R36</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="AmiWiFi" part="Part_R36" description=""/>
+      <property name="Sheetname" value="AmiWiFi"/>
+      <property name="Sheetfile" value="AmiWiFi.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>9836db74-d733-4e5b-85ec-cf33a893d5d2</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="TP1">
+      <value>+3V3_IF</value>
+      <footprint>AmiWiFi:TP1_TP1</footprint>
+      <fields>
+        <field name="Footprint">AmiWiFi:TP1_TP1</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="AmiWiFi" part="Part_TP1" description=""/>
+      <property name="Sheetname" value="AmiWiFi"/>
+      <property name="Sheetfile" value="AmiWiFi.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>ef9dc80b-1991-4e1f-8345-d8f5936bf81a</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="TP2">
+      <value>GND</value>
+      <footprint>AmiWiFi:TP1_TP2</footprint>
+      <fields>
+        <field name="Footprint">AmiWiFi:TP1_TP2</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="AmiWiFi" part="Part_TP2" description=""/>
+      <property name="Sheetname" value="AmiWiFi"/>
+      <property name="Sheetfile" value="AmiWiFi.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>e0d24fc7-e2cc-4754-be93-8dbad8596b55</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="TP3">
+      <value>PIO_STROBE_N</value>
+      <footprint>AmiWiFi:TP1_TP3</footprint>
+      <fields>
+        <field name="Footprint">AmiWiFi:TP1_TP3</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="AmiWiFi" part="Part_TP3" description=""/>
+      <property name="Sheetname" value="AmiWiFi"/>
+      <property name="Sheetfile" value="AmiWiFi.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>89932b1f-13fc-4619-82bc-e0aa2f5e7471</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="TP4">
+      <value>PIO_SEL</value>
+      <footprint>AmiWiFi:TP1_TP4</footprint>
+      <fields>
+        <field name="Footprint">AmiWiFi:TP1_TP4</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="AmiWiFi" part="Part_TP4" description=""/>
+      <property name="Sheetname" value="AmiWiFi"/>
+      <property name="Sheetfile" value="AmiWiFi.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>fbdf9826-97db-440a-b99f-f2929a8a8f4c</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="TP5">
+      <value>DATA_OE_N</value>
+      <footprint>AmiWiFi:TP1_TP5</footprint>
+      <fields>
+        <field name="Footprint">AmiWiFi:TP1_TP5</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="AmiWiFi" part="Part_TP5" description=""/>
+      <property name="Sheetname" value="AmiWiFi"/>
+      <property name="Sheetfile" value="AmiWiFi.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>73038074-16b3-41fd-b003-db17104f5ad7</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="TP6">
+      <value>DATA_DIR</value>
+      <footprint>AmiWiFi:TP1_TP6</footprint>
+      <fields>
+        <field name="Footprint">AmiWiFi:TP1_TP6</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="AmiWiFi" part="Part_TP6" description=""/>
+      <property name="Sheetname" value="AmiWiFi"/>
+      <property name="Sheetfile" value="AmiWiFi.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>e32defb7-dee8-4a34-85a6-082af3e88f2a</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="TP7">
+      <value>PICO_RUN_N</value>
+      <footprint>AmiWiFi:TP1_TP7</footprint>
+      <fields>
+        <field name="Footprint">AmiWiFi:TP1_TP7</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="AmiWiFi" part="Part_TP7" description=""/>
+      <property name="Sheetname" value="AmiWiFi"/>
+      <property name="Sheetfile" value="AmiWiFi.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>d14dad17-538a-46cd-bb18-74faf3e01904</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="U1">
+      <value>LD2981ABU33TR</value>
+      <footprint>AmiWiFi:SOT89_MAS_Original_U1</footprint>
+      <fields>
+        <field name="Footprint">AmiWiFi:SOT89_MAS_Original_U1</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="AmiWiFi" part="Part_U1" description=""/>
+      <property name="Sheetname" value="AmiWiFi"/>
+      <property name="Sheetfile" value="AmiWiFi.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>daa96447-0cdb-4868-80e8-1ee692ba64b2</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+            <pin num="2@1"/>
+            <pin num="3"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="U2">
+      <value>SN74LVC4245APWR</value>
+      <footprint>AmiWiFi:TSSOP24_U2</footprint>
+      <fields>
+        <field name="Footprint">AmiWiFi:TSSOP24_U2</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="AmiWiFi" part="Part_U2" description=""/>
+      <property name="Sheetname" value="AmiWiFi"/>
+      <property name="Sheetfile" value="AmiWiFi.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>4f1e86f6-8bd7-4066-aa5f-32bea19382d2</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+            <pin num="3"/>
+            <pin num="4"/>
+            <pin num="5"/>
+            <pin num="6"/>
+            <pin num="7"/>
+            <pin num="8"/>
+            <pin num="9"/>
+            <pin num="10"/>
+            <pin num="11"/>
+            <pin num="12"/>
+            <pin num="13"/>
+            <pin num="14"/>
+            <pin num="15"/>
+            <pin num="16"/>
+            <pin num="17"/>
+            <pin num="18"/>
+            <pin num="19"/>
+            <pin num="20"/>
+            <pin num="21"/>
+            <pin num="22"/>
+            <pin num="23"/>
+            <pin num="24"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="U3">
+      <value>SN74LVC125APWR</value>
+      <footprint>AmiWiFi:TSSOP14_U3</footprint>
+      <fields>
+        <field name="Footprint">AmiWiFi:TSSOP14_U3</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="AmiWiFi" part="Part_U3" description=""/>
+      <property name="Sheetname" value="AmiWiFi"/>
+      <property name="Sheetfile" value="AmiWiFi.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>05dbef44-93cc-4b82-b3be-7f5f49dbefc6</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+            <pin num="3"/>
+            <pin num="4"/>
+            <pin num="5"/>
+            <pin num="6"/>
+            <pin num="7"/>
+            <pin num="8"/>
+            <pin num="9"/>
+            <pin num="10"/>
+            <pin num="11"/>
+            <pin num="12"/>
+            <pin num="13"/>
+            <pin num="14"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="U4">
+      <value>SN74LVC4245APWR</value>
+      <footprint>AmiWiFi:TSSOP24_U4</footprint>
+      <fields>
+        <field name="Footprint">AmiWiFi:TSSOP24_U4</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="AmiWiFi" part="Part_U4" description=""/>
+      <property name="Sheetname" value="AmiWiFi"/>
+      <property name="Sheetfile" value="AmiWiFi.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>ff94ffcd-3981-4857-9fe3-0098cfc59ae3</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+            <pin num="3"/>
+            <pin num="4"/>
+            <pin num="5"/>
+            <pin num="6"/>
+            <pin num="7"/>
+            <pin num="8"/>
+            <pin num="9"/>
+            <pin num="10"/>
+            <pin num="11"/>
+            <pin num="12"/>
+            <pin num="13"/>
+            <pin num="14"/>
+            <pin num="15"/>
+            <pin num="16"/>
+            <pin num="17"/>
+            <pin num="18"/>
+            <pin num="19"/>
+            <pin num="20"/>
+            <pin num="21"/>
+            <pin num="22"/>
+            <pin num="23"/>
+            <pin num="24"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="U5">
+      <value>SN74LVC1G10DBVR</value>
+      <footprint>AmiWiFi:SOT23_6_U5</footprint>
+      <fields>
+        <field name="Footprint">AmiWiFi:SOT23_6_U5</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="AmiWiFi" part="Part_U5" description=""/>
+      <property name="Sheetname" value="AmiWiFi"/>
+      <property name="Sheetfile" value="AmiWiFi.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>12c1cb37-0f0d-4c61-813c-3e59dd7a562d</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+            <pin num="3"/>
+            <pin num="4"/>
+            <pin num="5"/>
+            <pin num="6"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="U6">
+      <value>SN74LVC1G10DBVR</value>
+      <footprint>AmiWiFi:SOT23_6_U6</footprint>
+      <fields>
+        <field name="Footprint">AmiWiFi:SOT23_6_U6</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="AmiWiFi" part="Part_U6" description=""/>
+      <property name="Sheetname" value="AmiWiFi"/>
+      <property name="Sheetfile" value="AmiWiFi.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>1527e459-620e-4bfc-be7b-6abb4eac3ae2</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+            <pin num="3"/>
+            <pin num="4"/>
+            <pin num="5"/>
+            <pin num="6"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="U7">
+      <value>Raspberry Pi Pico 2 W</value>
+      <footprint>AmiWiFi:Pico2W_PartialSocket_15x2_U7</footprint>
+      <fields>
+        <field name="Footprint">AmiWiFi:Pico2W_PartialSocket_15x2_U7</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="AmiWiFi" part="Part_U7" description=""/>
+      <property name="Sheetname" value="AmiWiFi"/>
+      <property name="Sheetfile" value="AmiWiFi.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>309f5d4f-c1f9-4228-b6bb-eecae6db393c</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+            <pin num="3"/>
+            <pin num="4"/>
+            <pin num="5"/>
+            <pin num="6"/>
+            <pin num="7"/>
+            <pin num="8"/>
+            <pin num="9"/>
+            <pin num="10"/>
+            <pin num="11"/>
+            <pin num="12"/>
+            <pin num="13"/>
+            <pin num="14"/>
+            <pin num="15"/>
+            <pin num="26"/>
+            <pin num="27"/>
+            <pin num="28"/>
+            <pin num="29"/>
+            <pin num="30"/>
+            <pin num="31"/>
+            <pin num="32"/>
+            <pin num="33"/>
+            <pin num="34"/>
+            <pin num="35"/>
+            <pin num="36"/>
+            <pin num="37"/>
+            <pin num="38"/>
+            <pin num="39"/>
+            <pin num="40"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+    <comp ref="U8">
+      <value>SN74LVC2G07DCKR</value>
+      <footprint>AmiWiFi:SC70_6_DCK_U8</footprint>
+      <datasheet>https://www.ti.com/lit/gpn/sn74lvc2g07</datasheet>
+      <fields>
+        <field name="Footprint">AmiWiFi:SC70_6_DCK_U8</field>
+        <field name="Datasheet">https://www.ti.com/lit/gpn/sn74lvc2g07</field>
+        <field name="Description"/>
+      </fields>
+      <libsource lib="AmiWiFi" part="Part_U8" description=""/>
+      <property name="Sheetname" value="AmiWiFi"/>
+      <property name="Sheetfile" value="AmiWiFi.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>998fe7a1-289f-4642-9b50-f6618efda29d</tstamps>
+      <units>
+        <unit name="A">
+          <pins>
+            <pin num="1"/>
+            <pin num="2"/>
+            <pin num="3"/>
+            <pin num="4"/>
+            <pin num="5"/>
+            <pin num="6"/>
+          </pins>
+        </unit>
+      </units>
+    </comp>
+  </components>
+  <libparts>
+    <libpart lib="AmiWiFi" part="Part_C1">
+      <fields>
+        <field name="Reference">C1</field>
+        <field name="Value">1uF</field>
+        <field name="Footprint">AmiWiFi:C0603_MAS_C1</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="AmiWiFi" part="Part_C10">
+      <fields>
+        <field name="Reference">C10</field>
+        <field name="Value">100nF</field>
+        <field name="Footprint">AmiWiFi:C0603_C10</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="AmiWiFi" part="Part_C11">
+      <fields>
+        <field name="Reference">C11</field>
+        <field name="Value">100nF</field>
+        <field name="Footprint">AmiWiFi:C0603_C11</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="AmiWiFi" part="Part_C2">
+      <fields>
+        <field name="Reference">C2</field>
+        <field name="Value">2.2uF</field>
+        <field name="Footprint">AmiWiFi:C0603_MAS_C2</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="AmiWiFi" part="Part_C3">
+      <fields>
+        <field name="Reference">C3</field>
+        <field name="Value">10uF 10V</field>
+        <field name="Footprint">AmiWiFi:C0805_C3</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="AmiWiFi" part="Part_C4">
+      <fields>
+        <field name="Reference">C4</field>
+        <field name="Value">100nF</field>
+        <field name="Footprint">AmiWiFi:C0603_C4</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="AmiWiFi" part="Part_C5">
+      <fields>
+        <field name="Reference">C5</field>
+        <field name="Value">100nF</field>
+        <field name="Footprint">AmiWiFi:C0603_C5</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="AmiWiFi" part="Part_C6">
+      <fields>
+        <field name="Reference">C6</field>
+        <field name="Value">100nF</field>
+        <field name="Footprint">AmiWiFi:C0603_C6</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="AmiWiFi" part="Part_C7">
+      <fields>
+        <field name="Reference">C7</field>
+        <field name="Value">100nF</field>
+        <field name="Footprint">AmiWiFi:C0603_C7</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="AmiWiFi" part="Part_C8">
+      <fields>
+        <field name="Reference">C8</field>
+        <field name="Value">100nF</field>
+        <field name="Footprint">AmiWiFi:C0603_C8</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="AmiWiFi" part="Part_C9">
+      <fields>
+        <field name="Reference">C9</field>
+        <field name="Value">100nF</field>
+        <field name="Footprint">AmiWiFi:C0603_C9</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="AmiWiFi" part="Part_D1">
+      <fields>
+        <field name="Reference">D1</field>
+        <field name="Value">SS14</field>
+        <field name="Footprint">AmiWiFi:SOD123_D1</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="AmiWiFi" part="Part_J1">
+      <fields>
+        <field name="Reference">J1</field>
+        <field name="Value">USB-C 5V (MAS original)</field>
+        <field name="Footprint">AmiWiFi:USB_C_MAS_Original_J1</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="GND" type="passive"/>
+        <pin num="2" name="SHIELD" type="passive"/>
+        <pin num="3" name="SHIELD" type="passive"/>
+        <pin num="4" name="SHIELD" type="passive"/>
+        <pin num="5" name="CC2" type="passive"/>
+        <pin num="6" name="VBUS" type="passive"/>
+        <pin num="7" name="GND" type="passive"/>
+        <pin num="8" name="CC1" type="passive"/>
+        <pin num="9" name="VBUS" type="passive"/>
+        <pin num="10" name="SHIELD" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="AmiWiFi" part="Part_J2">
+      <fields>
+        <field name="Reference">J2</field>
+        <field name="Value">DB25 MALE / MAS original</field>
+        <field name="Footprint">AmiWiFi:DB25_MAS_Original_J2</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="STROBE_N" type="passive"/>
+        <pin num="2" name="D0" type="passive"/>
+        <pin num="3" name="D1" type="passive"/>
+        <pin num="4" name="D2" type="passive"/>
+        <pin num="5" name="D3" type="passive"/>
+        <pin num="6" name="D4" type="passive"/>
+        <pin num="7" name="D5" type="passive"/>
+        <pin num="8" name="D6" type="passive"/>
+        <pin num="9" name="D7" type="passive"/>
+        <pin num="10" name="ACK_N" type="passive"/>
+        <pin num="11" name="BUSY" type="passive"/>
+        <pin num="12" name="POUT" type="passive"/>
+        <pin num="13" name="SEL" type="passive"/>
+        <pin num="14" name="5V_SENSE" type="passive"/>
+        <pin num="15" name="NC" type="passive"/>
+        <pin num="16" name="RESET_N" type="passive"/>
+        <pin num="17" name="GND" type="passive"/>
+        <pin num="18" name="GND" type="passive"/>
+        <pin num="19" name="GND" type="passive"/>
+        <pin num="20" name="GND" type="passive"/>
+        <pin num="21" name="GND" type="passive"/>
+        <pin num="22" name="GND" type="passive"/>
+        <pin num="23" name="GND" type="passive"/>
+        <pin num="24" name="GND" type="passive"/>
+        <pin num="25" name="GND" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="AmiWiFi" part="Part_R10">
+      <fields>
+        <field name="Reference">R10</field>
+        <field name="Value">100</field>
+        <field name="Footprint">AmiWiFi:R0402_R10</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="AmiWiFi" part="Part_R11">
+      <fields>
+        <field name="Reference">R11</field>
+        <field name="Value">100</field>
+        <field name="Footprint">AmiWiFi:R0402_R11</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="AmiWiFi" part="Part_R12">
+      <fields>
+        <field name="Reference">R12</field>
+        <field name="Value">100</field>
+        <field name="Footprint">AmiWiFi:R0402_R12</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="AmiWiFi" part="Part_R13">
+      <fields>
+        <field name="Reference">R13</field>
+        <field name="Value">100</field>
+        <field name="Footprint">AmiWiFi:R0402_R13</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="AmiWiFi" part="Part_R14">
+      <fields>
+        <field name="Reference">R14</field>
+        <field name="Value">100</field>
+        <field name="Footprint">AmiWiFi:R0402_R14</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="AmiWiFi" part="Part_R15">
+      <fields>
+        <field name="Reference">R15</field>
+        <field name="Value">100</field>
+        <field name="Footprint">AmiWiFi:R0402_R15</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="AmiWiFi" part="Part_R16">
+      <fields>
+        <field name="Reference">R16</field>
+        <field name="Value">100</field>
+        <field name="Footprint">AmiWiFi:R0402_R16</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="AmiWiFi" part="Part_R17">
+      <fields>
+        <field name="Reference">R17</field>
+        <field name="Value">100</field>
+        <field name="Footprint">AmiWiFi:R0402_R17</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="AmiWiFi" part="Part_R20">
+      <fields>
+        <field name="Reference">R20</field>
+        <field name="Value">100</field>
+        <field name="Footprint">AmiWiFi:R0402_R20</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="AmiWiFi" part="Part_R21">
+      <fields>
+        <field name="Reference">R21</field>
+        <field name="Value">100</field>
+        <field name="Footprint">AmiWiFi:R0402_R21</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="AmiWiFi" part="Part_R22">
+      <fields>
+        <field name="Reference">R22</field>
+        <field name="Value">330</field>
+        <field name="Footprint">AmiWiFi:R0402_R22</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="AmiWiFi" part="Part_R23">
+      <fields>
+        <field name="Reference">R23</field>
+        <field name="Value">330</field>
+        <field name="Footprint">AmiWiFi:R0402_R23</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="AmiWiFi" part="Part_R24">
+      <fields>
+        <field name="Reference">R24</field>
+        <field name="Value">330</field>
+        <field name="Footprint">AmiWiFi:R0402_R24</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="AmiWiFi" part="Part_R25">
+      <fields>
+        <field name="Reference">R25</field>
+        <field name="Value">10k</field>
+        <field name="Footprint">AmiWiFi:R0402_R25</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="AmiWiFi" part="Part_R26">
+      <fields>
+        <field name="Reference">R26</field>
+        <field name="Value">100k</field>
+        <field name="Footprint">AmiWiFi:R0402_R26</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="AmiWiFi" part="Part_R27">
+      <fields>
+        <field name="Reference">R27</field>
+        <field name="Value">100</field>
+        <field name="Footprint">AmiWiFi:R0402_R27</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="AmiWiFi" part="Part_R28">
+      <fields>
+        <field name="Reference">R28</field>
+        <field name="Value">4.7k</field>
+        <field name="Footprint">AmiWiFi:R0402_R28</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="AmiWiFi" part="Part_R29">
+      <fields>
+        <field name="Reference">R29</field>
+        <field name="Value">4.7k</field>
+        <field name="Footprint">AmiWiFi:R0402_R29</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="AmiWiFi" part="Part_R30">
+      <fields>
+        <field name="Reference">R30</field>
+        <field name="Value">10k</field>
+        <field name="Footprint">AmiWiFi:R0402_R30</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="AmiWiFi" part="Part_R31">
+      <fields>
+        <field name="Reference">R31</field>
+        <field name="Value">10k</field>
+        <field name="Footprint">AmiWiFi:R0402_R31</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="AmiWiFi" part="Part_R32">
+      <fields>
+        <field name="Reference">R32</field>
+        <field name="Value">10k</field>
+        <field name="Footprint">AmiWiFi:R0402_R32</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="AmiWiFi" part="Part_R33">
+      <fields>
+        <field name="Reference">R33</field>
+        <field name="Value">10k</field>
+        <field name="Footprint">AmiWiFi:R0402_R33</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="AmiWiFi" part="Part_R34">
+      <fields>
+        <field name="Reference">R34</field>
+        <field name="Value">10k</field>
+        <field name="Footprint">AmiWiFi:R0402_R34</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="AmiWiFi" part="Part_R35">
+      <fields>
+        <field name="Reference">R35</field>
+        <field name="Value">10k</field>
+        <field name="Footprint">AmiWiFi:R0402_R35</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="AmiWiFi" part="Part_R36">
+      <fields>
+        <field name="Reference">R36</field>
+        <field name="Value">100k</field>
+        <field name="Footprint">AmiWiFi:R0402_R36</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="AmiWiFi" part="Part_R6">
+      <fields>
+        <field name="Reference">R6</field>
+        <field name="Value">5.1k</field>
+        <field name="Footprint">AmiWiFi:R0603_MAS_R6</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="AmiWiFi" part="Part_R7">
+      <fields>
+        <field name="Reference">R7</field>
+        <field name="Value">5.1k</field>
+        <field name="Footprint">AmiWiFi:R0603_MAS_R7</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="AmiWiFi" part="Part_TP1">
+      <fields>
+        <field name="Reference">TP1</field>
+        <field name="Value">+3V3_IF</field>
+        <field name="Footprint">AmiWiFi:TP1_TP1</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="AmiWiFi" part="Part_TP2">
+      <fields>
+        <field name="Reference">TP2</field>
+        <field name="Value">GND</field>
+        <field name="Footprint">AmiWiFi:TP1_TP2</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="AmiWiFi" part="Part_TP3">
+      <fields>
+        <field name="Reference">TP3</field>
+        <field name="Value">PIO_STROBE_N</field>
+        <field name="Footprint">AmiWiFi:TP1_TP3</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="AmiWiFi" part="Part_TP4">
+      <fields>
+        <field name="Reference">TP4</field>
+        <field name="Value">PIO_SEL</field>
+        <field name="Footprint">AmiWiFi:TP1_TP4</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="AmiWiFi" part="Part_TP5">
+      <fields>
+        <field name="Reference">TP5</field>
+        <field name="Value">DATA_OE_N</field>
+        <field name="Footprint">AmiWiFi:TP1_TP5</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="AmiWiFi" part="Part_TP6">
+      <fields>
+        <field name="Reference">TP6</field>
+        <field name="Value">DATA_DIR</field>
+        <field name="Footprint">AmiWiFi:TP1_TP6</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="AmiWiFi" part="Part_TP7">
+      <fields>
+        <field name="Reference">TP7</field>
+        <field name="Value">PICO_RUN_N</field>
+        <field name="Footprint">AmiWiFi:TP1_TP7</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="AmiWiFi" part="Part_U1">
+      <fields>
+        <field name="Reference">U1</field>
+        <field name="Value">LD2981ABU33TR</field>
+        <field name="Footprint">AmiWiFi:SOT89_MAS_Original_U1</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="OUT" type="power_out"/>
+        <pin num="2" name="GND" type="power_in"/>
+        <pin num="2@1" name="TAB_GND" type="power_in"/>
+        <pin num="3" name="IN" type="power_in"/>
+      </pins>
+    </libpart>
+    <libpart lib="AmiWiFi" part="Part_U2">
+      <fields>
+        <field name="Reference">U2</field>
+        <field name="Value">SN74LVC4245APWR</field>
+        <field name="Footprint">AmiWiFi:TSSOP24_U2</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="VCCA_5V" type="power_in"/>
+        <pin num="2" name="DIR" type="input"/>
+        <pin num="3" name="A0" type="bidirectional"/>
+        <pin num="4" name="A1" type="bidirectional"/>
+        <pin num="5" name="A2" type="bidirectional"/>
+        <pin num="6" name="A3" type="bidirectional"/>
+        <pin num="7" name="A4" type="bidirectional"/>
+        <pin num="8" name="A5" type="bidirectional"/>
+        <pin num="9" name="A6" type="bidirectional"/>
+        <pin num="10" name="A7" type="bidirectional"/>
+        <pin num="11" name="GND" type="power_in"/>
+        <pin num="12" name="GND" type="power_in"/>
+        <pin num="13" name="GND" type="power_in"/>
+        <pin num="14" name="B7" type="bidirectional"/>
+        <pin num="15" name="B6" type="bidirectional"/>
+        <pin num="16" name="B5" type="bidirectional"/>
+        <pin num="17" name="B4" type="bidirectional"/>
+        <pin num="18" name="B3" type="bidirectional"/>
+        <pin num="19" name="B2" type="bidirectional"/>
+        <pin num="20" name="B1" type="bidirectional"/>
+        <pin num="21" name="B0" type="bidirectional"/>
+        <pin num="22" name="OE_N" type="input"/>
+        <pin num="23" name="VCCB_3V3" type="power_in"/>
+        <pin num="24" name="VCCB_3V3" type="power_in"/>
+      </pins>
+    </libpart>
+    <libpart lib="AmiWiFi" part="Part_U3">
+      <fields>
+        <field name="Reference">U3</field>
+        <field name="Value">SN74LVC125APWR</field>
+        <field name="Footprint">AmiWiFi:TSSOP14_U3</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="1OE_N" type="input"/>
+        <pin num="2" name="1A" type="input"/>
+        <pin num="3" name="1Y" type="tri_state"/>
+        <pin num="4" name="2OE_N" type="input"/>
+        <pin num="5" name="2A" type="input"/>
+        <pin num="6" name="2Y" type="tri_state"/>
+        <pin num="7" name="GND" type="power_in"/>
+        <pin num="8" name="3Y" type="tri_state"/>
+        <pin num="9" name="3A" type="input"/>
+        <pin num="10" name="3OE_N" type="input"/>
+        <pin num="11" name="4Y" type="tri_state"/>
+        <pin num="12" name="4A" type="input"/>
+        <pin num="13" name="4OE_N" type="input"/>
+        <pin num="14" name="VCC" type="power_in"/>
+      </pins>
+    </libpart>
+    <libpart lib="AmiWiFi" part="Part_U4">
+      <fields>
+        <field name="Reference">U4</field>
+        <field name="Value">SN74LVC4245APWR</field>
+        <field name="Footprint">AmiWiFi:TSSOP24_U4</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="VCCA_5V" type="power_in"/>
+        <pin num="2" name="DIR" type="input"/>
+        <pin num="3" name="A0" type="tri_state"/>
+        <pin num="4" name="A1" type="tri_state"/>
+        <pin num="5" name="A2" type="tri_state"/>
+        <pin num="6" name="A3" type="tri_state"/>
+        <pin num="7" name="A4" type="tri_state"/>
+        <pin num="8" name="A5" type="tri_state"/>
+        <pin num="9" name="A6" type="tri_state"/>
+        <pin num="10" name="A7" type="tri_state"/>
+        <pin num="11" name="GND" type="power_in"/>
+        <pin num="12" name="GND" type="power_in"/>
+        <pin num="13" name="GND" type="power_in"/>
+        <pin num="14" name="B7" type="input"/>
+        <pin num="15" name="B6" type="input"/>
+        <pin num="16" name="B5" type="input"/>
+        <pin num="17" name="B4" type="input"/>
+        <pin num="18" name="B3" type="input"/>
+        <pin num="19" name="B2" type="input"/>
+        <pin num="20" name="B1" type="input"/>
+        <pin num="21" name="B0" type="input"/>
+        <pin num="22" name="OE_N" type="input"/>
+        <pin num="23" name="VCCB_3V3" type="power_in"/>
+        <pin num="24" name="VCCB_3V3" type="power_in"/>
+      </pins>
+    </libpart>
+    <libpart lib="AmiWiFi" part="Part_U5">
+      <fields>
+        <field name="Reference">U5</field>
+        <field name="Value">SN74LVC1G10DBVR</field>
+        <field name="Footprint">AmiWiFi:SOT23_6_U5</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="A_FW_ENABLE" type="input"/>
+        <pin num="2" name="GND" type="power_in"/>
+        <pin num="3" name="B_HOST_PRESENT" type="input"/>
+        <pin num="4" name="Y_OE_N" type="output"/>
+        <pin num="5" name="VCC" type="power_in"/>
+        <pin num="6" name="C_RESET_N" type="input"/>
+      </pins>
+    </libpart>
+    <libpart lib="AmiWiFi" part="Part_U6">
+      <fields>
+        <field name="Reference">U6</field>
+        <field name="Value">SN74LVC1G10DBVR</field>
+        <field name="Footprint">AmiWiFi:SOT23_6_U6</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="A_FW_ENABLE" type="input"/>
+        <pin num="2" name="GND" type="power_in"/>
+        <pin num="3" name="B_HOST_PRESENT" type="input"/>
+        <pin num="4" name="Y_OE_N" type="output"/>
+        <pin num="5" name="VCC" type="power_in"/>
+        <pin num="6" name="C_RESET_N" type="input"/>
+      </pins>
+    </libpart>
+    <libpart lib="AmiWiFi" part="Part_U7">
+      <fields>
+        <field name="Reference">U7</field>
+        <field name="Value">Raspberry Pi Pico 2 W</field>
+        <field name="Footprint">AmiWiFi:Pico2W_PartialSocket_15x2_U7</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="GP0" type="bidirectional"/>
+        <pin num="2" name="GP1" type="bidirectional"/>
+        <pin num="3" name="GND" type="power_in"/>
+        <pin num="4" name="GP2" type="bidirectional"/>
+        <pin num="5" name="GP3" type="bidirectional"/>
+        <pin num="6" name="GP4" type="bidirectional"/>
+        <pin num="7" name="GP5" type="bidirectional"/>
+        <pin num="8" name="GND" type="power_in"/>
+        <pin num="9" name="GP6" type="bidirectional"/>
+        <pin num="10" name="GP7" type="bidirectional"/>
+        <pin num="11" name="GP8" type="bidirectional"/>
+        <pin num="12" name="GP9" type="bidirectional"/>
+        <pin num="13" name="GND" type="power_in"/>
+        <pin num="14" name="GP10" type="bidirectional"/>
+        <pin num="15" name="GP11" type="bidirectional"/>
+        <pin num="26" name="GP20" type="bidirectional"/>
+        <pin num="27" name="GP21" type="bidirectional"/>
+        <pin num="28" name="GND" type="power_in"/>
+        <pin num="29" name="GP22" type="bidirectional"/>
+        <pin num="30" name="RUN" type="input"/>
+        <pin num="31" name="GP26" type="bidirectional"/>
+        <pin num="32" name="GP27" type="bidirectional"/>
+        <pin num="33" name="AGND" type="power_in"/>
+        <pin num="34" name="GP28" type="bidirectional"/>
+        <pin num="35" name="ADC_VREF" type="power_out"/>
+        <pin num="36" name="3V3_OUT" type="power_out"/>
+        <pin num="37" name="3V3_EN" type="input"/>
+        <pin num="38" name="GND" type="power_in"/>
+        <pin num="39" name="VSYS" type="power_in"/>
+        <pin num="40" name="VBUS" type="power_in"/>
+      </pins>
+    </libpart>
+    <libpart lib="AmiWiFi" part="Part_U8">
+      <fields>
+        <field name="Reference">U8</field>
+        <field name="Value">SN74LVC2G07DCKR</field>
+        <field name="Footprint">AmiWiFi:SC70_6_DCK_U8</field>
+        <field name="Datasheet"/>
+        <field name="Description"/>
+      </fields>
+      <pins>
+        <pin num="1" name="1A_RESET_N" type="input"/>
+        <pin num="2" name="GND" type="power_in"/>
+        <pin num="3" name="2A_HOST_PRESENT" type="input"/>
+        <pin num="4" name="2Y_OD" type="open_collector"/>
+        <pin num="5" name="VCC" type="power_in"/>
+        <pin num="6" name="1Y_OD" type="open_collector"/>
+      </pins>
+    </libpart>
+  </libparts>
+  <libraries>
+    <library logical="AmiWiFi">
+      <uri>${KIPRJMOD}/AmiWiFi.kicad_sym</uri>
+    </library>
+  </libraries>
+  <nets>
+    <net code="1" name="/+3V3_IF" class="Default">
+      <node ref="C10" pin="1" pintype="passive"/>
+      <node ref="C11" pin="1" pintype="passive"/>
+      <node ref="C2" pin="2" pintype="passive"/>
+      <node ref="C5" pin="1" pintype="passive"/>
+      <node ref="C6" pin="1" pintype="passive"/>
+      <node ref="C8" pin="1" pintype="passive"/>
+      <node ref="C9" pin="1" pintype="passive"/>
+      <node ref="R30" pin="2" pintype="passive"/>
+      <node ref="R31" pin="2" pintype="passive"/>
+      <node ref="R32" pin="2" pintype="passive"/>
+      <node ref="TP1" pin="1" pintype="passive"/>
+      <node ref="U1" pin="1" pinfunction="OUT_1" pintype="power_out"/>
+      <node ref="U2" pin="23" pinfunction="VCCB_3V3_23" pintype="power_in"/>
+      <node ref="U2" pin="24" pinfunction="VCCB_3V3_24" pintype="power_in"/>
+      <node ref="U3" pin="10" pinfunction="3OE_N_10" pintype="input"/>
+      <node ref="U3" pin="13" pinfunction="4OE_N_13" pintype="input"/>
+      <node ref="U3" pin="14" pinfunction="VCC_14" pintype="power_in"/>
+      <node ref="U4" pin="23" pinfunction="VCCB_3V3_23" pintype="power_in"/>
+      <node ref="U4" pin="24" pinfunction="VCCB_3V3_24" pintype="power_in"/>
+      <node ref="U5" pin="5" pinfunction="VCC_5" pintype="power_in"/>
+      <node ref="U6" pin="5" pinfunction="VCC_5" pintype="power_in"/>
+      <node ref="U8" pin="5" pinfunction="VCC_5" pintype="power_in"/>
+    </net>
+    <net code="2" name="/+5V_USB" class="Default">
+      <node ref="C1" pin="2" pintype="passive"/>
+      <node ref="C4" pin="1" pintype="passive"/>
+      <node ref="C7" pin="1" pintype="passive"/>
+      <node ref="D1" pin="2" pintype="passive"/>
+      <node ref="J1" pin="6" pinfunction="VBUS_6" pintype="passive"/>
+      <node ref="J1" pin="9" pinfunction="VBUS_9" pintype="passive"/>
+      <node ref="U1" pin="3" pinfunction="IN_3" pintype="power_in"/>
+      <node ref="U2" pin="1" pinfunction="VCCA_5V_1" pintype="power_in"/>
+      <node ref="U4" pin="1" pinfunction="VCCA_5V_1" pintype="power_in"/>
+    </net>
+    <net code="3" name="/ACK_OUT" class="Default">
+      <node ref="R22" pin="2" pintype="passive"/>
+      <node ref="U4" pin="3" pinfunction="A0_3" pintype="tri_state"/>
+    </net>
+    <net code="4" name="/AM_5V_SENSE" class="Default">
+      <node ref="J2" pin="14" pinfunction="5V_SENSE_14" pintype="passive"/>
+      <node ref="R25" pin="1" pintype="passive"/>
+    </net>
+    <net code="5" name="/AM_ACK_N" class="Default">
+      <node ref="J2" pin="10" pinfunction="ACK_N_10" pintype="passive"/>
+      <node ref="R22" pin="1" pintype="passive"/>
+    </net>
+    <net code="6" name="/AM_BUSY" class="Default">
+      <node ref="J2" pin="11" pinfunction="BUSY_11" pintype="passive"/>
+      <node ref="R23" pin="1" pintype="passive"/>
+    </net>
+    <net code="7" name="/AM_D0" class="Default">
+      <node ref="J2" pin="2" pinfunction="D0_2" pintype="passive"/>
+      <node ref="R10" pin="1" pintype="passive"/>
+    </net>
+    <net code="8" name="/AM_D1" class="Default">
+      <node ref="J2" pin="3" pinfunction="D1_3" pintype="passive"/>
+      <node ref="R11" pin="1" pintype="passive"/>
+    </net>
+    <net code="9" name="/AM_D2" class="Default">
+      <node ref="J2" pin="4" pinfunction="D2_4" pintype="passive"/>
+      <node ref="R12" pin="1" pintype="passive"/>
+    </net>
+    <net code="10" name="/AM_D3" class="Default">
+      <node ref="J2" pin="5" pinfunction="D3_5" pintype="passive"/>
+      <node ref="R13" pin="1" pintype="passive"/>
+    </net>
+    <net code="11" name="/AM_D4" class="Default">
+      <node ref="J2" pin="6" pinfunction="D4_6" pintype="passive"/>
+      <node ref="R14" pin="1" pintype="passive"/>
+    </net>
+    <net code="12" name="/AM_D5" class="Default">
+      <node ref="J2" pin="7" pinfunction="D5_7" pintype="passive"/>
+      <node ref="R15" pin="1" pintype="passive"/>
+    </net>
+    <net code="13" name="/AM_D6" class="Default">
+      <node ref="J2" pin="8" pinfunction="D6_8" pintype="passive"/>
+      <node ref="R16" pin="1" pintype="passive"/>
+    </net>
+    <net code="14" name="/AM_D7" class="Default">
+      <node ref="J2" pin="9" pinfunction="D7_9" pintype="passive"/>
+      <node ref="R17" pin="1" pintype="passive"/>
+    </net>
+    <net code="15" name="/AM_POUT" class="Default">
+      <node ref="J2" pin="12" pinfunction="POUT_12" pintype="passive"/>
+      <node ref="R24" pin="1" pintype="passive"/>
+    </net>
+    <net code="16" name="/AM_RESET_N" class="Default">
+      <node ref="J2" pin="16" pinfunction="RESET_N_16" pintype="passive"/>
+      <node ref="R27" pin="1" pintype="passive"/>
+    </net>
+    <net code="17" name="/AM_SEL" class="Default">
+      <node ref="J2" pin="13" pinfunction="SEL_13" pintype="passive"/>
+      <node ref="R21" pin="1" pintype="passive"/>
+    </net>
+    <net code="18" name="/AM_STROBE_N" class="Default">
+      <node ref="J2" pin="1" pinfunction="STROBE_N_1" pintype="passive"/>
+      <node ref="R20" pin="1" pintype="passive"/>
+    </net>
+    <net code="19" name="/BUSY_OUT" class="Default">
+      <node ref="R23" pin="2" pintype="passive"/>
+      <node ref="U4" pin="4" pinfunction="A1_4" pintype="tri_state"/>
+    </net>
+    <net code="20" name="/BUS_D0" class="Default">
+      <node ref="R10" pin="2" pintype="passive"/>
+      <node ref="U2" pin="3" pinfunction="A0_3" pintype="bidirectional"/>
+    </net>
+    <net code="21" name="/BUS_D1" class="Default">
+      <node ref="R11" pin="2" pintype="passive"/>
+      <node ref="U2" pin="4" pinfunction="A1_4" pintype="bidirectional"/>
+    </net>
+    <net code="22" name="/BUS_D2" class="Default">
+      <node ref="R12" pin="2" pintype="passive"/>
+      <node ref="U2" pin="5" pinfunction="A2_5" pintype="bidirectional"/>
+    </net>
+    <net code="23" name="/BUS_D3" class="Default">
+      <node ref="R13" pin="2" pintype="passive"/>
+      <node ref="U2" pin="6" pinfunction="A3_6" pintype="bidirectional"/>
+    </net>
+    <net code="24" name="/BUS_D4" class="Default">
+      <node ref="R14" pin="2" pintype="passive"/>
+      <node ref="U2" pin="7" pinfunction="A4_7" pintype="bidirectional"/>
+    </net>
+    <net code="25" name="/BUS_D5" class="Default">
+      <node ref="R15" pin="2" pintype="passive"/>
+      <node ref="U2" pin="8" pinfunction="A5_8" pintype="bidirectional"/>
+    </net>
+    <net code="26" name="/BUS_D6" class="Default">
+      <node ref="R16" pin="2" pintype="passive"/>
+      <node ref="U2" pin="9" pinfunction="A6_9" pintype="bidirectional"/>
+    </net>
+    <net code="27" name="/BUS_D7" class="Default">
+      <node ref="R17" pin="2" pintype="passive"/>
+      <node ref="U2" pin="10" pinfunction="A7_10" pintype="bidirectional"/>
+    </net>
+    <net code="28" name="/CTRL_OE_N" class="Default">
+      <node ref="R32" pin="1" pintype="passive"/>
+      <node ref="U3" pin="1" pinfunction="1OE_N_1" pintype="input"/>
+      <node ref="U3" pin="4" pinfunction="2OE_N_4" pintype="input"/>
+      <node ref="U4" pin="22" pinfunction="OE_N_22" pintype="input"/>
+      <node ref="U6" pin="4" pinfunction="Y_OE_N_4" pintype="output"/>
+    </net>
+    <net code="29" name="/DATA_DIR" class="Default">
+      <node ref="R30" pin="1" pintype="passive"/>
+      <node ref="TP6" pin="1" pintype="passive"/>
+      <node ref="U2" pin="2" pinfunction="DIR_2" pintype="input"/>
+      <node ref="U7" pin="26" pinfunction="GP20_26" pintype="bidirectional"/>
+    </net>
+    <net code="30" name="/DATA_OE_N" class="Default">
+      <node ref="R31" pin="1" pintype="passive"/>
+      <node ref="TP5" pin="1" pintype="passive"/>
+      <node ref="U2" pin="22" pinfunction="OE_N_22" pintype="input"/>
+      <node ref="U5" pin="4" pinfunction="Y_OE_N_4" pintype="output"/>
+    </net>
+    <net code="31" name="/FW_CTRL_EN" class="Default">
+      <node ref="R29" pin="1" pintype="passive"/>
+      <node ref="U6" pin="1" pinfunction="A_FW_ENABLE_1" pintype="input"/>
+      <node ref="U7" pin="29" pinfunction="GP22_29" pintype="bidirectional"/>
+    </net>
+    <net code="32" name="/FW_DATA_EN" class="Default">
+      <node ref="R28" pin="1" pintype="passive"/>
+      <node ref="U5" pin="1" pinfunction="A_FW_ENABLE_1" pintype="input"/>
+      <node ref="U7" pin="27" pinfunction="GP21_27" pintype="bidirectional"/>
+    </net>
+    <net code="33" name="/GND" class="Default">
+      <node ref="C1" pin="1" pintype="passive"/>
+      <node ref="C10" pin="2" pintype="passive"/>
+      <node ref="C11" pin="2" pintype="passive"/>
+      <node ref="C2" pin="1" pintype="passive"/>
+      <node ref="C3" pin="2" pintype="passive"/>
+      <node ref="C4" pin="2" pintype="passive"/>
+      <node ref="C5" pin="2" pintype="passive"/>
+      <node ref="C6" pin="2" pintype="passive"/>
+      <node ref="C7" pin="2" pintype="passive"/>
+      <node ref="C8" pin="2" pintype="passive"/>
+      <node ref="C9" pin="2" pintype="passive"/>
+      <node ref="J1" pin="1" pinfunction="GND_1" pintype="passive"/>
+      <node ref="J1" pin="10" pinfunction="SHIELD_10" pintype="passive"/>
+      <node ref="J1" pin="2" pinfunction="SHIELD_2" pintype="passive"/>
+      <node ref="J1" pin="3" pinfunction="SHIELD_3" pintype="passive"/>
+      <node ref="J1" pin="4" pinfunction="SHIELD_4" pintype="passive"/>
+      <node ref="J1" pin="7" pinfunction="GND_7" pintype="passive"/>
+      <node ref="J2" pin="17" pinfunction="GND_17" pintype="passive"/>
+      <node ref="J2" pin="18" pinfunction="GND_18" pintype="passive"/>
+      <node ref="J2" pin="19" pinfunction="GND_19" pintype="passive"/>
+      <node ref="J2" pin="20" pinfunction="GND_20" pintype="passive"/>
+      <node ref="J2" pin="21" pinfunction="GND_21" pintype="passive"/>
+      <node ref="J2" pin="22" pinfunction="GND_22" pintype="passive"/>
+      <node ref="J2" pin="23" pinfunction="GND_23" pintype="passive"/>
+      <node ref="J2" pin="24" pinfunction="GND_24" pintype="passive"/>
+      <node ref="J2" pin="25" pinfunction="GND_25" pintype="passive"/>
+      <node ref="R26" pin="2" pintype="passive"/>
+      <node ref="R28" pin="2" pintype="passive"/>
+      <node ref="R29" pin="2" pintype="passive"/>
+      <node ref="R33" pin="2" pintype="passive"/>
+      <node ref="R34" pin="2" pintype="passive"/>
+      <node ref="R35" pin="2" pintype="passive"/>
+      <node ref="R36" pin="2" pintype="passive"/>
+      <node ref="R6" pin="1" pintype="passive"/>
+      <node ref="R7" pin="1" pintype="passive"/>
+      <node ref="TP2" pin="1" pintype="passive"/>
+      <node ref="U1" pin="2" pinfunction="GND_2" pintype="power_in"/>
+      <node ref="U1" pin="2@1" pinfunction="TAB_GND_2@1" pintype="power_in"/>
+      <node ref="U2" pin="11" pinfunction="GND_11" pintype="power_in"/>
+      <node ref="U2" pin="12" pinfunction="GND_12" pintype="power_in"/>
+      <node ref="U2" pin="13" pinfunction="GND_13" pintype="power_in"/>
+      <node ref="U3" pin="12" pinfunction="4A_12" pintype="input"/>
+      <node ref="U3" pin="7" pinfunction="GND_7" pintype="power_in"/>
+      <node ref="U3" pin="9" pinfunction="3A_9" pintype="input"/>
+      <node ref="U4" pin="11" pinfunction="GND_11" pintype="power_in"/>
+      <node ref="U4" pin="12" pinfunction="GND_12" pintype="power_in"/>
+      <node ref="U4" pin="13" pinfunction="GND_13" pintype="power_in"/>
+      <node ref="U4" pin="14" pinfunction="B7_14" pintype="input"/>
+      <node ref="U4" pin="15" pinfunction="B6_15" pintype="input"/>
+      <node ref="U4" pin="16" pinfunction="B5_16" pintype="input"/>
+      <node ref="U4" pin="17" pinfunction="B4_17" pintype="input"/>
+      <node ref="U4" pin="18" pinfunction="B3_18" pintype="input"/>
+      <node ref="U4" pin="2" pinfunction="DIR_2" pintype="input"/>
+      <node ref="U5" pin="2" pinfunction="GND_2" pintype="power_in"/>
+      <node ref="U6" pin="2" pinfunction="GND_2" pintype="power_in"/>
+      <node ref="U7" pin="13" pinfunction="GND_13" pintype="power_in"/>
+      <node ref="U7" pin="28" pinfunction="GND_28" pintype="power_in"/>
+      <node ref="U7" pin="3" pinfunction="GND_3" pintype="power_in"/>
+      <node ref="U7" pin="33" pinfunction="AGND_33" pintype="power_in"/>
+      <node ref="U7" pin="38" pinfunction="GND_38" pintype="power_in"/>
+      <node ref="U7" pin="8" pinfunction="GND_8" pintype="power_in"/>
+      <node ref="U8" pin="2" pinfunction="GND_2" pintype="power_in"/>
+    </net>
+    <net code="34" name="/HOST_PRESENT" class="Default">
+      <node ref="R25" pin="2" pintype="passive"/>
+      <node ref="R26" pin="1" pintype="passive"/>
+      <node ref="U5" pin="3" pinfunction="B_HOST_PRESENT_3" pintype="input"/>
+      <node ref="U6" pin="3" pinfunction="B_HOST_PRESENT_3" pintype="input"/>
+      <node ref="U8" pin="3" pinfunction="2A_HOST_PRESENT_3" pintype="input"/>
+    </net>
+    <net code="35" name="/PICO_RUN_N" class="Default">
+      <node ref="TP7" pin="1" pintype="passive"/>
+      <node ref="U7" pin="30" pinfunction="RUN_30" pintype="input"/>
+      <node ref="U8" pin="4" pinfunction="2Y_OD_4" pintype="open_collector"/>
+      <node ref="U8" pin="6" pinfunction="1Y_OD_6" pintype="open_collector"/>
+    </net>
+    <net code="36" name="/PICO_VSYS" class="Default">
+      <node ref="C3" pin="1" pintype="passive"/>
+      <node ref="D1" pin="1" pintype="passive"/>
+      <node ref="U7" pin="39" pinfunction="VSYS_39" pintype="power_in"/>
+    </net>
+    <net code="37" name="/PIO_ACK_N" class="Default">
+      <node ref="R33" pin="1" pintype="passive"/>
+      <node ref="U4" pin="21" pinfunction="B0_21" pintype="input"/>
+      <node ref="U7" pin="31" pinfunction="GP26_31" pintype="bidirectional"/>
+    </net>
+    <net code="38" name="/PIO_BUSY" class="Default">
+      <node ref="R34" pin="1" pintype="passive"/>
+      <node ref="U4" pin="20" pinfunction="B1_20" pintype="input"/>
+      <node ref="U7" pin="14" pinfunction="GP10_14" pintype="bidirectional"/>
+    </net>
+    <net code="39" name="/PIO_D0" class="Default">
+      <node ref="U2" pin="21" pinfunction="B0_21" pintype="bidirectional"/>
+      <node ref="U7" pin="1" pinfunction="GP0_1" pintype="bidirectional"/>
+    </net>
+    <net code="40" name="/PIO_D1" class="Default">
+      <node ref="U2" pin="20" pinfunction="B1_20" pintype="bidirectional"/>
+      <node ref="U7" pin="2" pinfunction="GP1_2" pintype="bidirectional"/>
+    </net>
+    <net code="41" name="/PIO_D2" class="Default">
+      <node ref="U2" pin="19" pinfunction="B2_19" pintype="bidirectional"/>
+      <node ref="U7" pin="4" pinfunction="GP2_4" pintype="bidirectional"/>
+    </net>
+    <net code="42" name="/PIO_D3" class="Default">
+      <node ref="U2" pin="18" pinfunction="B3_18" pintype="bidirectional"/>
+      <node ref="U7" pin="5" pinfunction="GP3_5" pintype="bidirectional"/>
+    </net>
+    <net code="43" name="/PIO_D4" class="Default">
+      <node ref="U2" pin="17" pinfunction="B4_17" pintype="bidirectional"/>
+      <node ref="U7" pin="6" pinfunction="GP4_6" pintype="bidirectional"/>
+    </net>
+    <net code="44" name="/PIO_D5" class="Default">
+      <node ref="U2" pin="16" pinfunction="B5_16" pintype="bidirectional"/>
+      <node ref="U7" pin="7" pinfunction="GP5_7" pintype="bidirectional"/>
+    </net>
+    <net code="45" name="/PIO_D6" class="Default">
+      <node ref="U2" pin="15" pinfunction="B6_15" pintype="bidirectional"/>
+      <node ref="U7" pin="9" pinfunction="GP6_9" pintype="bidirectional"/>
+    </net>
+    <net code="46" name="/PIO_D7" class="Default">
+      <node ref="U2" pin="14" pinfunction="B7_14" pintype="bidirectional"/>
+      <node ref="U7" pin="10" pinfunction="GP7_10" pintype="bidirectional"/>
+    </net>
+    <net code="47" name="/PIO_POUT" class="Default">
+      <node ref="R35" pin="1" pintype="passive"/>
+      <node ref="U4" pin="19" pinfunction="B2_19" pintype="input"/>
+      <node ref="U7" pin="15" pinfunction="GP11_15" pintype="bidirectional"/>
+    </net>
+    <net code="48" name="/PIO_SEL" class="Default">
+      <node ref="TP4" pin="1" pintype="passive"/>
+      <node ref="U3" pin="6" pinfunction="2Y_6" pintype="tri_state"/>
+      <node ref="U7" pin="12" pinfunction="GP9_12" pintype="bidirectional"/>
+    </net>
+    <net code="49" name="/PIO_STROBE_N" class="Default">
+      <node ref="TP3" pin="1" pintype="passive"/>
+      <node ref="U3" pin="3" pinfunction="1Y_3" pintype="tri_state"/>
+      <node ref="U7" pin="11" pinfunction="GP8_11" pintype="bidirectional"/>
+    </net>
+    <net code="50" name="/POUT_OUT" class="Default">
+      <node ref="R24" pin="2" pintype="passive"/>
+      <node ref="U4" pin="5" pinfunction="A2_5" pintype="tri_state"/>
+    </net>
+    <net code="51" name="/RESET_IN" class="Default">
+      <node ref="R27" pin="2" pintype="passive"/>
+      <node ref="R36" pin="1" pintype="passive"/>
+      <node ref="U5" pin="6" pinfunction="C_RESET_N_6" pintype="input"/>
+      <node ref="U6" pin="6" pinfunction="C_RESET_N_6" pintype="input"/>
+      <node ref="U8" pin="1" pinfunction="1A_RESET_N_1" pintype="input"/>
+    </net>
+    <net code="52" name="/SEL_IN" class="Default">
+      <node ref="R21" pin="2" pintype="passive"/>
+      <node ref="U3" pin="5" pinfunction="2A_5" pintype="input"/>
+    </net>
+    <net code="53" name="/STROBE_IN" class="Default">
+      <node ref="R20" pin="2" pintype="passive"/>
+      <node ref="U3" pin="2" pinfunction="1A_2" pintype="input"/>
+    </net>
+    <net code="54" name="/USB_CC1" class="Default">
+      <node ref="J1" pin="8" pinfunction="CC1_8" pintype="passive"/>
+      <node ref="R6" pin="2" pintype="passive"/>
+    </net>
+    <net code="55" name="/USB_CC2" class="Default">
+      <node ref="J1" pin="5" pinfunction="CC2_5" pintype="passive"/>
+      <node ref="R7" pin="2" pintype="passive"/>
+    </net>
+    <net code="56" name="unconnected-(J2-NC-Pad15)" class="Default">
+      <node ref="J2" pin="15" pinfunction="NC_15" pintype="passive+no_connect"/>
+    </net>
+    <net code="57" name="unconnected-(U3-3Y-Pad8)" class="Default">
+      <node ref="U3" pin="8" pinfunction="3Y_8" pintype="tri_state+no_connect"/>
+    </net>
+    <net code="58" name="unconnected-(U3-4Y-Pad11)" class="Default">
+      <node ref="U3" pin="11" pinfunction="4Y_11" pintype="tri_state+no_connect"/>
+    </net>
+    <net code="59" name="unconnected-(U4-A3-Pad6)" class="Default">
+      <node ref="U4" pin="6" pinfunction="A3_6" pintype="tri_state+no_connect"/>
+    </net>
+    <net code="60" name="unconnected-(U4-A4-Pad7)" class="Default">
+      <node ref="U4" pin="7" pinfunction="A4_7" pintype="tri_state+no_connect"/>
+    </net>
+    <net code="61" name="unconnected-(U4-A5-Pad8)" class="Default">
+      <node ref="U4" pin="8" pinfunction="A5_8" pintype="tri_state+no_connect"/>
+    </net>
+    <net code="62" name="unconnected-(U4-A6-Pad9)" class="Default">
+      <node ref="U4" pin="9" pinfunction="A6_9" pintype="tri_state+no_connect"/>
+    </net>
+    <net code="63" name="unconnected-(U4-A7-Pad10)" class="Default">
+      <node ref="U4" pin="10" pinfunction="A7_10" pintype="tri_state+no_connect"/>
+    </net>
+    <net code="64" name="unconnected-(U7-3V3_EN-Pad37)" class="Default">
+      <node ref="U7" pin="37" pinfunction="3V3_EN_37" pintype="input+no_connect"/>
+    </net>
+    <net code="65" name="unconnected-(U7-3V3_OUT-Pad36)" class="Default">
+      <node ref="U7" pin="36" pinfunction="3V3_OUT_36" pintype="power_out+no_connect"/>
+    </net>
+    <net code="66" name="unconnected-(U7-ADC_VREF-Pad35)" class="Default">
+      <node ref="U7" pin="35" pinfunction="ADC_VREF_35" pintype="power_out+no_connect"/>
+    </net>
+    <net code="67" name="unconnected-(U7-GP27-Pad32)" class="Default">
+      <node ref="U7" pin="32" pinfunction="GP27_32" pintype="bidirectional+no_connect"/>
+    </net>
+    <net code="68" name="unconnected-(U7-GP28-Pad34)" class="Default">
+      <node ref="U7" pin="34" pinfunction="GP28_34" pintype="bidirectional+no_connect"/>
+    </net>
+    <net code="69" name="unconnected-(U7-VBUS-Pad40)" class="Default">
+      <node ref="U7" pin="40" pinfunction="VBUS_40" pintype="power_in+no_connect"/>
+    </net>
+  </nets>
+</export>

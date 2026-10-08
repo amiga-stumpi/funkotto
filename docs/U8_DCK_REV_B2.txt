@@ -1,0 +1,25 @@
+Rev B2 – U8 auf SN74LVC2G07DCKR umgestellt, 07.10.2026
+
+Basis ist die gelieferte Rev B1 mit der vom Nutzer bearbeiteten Platine.
+U8 wechselt von DBV (SOT-23-6) auf DCK (SC70-6). Elektrische Pinbelegung,
+Open-Drain-Resetfunktion, Bestückungsposition (134, 104 mm) und Orientierung
+bleiben gleich. U5/U6 bleiben SN74LVC1G10DBVR.
+
+Projektlokales Lötbild AmiWiFi:SC70_6_DCK_U8 nach TI DCK0006A,
+Zeichnung 4214835/D, 11/2024: sechs Pads 0,9 x 0,4 mm, Eckradius 0,05 mm,
+Pinraster 0,65 mm, Reihenmittenabstand 2,2 mm. Nominaler Körper 1,25 x 2,0 mm
+in Boardorientierung. Courtyard 3,6 x 2,7 mm. Pin-1-Fase auf F.Fab.
+Quelle: https://www.ti.com/lit/gpn/sn74lvc2g07 (DCK-Gehäusezeichnung/Layout).
+
+Zehn lokale Leiterbahnsegmente angepasst; GND-Via von (132,5;104) auf
+(133,6;104) mm versetzt. Kupferfüllungen neu berechnet. Die anderen 55
+Footprints einschließlich Pads und Positionen bleiben identisch zu B1.
+Kontur, Netztopologie, Flächenparameter und Projekt-Prüfregeln bleiben gleich.
+234 Pad-Netze exakt einschließlich / und NC-Netzen mit dem nativen Export
+verglichen. Schaltplan, Symbolbibliothek, Footprintbibliothek, BOM und
+Bestückungsdaten synchronisiert. Vorherige Prüfberichte unter reference/.
+
+KiCad 10.0.6: DRC mit --schematic-parity --all-track-errors:
+0 Fehler, 0 Warnungen, 0 offene Verbindungen, 0 Schaltplanabweichungen.
+ERC: 0 Fehler, 0 Warnungen. Keine neuen Ausnahmen/deaktivierten Prüfregeln.
+Elektrische Musterprüfung ist weiterhin offen; keine Fertigungsfreigabe.

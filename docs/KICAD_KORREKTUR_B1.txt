@@ -1,0 +1,39 @@
+Ursache der vom Nutzer gemeldeten KiCad-Befunde
+
+Der hochgeladene DRC-Bericht enthält 73 DRC-Warnungen und zusätzlich 208
+Schaltplan-/Footprintmeldungen (davon 199 net_conflict, 8 Attribut-/Wertabweichungen,
+1 fehlendes Feld). Der ERC-Bericht enthält drei Versorgungseinspeisungsfehler.
+Die GUI-Meldungszahl ist nicht gleichbedeutend mit offenen Leiterbahnen.
+
+Die frühere CLI-Prüfung enthielt keinen nativen --schematic-parity-Abgleich.
+Der zusätzliche eigene Netzlistenvergleich entfernte führende / und übersprang
+unverbundene Pins. Dadurch wurden Unterschiede, die KiCad tatsächlich meldet,
+übersehen. Die frühere Aussage zur vollständigen Konsistenz war zu weitgehend.
+
+Korrektur B1:
+1. PCB-Netznamen einschließlich / und NC-Netzen exakt aus dem nativen XML-Export.
+   Kein Entfernen von Präfixen im Vergleich. Kupfergeometrie bleibt unverändert.
+2. J1-Wert und Feld LCSC übernommen, BOM-Einstellungen der Testpunkte abgeglichen.
+3. U7 ist ausdrücklich das Symbol für den projektspezifischen Teil-Sockel:
+   Pins 1-15 und 26-40. Pins 16-25 werden am Träger nicht bestückt. Keine erfundenen
+   PCB-Pads zur Beruhigung der Prüfung; Hinweis im Schaltplan ergänzt.
+4. PWR_FLAG auf den extern gespeisten Netzen und hinter D1. U4 bekommt für seine
+   feste Beschaltung DIR=GND einen richtungsspezifischen Symboltyp B-Eingang /
+   A-Tri-State-Ausgang. Bei späterer Änderung der DIR-Beschaltung Symbol anpassen.
+5. 56 projektlokale, bauteilspezifische Footprints aus dem tatsächlichen Board
+   gespeichert und Schaltplan/Board auf diese Varianten umgestellt. Physische
+   Geometrie bleibt erhalten; keine Rücksetzung auf generische Bibliotheksformen.
+6. Bestückungstexte auf mindestens 0,8 mm und zulässige Abstände gebracht.
+   Vollständige mechanische Umrisse der überstehenden/speziellen Bauteile
+   U1/J1/U7 auf F.Fab bewahrt. Die neuen Resetbauteil-Referenzen bleiben wie
+   in Rev B auf Dwgs.User; Bestückungspositionen stehen in components.json.
+
+Ergebnis: nativer DRC mit Schaltplanübereinstimmung und allen Trackfehlern,
+ERC sowie unabhängiger exakter Pad-Netz-Abgleich bestanden. Berichte validation/.
+Keine Prüfregeln für die Korrektur abgeschaltet. Vorbestehende deaktivierte
+Kategorien bleiben im Projekt unverändert und sind in den Berichten aufgeführt.
+Dies ist eine KiCad-Konsistenzkorrektur, keine elektrische Prototypabnahme.
+
+KiCad-Dokumentation:
+https://docs.kicad.org/10.0/en/cli/cli.html
+https://docs.kicad.org/10.0/en/eeschema/eeschema.html

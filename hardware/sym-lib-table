@@ -1,0 +1,1 @@
+(sym_lib_table (lib (name "AmiWiFi") (type "KiCad") (uri "${KIPRJMOD}/AmiWiFi.kicad_sym") (options "") (descr "Embedded and local prototype symbols")))

@@ -1,0 +1,43 @@
+Authoritative input: user upload AmiWiFi_Pico2W_RevA(1).zip
+SHA-256: 923df59e6a17f6ac96b90cc4c9c0e388622e9b6f66aeec76e7cd953a6bc07e1f
+KiCad 10 user-edited project; original input remains unmodified.
+All 52 existing footprints (position, properties, pad geometry), all 600 existing
+track segments and 63 vias, board graphics, Edge.Cuts and zone settings retained.
+Only existing pad net changed: U7 pin 30, NC -> PICO_RUN_N.
+Zone copper fills recalculated around added components and routes.
+New: U8 SN74LVC2G07DBVR, C11 100nF, R36 100k, TP7 PICO_RUN_N.
+Earlier production exports remain under reference/production_user_RevA_NOT_FOR_REV_B.
+They are historical files and are NOT manufacturing files for this revision.
+
+Rev B1 (2026-10-06): based on delivered Rev B, not regenerated from Rev A.
+Copper geometry, zones, outline, placements and pads unchanged from Rev B.
+Net names and NC-net metadata synchronized exactly with KiCad schematic.
+Silkscreen sizes/positions and mechanical outline layers corrected.
+Board-specific library variants preserve the custom physical footprints.
+Historical Rev-B validation is superseded; see validation/ for B1 results.
+
+Rev B2 – U8 auf SN74LVC2G07DCKR umgestellt, 07.10.2026
+
+Basis ist die gelieferte Rev B1 mit der vom Nutzer bearbeiteten Platine.
+U8 wechselt von DBV (SOT-23-6) auf DCK (SC70-6). Elektrische Pinbelegung,
+Open-Drain-Resetfunktion, Bestückungsposition (134, 104 mm) und Orientierung
+bleiben gleich. U5/U6 bleiben SN74LVC1G10DBVR.
+
+Projektlokales Lötbild AmiWiFi:SC70_6_DCK_U8 nach TI DCK0006A,
+Zeichnung 4214835/D, 11/2024: sechs Pads 0,9 x 0,4 mm, Eckradius 0,05 mm,
+Pinraster 0,65 mm, Reihenmittenabstand 2,2 mm. Nominaler Körper 1,25 x 2,0 mm
+in Boardorientierung. Courtyard 3,6 x 2,7 mm. Pin-1-Fase auf F.Fab.
+Quelle: https://www.ti.com/lit/gpn/sn74lvc2g07 (DCK-Gehäusezeichnung/Layout).
+
+Zehn lokale Leiterbahnsegmente angepasst; GND-Via von (132,5;104) auf
+(133,6;104) mm versetzt. Kupferfüllungen neu berechnet. Die anderen 55
+Footprints einschließlich Pads und Positionen bleiben identisch zu B1.
+Kontur, Netztopologie, Flächenparameter und Projekt-Prüfregeln bleiben gleich.
+234 Pad-Netze exakt einschließlich / und NC-Netzen mit dem nativen Export
+verglichen. Schaltplan, Symbolbibliothek, Footprintbibliothek, BOM und
+Bestückungsdaten synchronisiert. Vorherige Prüfberichte unter reference/.
+
+KiCad 10.0.6: DRC mit --schematic-parity --all-track-errors:
+0 Fehler, 0 Warnungen, 0 offene Verbindungen, 0 Schaltplanabweichungen.
+ERC: 0 Fehler, 0 Warnungen. Keine neuen Ausnahmen/deaktivierten Prüfregeln.
+Elektrische Musterprüfung ist weiterhin offen; keine Fertigungsfreigabe.

@@ -1,0 +1,306 @@
+AmiWiFi – Pico 2 W am Amiga-Parallelport
+Revision B2 · Entwicklungsentwurf · 07.10.2026
+
+1. Ziel und Lieferumfang
+
+WLAN-Adapter mit Raspberry Pi Pico 2 W, eigenem blockorientiertem
+Parallelport-Protokoll, SANA-II-Gerät und Konfigurationsprogramm für einen
+68000-Amiga mit Kickstart/Workbench 1.3. Das Gerät soll Ethernet-Pakete
+zwischen Amiga-TCP/IP-Stack und WLAN-Station übertragen. IP, DHCP und DNS
+bleiben Aufgaben des Amiga-Stacks; das Konfigurationsprogramm richtet WLAN ein.
+Ein NAT-Router oder TCP-Socket-Offloading ist nicht die Basis dieses Entwurfs.
+
+Enthalten sind ein nativer KiCad-Schaltplan, eine bestückte Leiterplatte,
+Projektdatei, lokale Symbol-/Footprintbibliotheken, Stückliste, Pinbelegung,
+Vorschauen und Prüfberichte. Der verbindliche Stand der Verbindungs- und
+Abstandsprüfung steht in validation/KiCad_DRC.txt und validation/checks.json.
+Firmware, SANA-II-Treiber und Amiga-Konfigurationsprogramm sind Arbeitspakete,
+keine mitgelieferten oder bereits getesteten Programme. Keine Fertigungsfreigabe.
+
+2. Ausgangsplatine und mechanische Umsetzung
+
+Aktuelle Basis: nutzerbearbeitete Datei „AmiWiFi_Pico2W_RevA(1).zip“, KiCad 10.
+Deine Kontur (ohne frühere linke Aussparung), Bauteilpositionen,
+Masseflächen-Einstellungen sind erhalten. B2 ändert nur das Lötbild von U8,
+zehn direkt angrenzende Leiterbahnsegmente und eine Masse-Durchkontaktierung.
+B1 korrigiert Beschriftungen, Bibliothekszuordnungen und Netzmetadaten.
+Der MAS Player war die ursprüngliche mechanische Vorlage. Die Nutzerfassung
+hat Vorrang vor dem ursprünglich generierten Rev-A-Stand.
+Rev B ergänzt ausschließlich den Resetpfad mit U8/C11/R36/TP7 und Pico RUN.
+
+Wichtig: Die Originaldatei verwendet einen DB25-Stecker (male), keine Buchse.
+Die konkrete Bestellnummer und die Eignung für 1,6-mm-Platinen sind vor Einkauf
+an einem vorhandenen MAS Player beziehungsweise am realen Steckerteil zu prüfen.
+Der Spezial-Footprint wurde übernommen, nicht durch einen generischen ersetzt.
+
+Der Pico 2 W ist 21 × 51 mm groß. Er passt nicht vollständig auf die originale
+Trägerkontur. Lösung: gestecktes Modul über den Bauteilen, um 180° orientiert,
+USB-Ende beim DB25, Antenne an der gegenüberliegenden Seite. Das Modul ragt
+11,3471 mm über die obere Trägerkante. Die Antenne liegt außerhalb des Trägers;
+eine zusätzliche Kupfer-Sperrfläche ist dokumentiert. Gehäuse und metallische
+Bauteile müssen ebenfalls Abstand zur Antenne halten.
+
+Zwei 1×15-Buchsenleisten tragen ausschließlich Pico-Pins 1–15 und 26–40.
+Pico-Pins 16–25 dürfen dort keine nach unten herausragenden Stiftleisten erhalten.
+Pin 1 liegt in der Boardansicht rechts unten. Das ist ein projektspezifischer
+Sockel, kein gewöhnlicher vollständiger Pico-Footprint. Mindestens 8,5 mm freie
+Bauhöhe zwischen Träger und Modul ist als mechanisches Entwicklungsziel
+vorgesehen; tatsächliche Sockelhöhe und Bauteilfreiraum am Muster prüfen.
+USB-Steckerzugang, BOOTSEL, Auszugskräfte und DB25-Gehäuse sind noch zu prüfen.
+Ein bestehendes MAS-Gehäuse kann wegen Überstand und Höhe unpassend sein.
+
+Vierlagiger Träger, 1,6 mm als Ausgangswert. Mindestabstände 0,18 mm,
+Standardleiterbahn 0,20 mm. Die Innenlagen werden in diesem ersten Routing
+auch für Signale verwendet; es gibt noch keine durchgehende Referenzebene.
+Vor Fertigung Rückstrompfade, Versorgungsspannungsabfall und Kupferfüllungen
+manuell optimieren. Dieser Entwurf ist auf die kleine Originalkontur ausgelegt;
+eine größere Platine würde Aufbau, Handbestückung und EMV verbessern.
+
+3. Elektrik
+
+USB-C J1 ist ein reiner 5-V-Versorgungseingang. R6/R7 mit 5,1 kOhm bleiben
+als CC-Pulldowns. Der originale LD2981ABU33TR versorgt nur die 3,3-V-Logik.
+Der Pico erhält 5 V über die SS14-Diode D1 an VSYS. Pico VBUS und 3V3_OUT
+sind nicht mit den entsprechenden Trägerspannungen verbunden. Dadurch muss
+der ursprüngliche kleine Regler nicht die WLAN-Stromspitzen liefern.
+Zum Flashen wird der eigene USB-Anschluss des Pico benutzt. Im Sockel zuvor
+DB25 UND USB-C-Trägerversorgung trennen; alternativ Pico herausnehmen.
+Firmwareupdates über den Amiga bleiben zurückgestellt.
+C1/C2 bleiben mit ursprünglichen Werten. Reglerstabilität einschließlich
+ESR/Dielektrikum von C2, tatsächliche Belastung und Einschaltverhalten am Muster
+prüfen. Eine beliebige Keramikbestückung ist keine geprüfte Ersatzfreigabe.
+
+U2 SN74LVC4245APWR übersetzt die acht Datenleitungen zwischen 5 V und 3,3 V.
+Die TTL-taugliche Eingangsschwelle auf der 5-V-Seite ist entscheidend:
+Ein beliebiger bidirektionaler 5-V-CMOS-Translator ist kein gleichwertiger Ersatz.
+100-Ohm-Serienwiderstände liegen in den Datenleitungen. Ihre Werte sind anhand
+von Signalqualität, Kabellänge und erreichbarer Taktung zu optimieren.
+
+U3 SN74LVC125APWR empfängt STROBE und SEL mit 5-V-toleranten Eingängen.
+U4 SN74LVC4245APWR treibt ACK, BUSY und POUT in Richtung Amiga, fest B→A.
+Die übrigen Eingänge sind definiert, unbenutzte Ausgänge offen. Rückleitungen
+haben 330 Ohm in Serie. Bei langen Leitungen müssen Pegel und Flanken gemessen
+werden; ein steckbarer, möglichst kurzer Anschluss ist die erste Testkonfiguration.
+
+U5/U6 SN74LVC1G10DBVR sperren Daten-/Steuerausgänge unabhängig von Software:
+OE_N = NICHT(FW_ENABLE UND HOST_PRESENT UND RESET_IN).
+HOST_PRESENT erkennt Amiga +5 V über 10 kOhm, mit 100 kOhm nach Masse.
+Pin 14 ist ausschließlich Sense, keine Versorgung des Adapters.
+Ein Amiga-Reset oder fehlende Hostversorgung schaltet die Treiber hochohmig.
+Zusätzlich setzt U8 (SN74LVC2G07DCKR) den Pico über RUN zurück. Seine beiden
+Open-Drain-Ausgänge verknüpfen RESET_IN und HOST_PRESENT. Details und
+Messanforderungen: docs/RESET_REV_B.txt. Nach Amiga-Reset startet WLAN neu.
+Firmware-Enables haben 4,7-kOhm-Pulldowns, die DIR-Leitung einen Pullup.
+Die Boot-Voreinstellung ist Amiga→Pico, die Treiber bleiben zunächst gesperrt.
+Die Sicherheitslogik ersetzt nicht die korrekte Richtungsumschaltung der Firmware.
+
+Die Auswahl berücksichtigt Ioff/Teilabschaltung. Vor Freigabe müssen dennoch
+alle Kombinationen aus Amiga an/aus, USB an/aus, Pico-USB an/aus und Reset
+auf unerwünschte Rückspeisung und Ausgangskonflikte vermessen werden.
+Nicht ohne Prüfung auf andere Logikfamilien oder pinähnliche ICs ausweichen.
+
+4. Pinbelegung
+
+DB25: 1 STROBE_N; 2–9 D0–D7; 10 ACK_N; 11 BUSY; 12 POUT;
+13 SEL; 14 Amiga +5 V Sense; 15 unbeschaltet; 16 RESET_N; 17–25 GND.
+Bei anderen Amiga-Modellen und insbesondere älteren Anschlussvarianten
+ist die Pinbelegung vor Anschluss am Hardwarehandbuch abzugleichen.
+
+Pico GPIOs (physische Modul-Pinnummern in Klammern):
+GP0–GP7 (1,2,4,5,6,7,9,10): D0–D7
+GP8 (11): STROBE_N Eingang
+GP9 (12): SEL Eingang / Blocksteuerung
+GP10 (14): BUSY Ausgang
+GP11 (15): POUT Ausgang
+GP20 (26): DATA_DIR; 1=Amiga→Pico, 0=Pico→Amiga
+GP21 (27): FW_DATA_EN
+GP22 (29): FW_CTRL_EN
+GP26 (31): ACK_N Ausgang / Paketereignis
+VSYS (39): Versorgung über D1
+GND (3,8,13,28,33,38): Masse
+Pins 16–25 fehlen bewusst im Trägersockel; übrige ungenutzte Pins bleiben offen.
+Eine maschinenlesbare vollständige Zuordnung steht in docs/PINOUT.csv.
+
+5. Protokollentwurf – vor Firmware implementierungsseitig festzuschreiben
+
+Zunächst ein konservativer, blockorientierter 8-Bit-Halbduplex-Link. Kein
+Handshake und kein Amiga-Interrupt pro Datenbyte. PIO erfasst STROBE und
+Daten; DMA bewegt vollständige Blöcke. Ein CPU-Kern bedient Link/Ringe,
+der andere WLAN und Konfigurationskommandos. Gemeinsame Puffer haben eine
+klar definierte Übergabe; keine Flash-Schreibvorgänge während aktiver DMA-Blöcke.
+
+Amiga schreibt Daten über CIAA PRB, liest über denselben Port. Die automatisch
+entstehenden STROBE-Impulse bei Portzugriffen und ihre genaue Phase müssen
+am realen CIA gemessen werden. SEL dient als explizite Block-/Modussteuerung.
+BUSY signalisiert Blockannahme, POUT verfügbare Empfangsdaten/Status;
+ACK_N signalisiert ein Ereignis für den Treiber, nicht jedes einzelne Byte.
+Ein festzulegender Zustandsautomat deckt COMMAND, TX, RX, TURNAROUND,
+ERROR und RESET ab. Pegel, Pulsbreiten, CIA-Registerfolge und Timeouts werden
+in einem eigenen Protokolltest eingefroren, bevor Treiber und Firmware
+unabhängig voneinander entwickelt werden.
+
+Sichere Richtungsumkehr:
+1. FW_DATA_EN=0, Amiga-Port und Pico-Datenpins zunächst Eingang.
+2. Beide Seiten bestätigen die Blockgrenze über Steuerleitungen.
+3. DATA_DIR umschalten; Ausgangsdaten vorlegen; nur Sender aktiviert Ausgänge.
+4. FW_DATA_EN=1; Empfänger beginnt den vereinbarten Transfer.
+5. Bei Timeout/Reset sofort sperren und in einen definierten Idle-Zustand gehen.
+Bei Amiga-Lesezyklen erstes Byte ausdrücklich vorladen; ein nötiger Dummy-Zyklus
+muss Teil des Protokolls sein. Kein blindes Warten mit CPU-abhängigen NOP-Zahlen.
+
+Vorgeschlagener Blockrahmen (noch kein kompatibler Firmware-Standard):
+8-Byte-Header: magic 0x4157 (2), version=1 (1), opcode (1), payload_length (2),
+sequence (2), mehrbyteige Felder big endian. Danach Payload und 2-Byte-CRC16
+(CCITT-FALSE, Polynom 0x1021, Start 0xFFFF, kein finales XOR) über Header+Payload.
+Maximal 1518 Payload-Bytes; reine Ethernet-Datenframes ohne FCS, MTU 1500.
+Fehlerantworten haben einen Statuscode; ACK/NACK, Wiederholung und Duplikat-
+unterdrückung anhand der Sequenznummer verhindern doppelte TX-Frames.
+Grenzen und Fragmentierung größerer Scanlisten sind explizit zu behandeln.
+
+Kommandos: GET_INFO, GET_STATUS, TX_FRAME, RX_FRAME, WIFI_SCAN, SCAN_NEXT,
+SET_PROFILE, SAVE_PROFILE, CONNECT, DISCONNECT, ERASE_PROFILE und RESET_LINK.
+GET_INFO liefert Protokollversion, MTU, Stations-MAC, Firmwareversion,
+Fähigkeitsbits und Pufferkapazität. Ein inkompatibler Treiber verweigert Online.
+Empfangsringe sind begrenzt; Überläufe zählen und melden, nie still überschreiben.
+Für den ersten Stand z.B. je 8 feste 1600-Byte-TX/RX-Puffer vorsehen und messen.
+
+WLAN läuft als Station über CYW43/Pico SDK mit Roh-Ethernet-Anbindung.
+Die Stations-MAC ist die primäre SANA-II-MAC; kein ungeprüftes MAC-Spoofing.
+Broadcast/ARP/DHCP und Multicast-Filterung müssen mit dem SDK-Verhalten getestet
+werden. Keine Behauptung einer transparenten Mehr-MAC-WLAN-Brücke.
+WLAN-Standards und unterstützte WPA-Modi nur gemäß tatsächlich verwendeter
+SDK-/Firmwareversion anbieten. WPA2-Personal ist der erste Kompatibilitätstest.
+
+6. Amiga SANA-II – Kickstart 1.3 als echte Zielplattform
+
+Device-Name als Arbeitsname: DEVS:Networks/amiwifi.device, Unit 0.
+68000-Code ohne 68020-Befehle, Exec/Intuition/DOS V34 als Mindestbasis.
+Keine ungeprüfte Verwendung von AllocVec, CreateMsgPort, ReadArgs, GadTools,
+Reaction, utility.library oder anderen erst später eingeführten APIs.
+Hilfsfunktionen über OS-1.3-taugliche amiga.lib oder eigenen V34-Code bereitstellen.
+Die gewählte SANA-II-Spezifikation und ihre Header werden im Projekt versioniert;
+SANA-II selbst bedeutet nicht automatisch, dass jeder TCP/IP-Stack unter 1.3 läuft.
+Ein konkreter, rechtmäßig verfügbarer OS-1.3-Stack ist deshalb ein frühes Test-Gate.
+
+Implementieren: Open/Close/Expunge, BeginIO/AbortIO, asynchrone Lese-/Schreibqueues,
+S2_DEVICEQUERY, Stationsadresse, Konfiguration, Online/Offline, Broadcast,
+Statistik- und Ereignisbehandlung gemäß gewählter SANA-II-Version.
+CopyToBuff/CopyFromBuff-Callbacks aus den Open-Tags korrekt übernehmen;
+mehrere Opens dürfen nicht dieselben Callback-Kontexte vermischen.
+Multicast und optionale Kommandos nur als unterstützt melden, wenn sie funktionieren.
+AbortIO, Offline, Reset und Close müssen alle wartenden Requests deterministisch
+abschließen. Fehler- und WireError-Codes nicht pauschal auf Erfolg setzen.
+
+Parallelport und relevante CIA-Bits über die vorgesehenen Ressourcen exklusiv
+belegen; Konflikte mit parallel.device/Druckertreiber sauber melden. Gemeinsame
+CIA-Steuerregister nicht vollständig überschreiben, fremde Bits erhalten.
+Interrupts über cia.resource einhängen, fremde Interruptquellen nicht wegquittieren.
+Interruptserver weckt einen Worker; Kopieren, WLAN-Kommandos und längere
+Transfers gehören nicht in einen langen Interruptabschnitt. Speicheranforderungen,
+Forbid/Disable-Dauern und Stackbedarf für einen unbeschleunigten A500 messen.
+
+Konfigurationskommandos laufen über eine versionierte private Device-Schnittstelle.
+Einzig der Treiber besitzt den Parallelport; GUI und CLI greifen niemals neben ihm
+direkt auf CIA-Register zu. Scan und Profile-Änderungen werden mit Datenverkehr
+serialisiert; der normale Datenpfad darf dabei nicht unendlich blockieren.
+
+7. Konfigurationsprogramm
+
+„AmiWiFiPrefs“: klassisches Intuition-V34-Fenster mit nativen Gadgets, optional
+CLI „AmiWiFiCtl“. Anzeigen: Adapter/Firmware, Linkstatus, SSID, RSSI,
+WLAN-MAC, Fehlerzähler. Aktionen: Scan, Netz wählen, SSID manuell eingeben,
+Passwort eingeben, verbinden, trennen, Profil speichern/löschen.
+GUI bleibt während Scan/Join bedienbar und zeigt Zeitüberschreitungen an.
+Passwort wird maskiert; im CLI verdeckte Eingabe statt Kommandozeilenargument.
+Keine Passwörter in Logs/Fehlerausgaben. SSID als Bytefolge bis 32 Bytes behandeln;
+Zeichenkodierungsgrenzen der Amiga-Oberfläche ausdrücklich behandeln.
+
+Profile nur auf Wunsch persistent speichern. Flash-Speicher besitzt bei diesem
+Entwurf keinen Schutz gegen einen physischen Angreifer. Zwei Slots mit Version,
+Länge, Sequenznummer und Prüfsumme erlauben atomaren Wechsel bei Stromausfall.
+Löschen des Profils: zuerst gültigen Löschdatensatz festschreiben, danach alte
+Zugangsdaten entfernen; nach Abbruch darf kein altes Profil reaktiviert werden. Flash-Schreiben erfordert einen
+kurzen, angekündigten Link-Stopp. Recovery über BOOTSEL bleibt möglich.
+TCP/IP-Konfiguration des Stacks (DHCP/statische IP/DNS) separat erklären.
+
+8. Meilensteine und Abnahmekriterien
+
+M0 – Entwurfsreview vor Bestellung
+Originalanschlüsse real vermessen, Pico-/Sockelmechanik prüfen, Board in KiCad
+öffnen, aktuelle native DRC/ERC-Berichte einschließlich Schaltplanvergleich prüfen, Strompfade,
+Reglerstabilität, Rückstromflächen und Pinouts unabhängig prüfen. Keine Bestellung
+auf Basis eines automatisch gerouteten Standes ohne dieses Review.
+
+M1 – Versorgung und elektrische Grundfunktion
+Erstes Muster mit strombegrenzter 5-V-Quelle, zunächst ohne Amiga. Rails, Ripple,
+Temperatur und Einschaltreihenfolge messen. Hardware-OE bei Boot, Reset und
+Hostverlust prüfen. Erst danach Verbindung zu einem geprüften Amiga-Modell.
+Alle Datenmuster, Pegel und Richtungswechsel mit Logikanalysator/Oszilloskop testen.
+Gate: keine Buskollision, keine unzulässige Rückspeisung, fehlerfreie Loopbacks.
+
+M2 – Firmware und Linkprotokoll
+Reproduzierbarer Pico-SDK-Build; PIO/DMA-Link, Ringe, CRC, Timeout/Recovery,
+WLAN-Join, Rohframes und Konfiguration implementieren. Zunächst konservative
+Transferfolge; schnellere CIA-Sequenzen nur als ausgehandelte Fähigkeit.
+Gate: mindestens 24 h wechselnder TX/RX-Last ohne Datenkorruption; Reset/USB-
+Ausfall/AP-Ausfall/volle Ringe führen zuverlässig in einen wieder benutzbaren Zustand.
+
+M3 – SANA-II und OS 1.3
+68000-Build und minimaler Loopback-Test, dann Devicequery, Online, ARP, DHCP,
+Ping, TCP/UDP mit dem gewählten OS-1.3-Stack. Zusätzlich Betrieb unter späterem
+OS testen. Emulatoren prüfen ABI und Fehlerpfade, ersetzen keinen echten CIA.
+Gate: sauberer Betrieb auf A500/68000, wiederholtes Open/Close/Abort/Offline,
+kein Speicherverlust und keine Beeinträchtigung fremder CIA-Funktionen.
+
+M4 – Oberfläche und Integration
+GUI und CLI unter Workbench 1.3 testen. Lange/unsichtbare SSIDs, falsches Passwort,
+Scanabbruch, inkompatible Firmware, Stromausfall beim Speichern, Profil löschen.
+Gate: Installation mit dokumentierten Dateien ohne manuelle CIA-Eingriffe;
+verständliche Rückmeldungen, keine Blockade des Systems durch fehlenden Adapter.
+
+M5 – Leistung und nachfolgende Hardware-Revision
+Vergleich mit Plipbox am identischen Amiga, CPU, RAM, Stack, MTU und Testserver.
+Getrennt messen: Raw-Link, SANA-II-Nutzdurchsatz, TCP/UDP, CPU-Zeit und Latenz.
+Paketgrößen 64/256/512/1500 Bytes, beide Richtungen, Dauerlast und Mischlast.
+Die schnellere MCU garantiert keinen höheren Nutzdurchsatz: CIA-Zugriffe,
+68000-Kopierkosten, Handshake und Stack bestimmen die Grenze.
+Ein überlegener Plipbox-Durchsatz ist ein Abnahmeziel, kein gemessener Befund.
+Erst danach PIO-Phasen, Blockgröße, CRC-Kosten und Assembler-Loops optimieren.
+Mit Messwerten Routing, Widerstände, Puffer und ggf. Platinenformat überarbeiten.
+
+9. Prüfumfang dieses Pakets
+
+Native KiCad-Dateien werden geladen; der native Schaltplan-Netzlistenexport wird
+pinweise mit den PCB-Netzen verglichen. Kritische Versorgung-/GPIO-Pins und
+übernommene Geometrien werden gesondert geprüft. Ein nativer PCB-DRC-Bericht
+liegt bei. KiCad 10.0.6, Rev B2: DRC einschließlich Schaltplanvergleich und ERC jeweils
+0 Fehler/0 Warnungen; 0 offene Verbindungen. Exakte Pad-Netznamen einschließlich
+NC-Netzen abgeglichen. Elektrische Messungen fehlen.
+Nicht geprüft: reales Muster, Regler-Transienten, HF/EMV, CIA-Timing, OS-1.3-
+Software, Durchsatz und Zulassungen. Entsprechende Angaben sind Entwicklungsziele.
+
+10. Quellen und Lizenzhinweise
+
+Originalgeometrie: bereitgestelltes MAS-Player-Alinea-Archiv. Weitergabe und
+kommerzielle Fertigung nur im Rahmen der Rechte am ursprünglichen Design.
+KiCad-Standardfootprints wurden projektlokal übernommen; Lizenzinformationen:
+https://www.kicad.org/libraries/license/
+
+Pico 2 W Datenblatt (Mechanik, Versorgung, GPIOs):
+https://datasheets.raspberrypi.com/picow/pico-2-w-datasheet.pdf
+Pico SDK Netzwerk-API:
+https://www.raspberrypi.com/documentation/pico-sdk/networking.html
+TI SN74LVC4245A (TTL-Schwellen, Richtung, Versorgung, Teilabschaltung):
+https://www.ti.com/lit/ds/symlink/sn74lvc4245a.pdf
+TI SN74LVC125A:
+https://www.ti.com/lit/ds/symlink/sn74lvc125a.pdf
+TI SN74LVC1G10 (DBV-Pinbelegung):
+https://www.ti.com/lit/ds/symlink/sn74lvc1g10.pdf
+ST LD2981:
+https://www.st.com/resource/en/datasheet/ld2981.pdf
+CIA-Transfervergleich / Plipbox-Autor:
+https://lallafa.de/blog/2015/09/amiga-parallel-port-how-fast-can-you-go/
+SANA-II-Spezifikation und Commodore Hardware Reference Manual sind vor M2/M3
+als verbindliche Implementierungsreferenz zu beschaffen/versionieren.
+Übernahme von existierendem Plipbox-Code erfordert dessen Lizenzprüfung;
+dieses Paket enthält keinen übernommenen Plipbox-Treiberquelltext.

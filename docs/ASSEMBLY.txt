@@ -1,0 +1,33 @@
+Bestückungshinweise Rev B2
+
+U7 benötigt zwei 1×15-Buchsenleisten mit 2,54-mm-Raster und passende Stiftleisten
+nur an den Pico-Pins 1–15 und 26–40. Mechanische Zusatzteile sind nicht als
+separate elektrische Bauteile im Schaltplan dargestellt. Verfügbare Sockelhöhe
+gegen Bauteile unter dem Modul prüfen; Ziel mindestens 8,5 mm freie Höhe.
+
+0402-Widerstände erfordern geeignete Bestückungsausrüstung. Vor Handbestückung
+eine größere Revision mit 0603 erwägen. Kondensatoren C1/C2 gehören zur
+übernommenen Reglerbeschaltung: tatsächlichen Typ/ESR zuerst verifizieren.
+Zusätzliche 100-nF-Kondensatoren: X7R, >=10 V. C3: 10 uF, >=10 V,
+Kapazitätsverlust unter Gleichspannung berücksichtigen. Widerstände 1 %.
+
+J1/J2 und U1 anhand der ursprünglichen Bauteile/Bestellnummern identifizieren;
+der übernommene Footprint allein ist keine vollständige Beschaffungsspezifikation.
+Nicht mit einem ähnlich aussehenden USB-C- oder DB25-Typ substituieren.
+Pico 2 W darf nicht durch Pico W oder einen RP2040-Nachbau ersetzt werden,
+ohne Firmware-, Pin- und Stromversorgungsreview.
+
+F.Cu / In1.Cu / In2.Cu / B.Cu: vier Kupferlagen. Keine Gerberfreigabe enthalten.
+Original-DB25-Kontakte liegen auf Ober- und Unterseite. Beschriftungen sind
+überwiegend auf Dwgs.User, nicht als Fertigungssiebdruck ausgeführt. Für die
+Bestückung docs/components.json (Positionen in mm) und Board in KiCad verwenden.
+Vor Fertigung Bestückungsdruck und Prüfpunktzugang bei gestecktem Pico prüfen.
+Neu U8/C11/R36/TP7: Beschriftung auf Dwgs.User. U8 exakt Open-Drain-Typ
+SN74LVC2G07DCKR; Pinbelegung nicht mit U5/U6 gleichsetzen.
+
+B1: Referenztexte auf F.SilkS sind mindestens 0,8 mm hoch. Umrisse U1/J1/U7
+liegen auf F.Fab; Resetbauteil-Referenzen wie bisher auf Dwgs.User.
+Projektlokale Footprints haben bauteilspezifische Namen, physische Bauformen unverändert.
+
+B2: U8 jetzt SC70-6 (DCK), 0,65-mm-Pinraster. Der bisherige DBVR passt nicht
+auf das neue Lötbild. Pin 1 ist im F.Fab-Umriss abgeschrägt. U5/U6 bleiben DBVR.

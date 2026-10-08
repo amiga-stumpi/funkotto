@@ -1,0 +1,49 @@
+Rev B2 – Resetentscheidung und Bring-up
+
+U8: TI SN74LVC2G07DCKR, SC70-6 (DCK), dual nichtinvertierend, Open Drain.
+Pin 1 RESET_IN, 2 GND, 3 HOST_PRESENT, 4 PICO_RUN_N, 5 +3V3_IF,
+6 PICO_RUN_N. Pins 4 und 6 gemeinsam an U7 Pin 30 RUN und TP7.
+U8 darf nicht durch einen Push-Pull-Puffer ersetzt werden.
+
+RESET_IN HOST_PRESENT -> RUN
+0        0           -> Low
+0        1           -> Low
+1        0           -> Low
+1        1           -> hochohmig; interner Pico-Pullup gibt RUN frei
+U8 ohne Versorgung    -> Ioff-Ausgänge hochohmig (USB-Servicefall)
+
+C11 100 nF an U8-VCC/GND. R36 100 kOhm RESET_IN/GND.
+Keine direkte 5-V-Verbindung an RUN. R28/R29 bleiben 4,7 kOhm.
+R36 belastet den Amiga-Reset zusätzlich nur über die vorhandene Serienbeschaltung;
+reale High/Low-Pegel trotzdem einschließlich aller Lasten messen.
+
+Firmware muss nach jedem RUN-Reset eine neue Sitzung beginnen:
+1. FW_DATA_EN und FW_CTRL_EN aus; Datenleitungen Eingang; DIR Amiga -> Pico.
+2. Ausgangslatches sicher vorladen, PIO/DMA/FIFOs leeren.
+3. Steuerpfad erst mit gültigen Idle-Pegeln aktivieren, Amiga-Synchronisation
+   ermöglichen. Daten-Ausgabe nur nach HELLO und bestätigter Richtungsübergabe.
+4. Persistentes Profil lesen, WLAN neu initialisieren und verbinden.
+5. Abgebrochene Flash-Konfigurationsschreibvorgänge erkennen; alten gültigen
+   Datensatz behalten. Hardware-Reset kann nicht softwareseitig verzögert werden.
+
+USB-Service im Sockel:
+DB25 und USB-C-Trägerversorgung trennen, danach BOOTSEL am Pico halten und
+Pico-eigenen USB-Port verbinden. D1 trennt VSYS von der Trägerversorgung;
+U8 bleibt unversorgt, seine Ausgänge sind hochohmig. Diese Einschaltfolge und
+fehlende Rückspeisung am Muster verifizieren. Alternativ Pico herausnehmen.
+
+Noch offen vor aktivem Bustest:
+- RESET_IN, HOST_PRESENT, RUN/TP7 und DATA_OE_N/CTRL_OE_N zeitlich messen.
+- RUN-Low-Dauer gegen RP2350-Resetanforderung; keine verkürzten Störpulse.
+- Während Reset Bustreiber gesperrt; nach Reset kein Wiederanlauf alter Ausgänge.
+- Amiga an/aus, Träger an/aus, Pico-USB an/aus und beide Einschaltreihenfolgen.
+- Reset mitten in Host-Read/Write, PIO/DMA und SAVE_PROFILE/ERASE_PROFILE.
+- RUN-Freigabe, Parallelport-Bereitschaft und WLAN-Reconnect separat messen.
+- Warmer Betrieb nur durch LINK_RESET darf WLAN erhalten; physischer Amiga-Reset
+  startet den ganzen Pico neu. Ein reiner Software-Neustart ohne Resetimpuls
+  benötigt weiterhin die Protokoll-Resynchronisation.
+
+Quellen:
+https://www.ti.com/lit/gpn/sn74lvc2g07
+https://datasheets.raspberrypi.com/picow/pico-2-w-datasheet.pdf
+Automatische ERC/DRC-Prüfung ersetzt diese elektrischen Messungen nicht.

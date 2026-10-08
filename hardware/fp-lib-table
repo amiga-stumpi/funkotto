@@ -1,0 +1,1 @@
+(fp_lib_table (lib (name "AmiWiFi") (type "KiCad") (uri "${KIPRJMOD}/AmiWiFi.pretty") (options "") (descr "Self-contained footprints; MAS originals preserved")))

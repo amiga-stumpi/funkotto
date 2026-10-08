@@ -10,7 +10,8 @@ ein Amiga-Konfigurationsprogramm.
 Rev B2 mit U8 SN74LVC2G07DCKR (SC70-6), angepasstem Lötbild und
 nativen DRC-/ERC-Prüfberichten. [Bisheriger Fortschritt](docs/results/2026-10-06-fortschritt.md).
 
-Das Repository enthält zunächst den [Entwicklungsplan für Firmware v0.1](docs/firmware-v0.1-plan.md).
+Das Repository enthält den [Entwicklungsplan für Firmware v0.1](docs/firmware-v0.1-plan.md)
+und das vollständige KiCad-Projekt mit lokalen Bibliotheken, Stückliste und Prüfberichten.
 Es gibt noch keine funktionsfähige Firmware oder Treiber-Binaries.
 
 Die erste Firmware soll Parallelport-Kommunikation, WLAN-Rohpakete und ein
@@ -18,7 +19,7 @@ dauerhaft gespeichertes WLAN-Profil mit automatischer Wiederverbindung bieten.
 Firmwareinstallation und Updates erfolgen vorerst über USB/BOOTSEL am Pico.
 Firmwareupdates über den Amiga sind zurückgestellt.
 
-Die Hardwarebasis ist der separate KiCad-10-Entwurf `FunkOtto_Pico2W_RevB2`,
+Die Hardwarebasis ist der KiCad-10-Entwurf Rev B2 unter [hardware/](hardware/),
 auf Basis der vom Nutzer bearbeiteten Rev-A-Datei. Ein zusätzlicher
 Open-Drain-Resetpfad setzt den Pico bei Amiga-Reset oder fehlender Hostversorgung
 über RUN zurück. Nach Reset startet die Firmware neu und verbindet WLAN erneut;
@@ -45,3 +46,16 @@ Prüfsummen stehen im Firmwareplan.
 Die [Ideenliste](docs/ideenliste.md) sammelt fortlaufend Erweiterungswünsche.
 Erster Eintrag: eine später nachrüstbare Traffic-LED, optional getrennt für TX/RX.
 
+
+## KiCad-Projekt öffnen
+
+Repository herunterladen und `hardware/AmiWiFi.kicad_pro` mit KiCad 10 öffnen.
+Die Bibliotheken in `hardware/` gehören zum Projekt.
+
+- [Hinweise zum Hardwarestand Rev B2](docs/KICAD_REV_B2.txt)
+- [Stückliste](docs/BOM.csv) und [Pinbelegung](docs/PINOUT.csv)
+- [Vorschauen](preview/) und [Prüfberichte](validation/)
+
+Importiert am 08.10.2026 aus dem geprüften Rev-B2-Paket. Schaltplan und Board
+sind gegenüber der Auslieferung bytegenau unverändert. Elektrische Musterprüfung
+und Fertigungsfreigabe bleiben offen.
