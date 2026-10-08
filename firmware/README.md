@@ -92,5 +92,7 @@ oder bitidentische Debug-Dateien ergibt sich daraus nicht.
 Parallelport-Antwort. Ohne WLAN-Initialisierung leuchtet auch die Pico-WLAN-LED
 nicht automatisch. Ein ausgeschaltetes Terminal verhindert den Firmwarestart nicht.
 
-Messungen am Träger gemäß M0 bleiben offen. Der bisherige Softwaretest belegt
-keine elektrischen Pegel, Reset-Pulsbreiten oder reale Laufzeit auf dem Pico.
+Messungen am Träger gemäß M0 bleiben offen. Der Nutzer hat am 08.10.2026 USB-Status und Kaltstart ohne geöffnetes Terminal
+auf dem Pico bestätigt ([Bericht](../docs/results/2026-10-08-firmware-m1.md)).
+Elektrische Pegel, Reset-Pulsbreiten und Watchdog-Fehlerinjektion bleiben ungeprüft.
+Die nächsten Schritte stehen im [WLAN-Plan](../docs/wlan-entwicklungsplan.md).

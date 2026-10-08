@@ -1,6 +1,6 @@
 # FunkOtto: Plan für die erste funktionale Firmware v0.1
 
-Stand: 08.10.2026 · Status: M1 implementiert und lokal gebaut/getestet; Hardwareabnahme offen
+Stand: 08.10.2026 · Status: M1 gebaut, CI erfolgreich, USB/Kaltstart am Pico bestätigt; M0 offen
 
 ## 1. Ziel und Entscheidung
 
@@ -332,8 +332,11 @@ Dieses Verhalten mit dem konkreten Updateverfahren testen und dokumentieren.
 **Fortschritt am 08.10.2026:** M1-Quellen, USB-Konsole, GPIO-Sperre, Watchdog,
 Buildworkflow und automatisierte Prüfungen sind vorhanden. Zwei lokale Builds
 aus getrennten Quellverzeichnissen liefern bytegleiche UF2/BIN-Dateien.
-GPIO-/Parser-Hosttests und Artefaktprüfungen bestehen. Der reale Pico-Starttest
-ist noch offen; M1 ist damit noch nicht vollständig am Muster abgenommen.
+GPIO-/Parser-Hosttests und Artefaktprüfungen bestehen. Der Nutzer hat USB-Status
+und Kaltstart ohne geöffnetes Terminal am realen Pico bestätigt. Watchdog-
+Fehlerinjektion und elektrische Musterabnahme bleiben offen.
+Die vorgezogene isolierte M3-Entwicklung beschreibt der
+[WLAN-Entwicklungsplan](wlan-entwicklungsplan.md).
 M0 sowie M2–M6 sind offen. [Prüfbericht](results/2026-10-08-firmware-m1.md).
 
 M1 und isolierte M3-Arbeiten können vor Abschluss M0 beginnen. M2-Bustests sind

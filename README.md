@@ -27,7 +27,9 @@ GPIO-Zustände, USB-Diagnose (`help`, `info`, `status`) und Watchdog.
 [Build- und Testanleitung](firmware/README.md) ·
 [Prüfergebnisse M1](docs/results/2026-10-08-firmware-m1.md).
 WLAN, Parallelport-Kommunikation, Profilspeicherung und Amiga-Treiber folgen.
-Der Start auf einem realen Pico und die elektrische M0-Abnahme stehen noch aus.
+USB-Diagnose und Kaltstart ohne geöffnetes Terminal wurden am 08.10.2026 vom
+Nutzer auf einem realen Pico bestätigt. Die elektrische M0-Abnahme bleibt offen.
+Nächster Schritt: [WLAN-Entwicklungsplan](docs/wlan-entwicklungsplan.md).
 
 Die erste Firmware soll Parallelport-Kommunikation, WLAN-Rohpakete und ein
 dauerhaft gespeichertes WLAN-Profil mit automatischer Wiederverbindung bieten.
