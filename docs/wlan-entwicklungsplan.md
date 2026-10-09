@@ -174,9 +174,10 @@ Dieser USB-Test ist kein SANA-II-Ersatz und kein Amiga-Durchsatzbenchmark.
 Stand 09.10.2026: implementiert als `funkotto_w4`, einschließlich Journal,
 Löschdatensatz/Bereinigung, SDK-Flashsperre und Boot-Autoconnect.
 [Bedienung/Hardwaretest](../firmware/W4_TEST.md) · [Prüfbericht](results/2026-10-09-w4.md).
-Ein erster realer Status bestätigt ein gültiges gespeichertes Profil und `LINK_UP`.
-Kaltstart-/Autoconnect-Nachweis und Löschtest bleiben ausdrücklich zu bestätigen;
-die vollständige Hardwareabnahme ist weiterhin offen.
+Ein realer Status bestätigt ein gültiges gespeichertes Profil und `LINK_UP`.
+Der erste Kaltstart mit automatischer Wiederverbindung wurde vom Nutzer
+ausdrücklich als bestanden bestätigt. Löschtest, wiederholte Kaltstarts und
+die übrige Hardwareabnahme bleiben offen.
 
 Bestehendes Layout behalten: Profil A bei Flashoffset `0x003FE000`, Profil B
 bei `0x003FF000`, je 4096 Byte; Firmware vor XIP `0x103FD000` begrenzen und den

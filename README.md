@@ -40,8 +40,9 @@ AP-Ausfall, Wiederverbindung und erneuter Pakettest sind vom Nutzer bestätigt.
 Langzeitbetrieb und die Ursache einzelner Latenzausreißer bleiben offen.
 **W4 ist implementiert:** dauerhaftes Profil, `wifi save`/`wifi erase` und
 Autoconnect nach Stromverlust. [W4-Anleitung](firmware/W4_TEST.md) ·
-[W4-Prüfstand](docs/results/2026-10-09-w4.md). Ein erster realer Status bestätigt
-das gespeicherte Profil und `LINK_UP`; Kaltstart und Löschtest bleiben zu bestätigen.
+[W4-Prüfstand](docs/results/2026-10-09-w4.md). Gespeichertes Profil und erster
+Kaltstart mit automatischer Wiederverbindung sind am Pico bestätigt. Löschtest
+und weitergehende Hardwareabnahme bleiben offen.
 Parallelport-Kommunikation und Amiga-Treiber folgen.
 USB-Diagnose und Kaltstart ohne geöffnetes Terminal wurden am 08.10.2026 vom
 Nutzer auf einem realen Pico bestätigt. Die elektrische M0-Abnahme bleibt offen.
