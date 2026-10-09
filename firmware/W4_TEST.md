@@ -2,8 +2,9 @@
 
 Firmware `0.1.0-w4`, Ziel `funkotto_w4`, Pico 2 W. W4 ergänzt den geprüften
 W3-Rohdatenpfad um ein dauerhaftes WLAN-Profil. Gespeichertes Profil und erster
-Kaltstart mit automatischer Wiederverbindung sind am Pico bestätigt. Löschtest
-und weitergehende Hardwareabnahme bleiben offen
+Kaltstart mit automatischer Wiederverbindung sind am Pico bestätigt. Auch Löschtest
+und erneutes Einrichten/Verbinden sind bestanden; die weitergehende Hardwareabnahme
+bleibt offen
 ([Prüfstand](../docs/results/2026-10-09-w4.md)). Der Amiga-Bus bleibt gesperrt.
 
 ## 1. Flashen und einmalig konfigurieren

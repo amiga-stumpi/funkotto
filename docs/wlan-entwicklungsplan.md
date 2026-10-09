@@ -176,8 +176,9 @@ Löschdatensatz/Bereinigung, SDK-Flashsperre und Boot-Autoconnect.
 [Bedienung/Hardwaretest](../firmware/W4_TEST.md) · [Prüfbericht](results/2026-10-09-w4.md).
 Ein realer Status bestätigt ein gültiges gespeichertes Profil und `LINK_UP`.
 Der erste Kaltstart mit automatischer Wiederverbindung wurde vom Nutzer
-ausdrücklich als bestanden bestätigt. Löschtest, wiederholte Kaltstarts und
-die übrige Hardwareabnahme bleiben offen.
+ausdrücklich als bestanden bestätigt. Auch der Löschtest im beschriebenen
+Neustartablauf und die erneute Einrichtung/Verbindung sind durch Nutzerstatus
+belegt. Wiederholte Kaltstarts und die übrige Hardwareabnahme bleiben offen.
 
 Bestehendes Layout behalten: Profil A bei Flashoffset `0x003FE000`, Profil B
 bei `0x003FF000`, je 4096 Byte; Firmware vor XIP `0x103FD000` begrenzen und den
