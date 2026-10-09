@@ -142,8 +142,9 @@ Energiesparen zunächst abschalten; Latenz und Verbrauch später gesondert bewer
 Stand 09.10.2026: als `funkotto_w3` implementiert, einschließlich USB-Testmodus,
 PC-ARP/ICMP-Werkzeug und automatisierter Queue-/Protokolltests. **Reale ARP/ICMP-Tests
 bestanden (12/12 und 1.000/1.000, MTU 1500, keine Verluste; JSON/PCAP geprüft)**.
-Langzeitbetrieb, einzelne Latenzausreißer und
-Linkverlust unter Rohdatenlast bleiben offen: [Testablauf](../firmware/W3_TEST.md),
+AP-Ausfall mit Wiederverbindung und erneutem Pakettest ist vom Nutzer bestätigt.
+Damit kann W4 als nächster Entwicklungsschritt beginnen. Langzeitbetrieb und
+die Ursache einzelner Latenzausreißer bleiben offen: [Testablauf](../firmware/W3_TEST.md),
 [Prüfstand](results/2026-10-09-w3.md). W4 beginnt nach dem realen Rohframe-Nachweis.
 
 TX über `cyw43_send_ethernet(..., is_pbuf=false)`, RX über den eigenen Callback.
