@@ -1,7 +1,9 @@
 # FunkOtto W3 – Ethernet über USB prüfen
 
 Firmware `0.1.0-w3`, Ziel `funkotto_w3`, Pico 2 W. W3 implementiert Roh-Ethernet
-mit je acht festen TX-/RX-Puffern. Der reale WLAN-Pakettest ist noch offen.
+mit je acht festen TX-/RX-Puffern. Der erste reale ARP/ICMP-Test ist am 09.10.2026
+mit 12/12 geprüften Antworten einschließlich MTU 1500 bestanden; Dauerlauf und
+Belastungstests bleiben offen.
 Der Amiga-Bus bleibt gesperrt; WLAN-Zugangsdaten bleiben ausschließlich im RAM.
 
 ## 1. Flashen und WLAN verbinden
@@ -44,6 +46,11 @@ python tools/wifi_diag.py --port COM5
 Das Programm aktiviert `raw on` selbst. Es zeigt Stations-MAC, Link, Link-Epoche
 und Paket-/Fehlerzähler. Dieser Aufruf prüft nur USB/Status, noch keine LAN-Pakete.
 Nach Programmende kann das normale Terminal wieder geöffnet werden.
+
+Beim Werkzeug aus `b09aa6182ef8` kann einmalig `usb_bad_frames=1` erscheinen:
+Die Textbegrüßung vor dem Binärmodus wird im Host-Fehlerzähler mitgezählt.
+Das ist bei sonst gültigen Antworten und `usb_retries=0` allein kein Beleg für
+einen Übertragungsfehler. Zusätzliche Fehler im laufenden Test gesondert prüfen.
 
 ## 3. ARP und ICMP über eine LAN-Gegenstelle testen
 

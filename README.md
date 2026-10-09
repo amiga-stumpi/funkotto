@@ -33,7 +33,8 @@ Scan und erster WPA2-Join wurden am 08.10.2026 auf dem Pico bestätigt
 nach AP-Ausfall sind ebenfalls bestätigt. Dauerlauf und weitere Fehlerfälle
 bleiben offen. **W3 ist implementiert:** Ethernet-Rohtransport mit festen Puffern,
 USB-Testprotokoll und PC-Werkzeug für ARP/ICMP. [W3-Testanleitung](firmware/W3_TEST.md) ·
-[W3-Prüfstand](docs/results/2026-10-09-w3.md). Der reale Pakettest am Pico ist noch offen.
+[W3-Prüfstand](docs/results/2026-10-09-w3.md). Der erste reale ARP/ICMP-Test ist bestanden: 12/12 Echo-Antworten einschließlich
+MTU 1500, keine Verluste. Dauerlauf und Belastungstests bleiben offen.
 Parallelport-Kommunikation, Profilspeicherung und Amiga-Treiber folgen.
 USB-Diagnose und Kaltstart ohne geöffnetes Terminal wurden am 08.10.2026 vom
 Nutzer auf einem realen Pico bestätigt. Die elektrische M0-Abnahme bleibt offen.
