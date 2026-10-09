@@ -54,7 +54,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("build_dir", type=Path)
     parser.add_argument("--tool-prefix", default="arm-none-eabi-")
-    parser.add_argument("--target", choices=["funkotto_m1", "funkotto_w12", "funkotto_w3"], default="funkotto_m1")
+    parser.add_argument("--target", choices=["funkotto_m1", "funkotto_w12", "funkotto_w3", "funkotto_w4"], default="funkotto_m1")
     args = parser.parse_args()
     build = args.build_dir.resolve()
     elf = build / (args.target + ".elf")
@@ -73,18 +73,25 @@ def main():
         raise SystemExit("Unexpected UART linked: GP0/GP1 are parallel data pins")
     callback_names = ["cyw43_cb_tcpip_init", "cyw43_cb_tcpip_deinit", "cyw43_cb_tcpip_set_link_up",
                       "cyw43_cb_tcpip_set_link_down", "cyw43_cb_process_ethernet"]
-    if args.target in ("funkotto_w12", "funkotto_w3"):
+    if args.target in ("funkotto_w12", "funkotto_w3", "funkotto_w4"):
         for name in callback_names:
             if not re.search(r"^[0-9a-fA-F]+ T " + name + r"$", nm, re.M):
                 raise SystemExit("Missing strong WLAN callback: " + name)
         if any(name in symbols for name in ("lwip_init", "tcpip_init", "dhcp_start", "netif_add")):
             raise SystemExit("Unexpected IP stack in WLAN adapter")
-    if args.target == "funkotto_w3":
+    if args.target in ("funkotto_w3", "funkotto_w4"):
         for name in ("cyw43_send_ethernet", "fo_net_submit", "fo_raw_feed", "pbuf_copy_partial"):
             if name not in symbols:
                 raise SystemExit("Missing W3 symbol: " + name)
         if symbols.get("__StackTop", 0) - symbols.get("__StackBottom", 0) != 4096:
             raise SystemExit("Unexpected Core 0 stack reservation")
+    if args.target == "funkotto_w4":
+        for name in ("flash_operation", "flash_range_erase", "flash_range_program", "multicore_lockout_handler"):
+            if not 0x20000000 <= symbols.get(name, 0) < 0x20082000:
+                raise SystemExit("Flash-critical function is not in SRAM: " + name)
+        for name in ("flash_safe_execute", "flash_safe_execute_core_init", "fo_store_save", "fo_store_erase"):
+            if name not in symbols:
+                raise SystemExit("Missing W4 symbol: " + name)
     header = (build / ("generated/" + args.target + "/funkotto/build_info.h")).read_text()
     defines = dict(re.findall(r'#define\s+(\w+)\s+"([^"\n]*)"', header))
     source_paths = [p for d in ("firmware", "tools", "tests") for p in (ROOT / d).rglob("*")
@@ -97,7 +104,8 @@ def main():
         artifacts[p.name] = {"size": p.stat().st_size, "sha256": hashlib.sha256(p.read_bytes()).hexdigest()}
     manifest = {
         "version": defines["FUNKOTTO_VERSION"], "source_id": defines["FUNKOTTO_SOURCE_ID"],
-        "stage": ("W3 raw Ethernet via USB; RAM profile only; parallel bus disabled"
+        "stage": ("W4 persistent WLAN journal and autoconnect; raw Ethernet via USB; parallel bus disabled"
+                  if args.target == "funkotto_w4" else "W3 raw Ethernet via USB; RAM profile only; parallel bus disabled"
                   if args.target == "funkotto_w3" else "W1/W2 WLAN; RAM profile only; no parallel or Ethernet transport"
                   if args.target == "funkotto_w12" else "M1 USB diagnostics; no active parallel bus or WLAN"),
         "board": "pico2_w", "platform": "rp2350-arm-s", "build_type": "Release",
@@ -111,7 +119,7 @@ def main():
         "uart_absent": True, "uf2": info, "sources_sha256": sources, "artifacts": artifacts,
         "hardware_tested": False,
     }
-    if args.target in ("funkotto_w12", "funkotto_w3"):
+    if args.target in ("funkotto_w12", "funkotto_w3", "funkotto_w4"):
         cache = (build / "CMakeCache.txt").read_text()
         sdk_match = re.search(r"^PICO_SDK_PATH:[^=]+=([^\n]+)$", cache, re.M)
         if not sdk_match:
@@ -123,6 +131,10 @@ def main():
             for name in firmware_files}
         manifest["strong_callbacks"] = callback_names
         manifest["lwip_absent"] = True
+    if args.target == "funkotto_w4":
+        manifest["profile_schema"] = 1
+        manifest["flash_critical_functions_in_sram"] = True
+        manifest["profile_note"] = "Two 4096-byte sectors, CRC32 and separate commit page; credentials unencrypted"
     manifest_name = "manifest.json" if args.target == "funkotto_m1" else args.target + "-manifest.json"
     (build / manifest_name).write_text(json.dumps(manifest, indent=2) + "\n")
     print(json.dumps({"uf2": info, "elf_flash_end": hex(symbols["__flash_binary_end"]),

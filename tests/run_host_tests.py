@@ -60,3 +60,18 @@ with tempfile.TemporaryDirectory(prefix="funkotto-w3-tests-") as tmp:
         str(ROOT / "firmware/src/ethernet.c"), "-o", binary,
     ], check=True)
     subprocess.run([binary], check=True)
+
+with tempfile.TemporaryDirectory(prefix="funkotto-w4-tests-") as tmp:
+    common = [os.environ.get("CC", "cc"), "-std=c11", "-Wall", "-Wextra", "-Werror",
+              "-Wconversion", "-Wshadow", "-g", "-fno-omit-frame-pointer", "-fsanitize=address,undefined",
+              "-I" + str(ROOT / "firmware/include")]
+    for name, sources, includes in [
+        ("test_profile_store", ["tests/test_profile_store.c", "firmware/src/profile_store.c", "firmware/src/wifi_model.c"], []),
+        ("test_profile_flash", ["tests/test_profile_flash.c"], ["-I" + str(ROOT / "tests/flash_fakes")]),
+        ("test_w4_service", ["tests/test_wifi_service.c", "firmware/src/wifi_model.c", "firmware/src/ethernet.c", "firmware/src/profile_store.c"],
+         ["-DFUNKOTTO_W3=1", "-DFUNKOTTO_W4=1", "-I" + str(ROOT / "tests/wifi_fakes")]),
+        ("test_w4_console", ["tests/test_wifi.c", "firmware/src/wifi_console.c", "firmware/src/wifi_model.c"], ["-DFUNKOTTO_W4=1"]),
+    ]:
+        binary = str(Path(tmp) / name)
+        subprocess.run(common + includes + [str(ROOT / s) for s in sources] + ["-o", binary], check=True)
+        subprocess.run([binary], check=True)

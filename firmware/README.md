@@ -1,8 +1,11 @@
+> Neu: **W4** als Ziel `funkotto_w4`: dauerhaftes Profil und Autoconnect.
+> [W4-Bedienung und Kaltstarttest](W4_TEST.md). Reale Flash-/Kaltstartabnahme noch offen.
+
 > W3 ist als zusätzliches Ziel `funkotto_w3` implementiert:
 > [Roh-Ethernet über USB testen](W3_TEST.md). Die realen ARP/ICMP-Tests sind bestanden
 > (12/12 und 1.000/1.000, MTU 1500; JSON/PCAP geprüft). AP-Ausfall mit
 > Wiederverbindung und erneutem Pakettest ist vom Nutzer bestätigt.
-> Langzeitbetrieb und Latenzausreißer bleiben offen; nächster Schritt ist W4.
+> Langzeitbetrieb und Latenzausreißer bleiben offen.
 > M1 und W1/W2 bleiben separat baubar; alle drei Ziele halten den Amiga-Bus gesperrt.
 
 # FunkOtto – Pico-Firmware

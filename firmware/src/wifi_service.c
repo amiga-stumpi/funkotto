@@ -12,6 +12,10 @@
 static struct fo_eth ethernet;
 static struct fo_frame transmit_frame;
 #endif
+#ifdef FUNKOTTO_W4
+#include "funkotto/profile_store.h"
+static struct fo_store profile_store;
+#endif
 static critical_section_t shared_lock;
 static struct fo_wifi_status shared, status;
 static struct fo_wifi_model model;
@@ -22,6 +26,13 @@ static uint32_t link_epoch;
 static uint64_t scan_deadline, join_started, rssi_due;
 static uint64_t now_ms(void) { return time_us_64() / 1000u; }
 static void publish(void) {
+#ifdef FUNKOTTO_W4
+    status.stored = model.configured && fo_store_matches(&profile_store, &model.profile);
+    status.flash_profile = profile_store.state == STORE_PROFILE;
+    status.storage_state = (uint32_t)profile_store.state;
+    status.storage_error = (uint32_t)profile_store.error;
+    status.storage_sequence = profile_store.sequence;
+#endif
     status.state = model.state; status.error = model.error;
     status.configured = model.configured; status.wanted = model.wanted;
     status.attempts = model.attempts; status.links = model.links; status.epoch = model.epoch;
@@ -33,6 +44,9 @@ static void publish(void) {
 }
 void fo_wifi_snapshot(struct fo_wifi_status *s) {
     critical_section_enter_blocking(&shared_lock); *s = shared; critical_section_exit(&shared_lock);
+}
+bool fo_wifi_command_busy(void) {
+    critical_section_enter_blocking(&shared_lock); bool busy=mailbox.active; critical_section_exit(&shared_lock); return busy;
 }
 bool fo_wifi_submit(enum fo_request request, const struct fo_profile *profile) {
     bool ok = false;
@@ -169,7 +183,31 @@ static int scan_result(void *env, const cyw43_ev_scan_result_t *r) {
     d->ssid_len = r->ssid_len; d->auth = r->auth_mode; d->channel = r->channel; d->rssi = r->rssi;
     return 0;
 }
+#ifdef FUNKOTTO_W4
+static enum fo_reply persistent_command(bool erase) {
+    if (status.scanning) return REPLY_BUSY;
+    if (!erase && !model.configured) return REPLY_NO_PROFILE;
+    if (!status.flash_ready) { profile_store.error=STORE_NOT_READY; return REPLY_FLASH; }
+    bool reconnect=model.wanted && !erase;
+    status.sdk_busy=true; publish();
+    fo_model_disconnect(&model); driver_stop(); fo_net_enable(false);
+    if (erase) {
+        fo_wipe(&model.profile,sizeof(model.profile)); model.configured=false; model.state=FO_UNCONFIGURED;
+    }
+    bool ok=false;
+    if (fo_flash_open()) {
+        ok=erase ? fo_store_erase(&profile_store) : fo_store_save(&profile_store,&model.profile);
+        fo_flash_close();
+    } else profile_store.error=STORE_NOT_READY;
+    status.sdk_busy=false;
+    if (reconnect) (void)fo_model_connect(&model,now_ms());
+    return ok ? REPLY_OK : REPLY_FLASH;
+}
+#endif
 static enum fo_reply command(enum fo_request kind, const struct fo_profile *p) {
+#ifdef FUNKOTTO_W4
+    if (kind==REQ_SAVE || kind==REQ_ERASE) return persistent_command(kind==REQ_ERASE);
+#endif
     if (kind == REQ_DISCONNECT) {
         fo_model_disconnect(&model); driver_stop(); return REPLY_OK;
     }
@@ -198,7 +236,25 @@ static enum fo_reply command(enum fo_request kind, const struct fo_profile *p) {
     return REPLY_INVALID;
 }
 static void service_init(void) {
-    fo_model_init(&model); model.state = FO_INITIALIZING; publish();
+    fo_model_init(&model); model.state = FO_INITIALIZING;
+#ifdef FUNKOTTO_W4
+    status.flash_ready = fo_flash_core_init() && status.flash_ready;
+    fo_store_load(&profile_store,&fo_flash_io);
+    /* Finish an interrupted delete before WLAN can use any credentials. */
+    if (profile_store.state==STORE_DELETED) {
+        if (status.flash_ready && fo_flash_open()) {
+            (void)fo_store_cleanup(&profile_store); fo_flash_close();
+        } else profile_store.error=STORE_NOT_READY;
+    }
+#endif
+    publish();
+#ifdef FUNKOTTO_W4
+    if (profile_store.state==STORE_PROFILE) {
+        (void)fo_model_profile(&model,&profile_store.profile);
+        (void)fo_model_connect(&model,now_ms());
+        publish(); return; /* First service step initializes CYW43 once for join. */
+    }
+#endif
     if (driver_prepare(false)) model.state = FO_UNCONFIGURED;
     else { model.state = FO_ERROR; model.error = FO_DRIVER_ERROR; }
 }
@@ -263,6 +319,9 @@ static void core1_main(void) {
 }
 
 void fo_wifi_launch(void) {
+#ifdef FUNKOTTO_W4
+    status.flash_ready=fo_flash_core_init(); /* Core 0 lockout victim, before launch. */
+#endif
 #ifdef FUNKOTTO_W3
     fo_eth_init(&ethernet);
 #endif

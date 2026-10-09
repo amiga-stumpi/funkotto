@@ -31,7 +31,12 @@ static void parser(void) {
     for (unsigned i = 0; i < 300; ++i) fo_ui_feed(&u, 'x');
     assert(feed(&u, "wifi connect\n") == UI_INVALID && !u.phase);
     assert(feed(&u, "wifi connect\n") == UI_CONNECT);
+#ifdef FUNKOTTO_W4
+    assert(feed(&u, "wifi save\n") == UI_SAVE);
+    assert(feed(&u, "wifi erase\n") == UI_ERASE);
+#else
     assert(feed(&u, "wifi save\n") == UI_NOT_IMPLEMENTED);
+#endif
     assert(feed(&u, "wifi set\nS\n1234") == UI_PROMPT_KEY);
     fo_ui_feed(&u, 0); assert(feed(&u, "5678\n") == UI_INVALID);
     assert(feed(&u, "wifi statuz\b s\n") == UI_INVALID);

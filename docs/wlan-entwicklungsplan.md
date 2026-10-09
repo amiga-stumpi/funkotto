@@ -171,6 +171,11 @@ Dieser USB-Test ist kein SANA-II-Ersatz und kein Amiga-Durchsatzbenchmark.
 
 ### W4: Speichern und Autoconnect
 
+Stand 09.10.2026: implementiert als `funkotto_w4`, einschließlich Journal,
+Löschdatensatz/Bereinigung, SDK-Flashsperre und Boot-Autoconnect.
+[Bedienung/Hardwaretest](../firmware/W4_TEST.md) · [Prüfbericht](results/2026-10-09-w4.md).
+Reale Flash-/Kaltstartabnahme bleibt offen.
+
 Bestehendes Layout behalten: Profil A bei Flashoffset `0x003FE000`, Profil B
 bei `0x003FF000`, je 4096 Byte; Firmware vor XIP `0x103FD000` begrenzen und den
 separaten E10-Sektor schützen. UF2-/Linkerprüfungen auf die WLAN-Ziele erweitern.

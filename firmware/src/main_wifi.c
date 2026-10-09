@@ -6,6 +6,9 @@
 #include "funkotto/build_info.h"
 #include "funkotto/wifi_console.h"
 #include "funkotto/wifi_service.h"
+#ifdef FUNKOTTO_W4
+#include "funkotto/profile_store.h"
+#endif
 #ifdef FUNKOTTO_W3
 #include "pico/rand.h"
 #include "pico/stdio/driver.h"
@@ -45,7 +48,9 @@ static void escaped(const uint8_t *p, size_t n) {
 }
 static void info(void) {
     printf("FunkOtto %s source=%s board=pico2_w sdk=%s\n", FUNKOTTO_VERSION, FUNKOTTO_SOURCE_ID, FUNKOTTO_SDK_COMMIT);
-#ifdef FUNKOTTO_W3
+#ifdef FUNKOTTO_W4
+    puts("stage=W4 parallel=disabled wifi=WPA2_2.4GHz profile=FLASH_JOURNAL raw_ethernet=USB_TEST country=DE");
+#elif defined(FUNKOTTO_W3)
     puts("stage=W3 parallel=disabled wifi=WPA2_2.4GHz profile=RAM_ONLY raw_ethernet=USB_TEST country=DE");
 #else
     puts("stage=W1W2 parallel=disabled wifi=WPA2_2.4GHz profile=RAM_ONLY raw_ethernet=not_implemented country=DE");
@@ -53,9 +58,9 @@ static void info(void) {
 }
 static void wifi_status(void) {
     fo_wifi_snapshot(&snapshot);
-    printf("wifi=%s error=%s sdk_error=%ld configured=%u stored=0 auto_retry=%u sdk_busy=%u ",
+    printf("wifi=%s error=%s sdk_error=%ld configured=%u stored=%u auto_retry=%u sdk_busy=%u ",
         fo_state_name(snapshot.state), fo_error_name(snapshot.error), (long)snapshot.sdk_error,
-        (unsigned)snapshot.configured, (unsigned)snapshot.wanted, (unsigned)snapshot.sdk_busy);
+        (unsigned)snapshot.configured, (unsigned)snapshot.stored, (unsigned)snapshot.wanted, (unsigned)snapshot.sdk_busy);
     printf("mac_valid=%u mac=", (unsigned)snapshot.mac_valid); mac(snapshot.mac);
     printf(" rssi_valid=%u rssi=%ld scan=%u attempts=%lu links=%lu epoch=%lu retry_at_ms=%llu\n",
         (unsigned)snapshot.rssi_valid, (long)snapshot.rssi, (unsigned)snapshot.scanning,
@@ -67,14 +72,22 @@ static void wifi_status(void) {
     for (unsigned i = 0; i < snapshot.ssid_len; ++i) printf("%02x", snapshot.ssid[i]);
     printf(" last_link_error=%ld failed_attempt=%lu\n", (long)snapshot.last_link_error,
         (unsigned long)snapshot.failed_attempt);
+#ifdef FUNKOTTO_W4
+    printf("storage=%s storage_error=%lu flash_profile=%u flash_ready=%u storage_seq=%lu\n",
+        fo_store_state_name((enum fo_store_state)snapshot.storage_state), (unsigned long)snapshot.storage_error,
+        (unsigned)snapshot.flash_profile, (unsigned)snapshot.flash_ready, (unsigned long)snapshot.storage_sequence);
+#endif
 }
 static void submit(enum fo_request r, const struct fo_profile *p) {
     puts(fo_wifi_submit(r, p) ? "QUEUED (completion follows)" : "BUSY: previous command still running");
 }
 static void dispatch(enum fo_ui_command c) {
     switch(c) {
+    case UI_SAVE: submit(REQ_SAVE,NULL); break;
+    case UI_ERASE: submit(REQ_ERASE,NULL); break;
     case UI_RAW_ON:
 #ifdef FUNKOTTO_W3
+        if (fo_wifi_command_busy()) { puts("BUSY: command still running"); break; }
         puts("RAW v1; close serial port (DTR low) to return to console");
         fo_raw_start(&raw, get_rand_64()); raw_active = true; print_scan = false;
         /* Suppress all SDK/console text while the binary transport is active. */
@@ -88,7 +101,13 @@ static void dispatch(enum fo_ui_command c) {
         puts("raw on: binary Ethernet test mode (tools/wifi_diag.py)");
 #endif
         puts("help | info | status | wifi status | wifi scan | wifi results | wifi set | wifi sethex");
-        puts("wifi connect | wifi disconnect | wifi stats; Ctrl-C cancels input; RAM profile only."); break;
+#ifdef FUNKOTTO_W4
+        puts("wifi connect | wifi disconnect | wifi stats | wifi save | wifi erase");
+        puts("wifi set changes RAM; wifi save persists for autoconnect; wifi erase clears RAM and flash.");
+#else
+        puts("wifi connect | wifi disconnect | wifi stats; Ctrl-C cancels input; RAM profile only.");
+#endif
+        break;
     case UI_INFO: info(); break;
     case UI_STATUS:
         printf("uptime_ms=%llu safe_init_us=%llu bus_locked=%u output_mask=0x%08x watchdog_boot=%u config_offset=0x%08x\n",
@@ -168,7 +187,7 @@ int main(void) {
         fo_wifi_snapshot(&snapshot);
         if (snapshot.completed != completed) {
             completed = snapshot.completed;
-            static const char *const replies[] = {"OK", "BUSY", "NO_PROFILE", "DRIVER_ERROR", "INVALID"};
+            static const char *const replies[] = {"OK", "BUSY", "NO_PROFILE", "DRIVER_ERROR", "INVALID", "FLASH_ERROR"};
             printf("wifi command=%lu result=%s\n", (unsigned long)completed, replies[snapshot.reply]);
         }
         if (snapshot.scan_done != scan_done) {

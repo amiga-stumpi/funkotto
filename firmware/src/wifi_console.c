@@ -45,7 +45,12 @@ static enum fo_ui_command line(struct fo_wifi_console *u) {
     if (!strcmp(u->line, "wifi connect")) return UI_CONNECT;
     if (!strcmp(u->line, "wifi disconnect")) return UI_DISCONNECT;
     if (!strcmp(u->line, "wifi stats")) return UI_STATS;
+#ifdef FUNKOTTO_W4
+    if (!strcmp(u->line, "wifi save")) return UI_SAVE;
+    if (!strcmp(u->line, "wifi erase")) return UI_ERASE;
+#else
     if (!strcmp(u->line, "wifi save") || !strcmp(u->line, "wifi erase")) return UI_NOT_IMPLEMENTED;
+#endif
     if (!strcmp(u->line, "wifi set") || !strcmp(u->line, "wifi sethex")) {
         fo_wipe(&u->profile, sizeof(u->profile));
         u->hex = !strcmp(u->line, "wifi sethex"); u->phase = 1; return UI_PROMPT_SSID;

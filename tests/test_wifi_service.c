@@ -50,7 +50,62 @@ int cyw43_send_ethernet(cyw43_t *p, int itf, size_t len, const void *buf, bool i
     return 0;
 }
 #endif
+#ifdef FUNKOTTO_W4
+static uint8_t flash_bytes[2][4096];
+static bool flash_allowed=true, flash_window;
+static unsigned flash_ops, flash_inits;
+static const uint8_t *flash_read(unsigned slot) { assert(slot<2);return flash_bytes[slot]; }
+static bool flash_erase(unsigned slot) {
+    assert(flash_window && !driver_up && !lock_depth && !cyw43_state.itf_state && slot<2);
+    ++flash_ops;memset(flash_bytes[slot],255,4096);return true;
+}
+static bool flash_program(unsigned slot,unsigned page,const uint8_t *data) {
+    assert(flash_window && !driver_up && !lock_depth && slot<2 && page<2);
+    ++flash_ops;for(unsigned i=0;i<256;++i)flash_bytes[slot][page*256+i]&=data[i];return true;
+}
+const struct fo_store_io fo_flash_io={flash_read,flash_erase,flash_program};
+bool fo_flash_core_init(void) { ++flash_inits;return true; }
+bool fo_flash_open(void) { assert(!driver_up && !lock_depth);flash_window=flash_allowed;return flash_window; }
+void fo_flash_close(void) { flash_window=false; }
+static void storage_tests(struct fo_profile *p) {
+    assert(flash_inits==2 && status.flash_ready && !status.stored);
+    assert(fo_wifi_submit(REQ_SAVE,NULL));assert(fo_wifi_command_busy());service_step();
+    assert(status.reply==REPLY_OK && status.stored && status.flash_profile && flash_ops==3 && !fo_wifi_command_busy());
+    unsigned ops=flash_ops;assert(fo_wifi_submit(REQ_SAVE,NULL));service_step();assert(flash_ops==ops);
+    assert(fo_wifi_submit(REQ_CONNECT,NULL));service_step();link_event=true;service_step();
+    assert(model.state==FO_LINK_UP);
+    p->key[7]='9';assert(fo_wifi_submit(REQ_SET,p));service_step();assert(!status.stored && status.flash_profile);
+    assert(fo_wifi_submit(REQ_CONNECT,NULL));service_step();link_event=true;service_step();
+    assert(fo_wifi_submit(REQ_SAVE,NULL));service_step();
+    assert(status.reply==REPLY_OK && model.wanted && status.stored && !flash_window);
+    link_event=true;service_step();assert(model.state==FO_LINK_UP);
+    ops=flash_ops;
+    driver_stop();service_init();service_step();
+    assert(model.wanted && model.configured && model.profile.key[7]=='9' && status.stored && flash_ops==ops);
+    /* Save after failed quiescence must not change flash; retry intent survives. */
+    flash_allowed=false;assert(fo_wifi_submit(REQ_SAVE,NULL));service_step();
+    assert(status.reply==REPLY_FLASH && model.wanted && flash_ops==ops && status.storage_error==STORE_NOT_READY);
+    flash_allowed=true;
+    assert(fo_wifi_submit(REQ_ERASE,NULL));service_step();
+    assert(status.reply==REPLY_OK && !model.configured && !model.wanted && !status.stored && !status.flash_profile);
+    for(unsigned i=0;i<sizeof(model.profile);++i)assert(((uint8_t *)&model.profile)[i]==0);
+    driver_stop();service_init();service_step();assert(!model.configured && !model.wanted);
+    assert(fo_wifi_submit(REQ_SAVE,NULL));service_step();assert(status.reply==REPLY_NO_PROFILE);
+    /* Simulate committed delete with interrupted old-secret cleanup on reboot. */
+    assert(fo_wifi_submit(REQ_SET,p));service_step();assert(fo_wifi_submit(REQ_SAVE,NULL));service_step();
+    uint8_t old_sector[4096];unsigned old=(unsigned)profile_store.active;memcpy(old_sector,flash_bytes[old],4096);
+    assert(fo_wifi_submit(REQ_ERASE,NULL));service_step();memcpy(flash_bytes[old],old_sector,4096);
+    driver_stop();service_init();service_step();assert(!model.configured && !model.wanted);
+    for(unsigned i=0;i<4096;++i)assert(flash_bytes[old][i]==255);
+    assert(fo_wifi_submit(REQ_SCAN,NULL));service_step();ops=flash_ops;
+    assert(fo_wifi_submit(REQ_ERASE,NULL));service_step();assert(status.reply==REPLY_BUSY && flash_ops==ops);
+    puts("PASS: W4 actual service save/erase, stored-vs-RAM state, boot autoconnect, delete cleanup and failed quiescence");
+}
+#endif
 int main(void) {
+#ifdef FUNKOTTO_W4
+    memset(flash_bytes,255,sizeof(flash_bytes));
+#endif
     fo_wifi_launch(); service_init();
     assert(model.state == FO_UNCONFIGURED && driver_up && status.mac_valid);
     assert(status.pio_mask == 0x10 && status.dma_mask == 8);
@@ -113,5 +168,8 @@ int main(void) {
     assert(fo_wifi_submit(REQ_SET, &p)); service_step();
     assert(status.last_link_error == 0 && status.failed_attempt == 0);
     assert(status.ssid_len == 1 && status.ssid[0] == 'T');
+#ifdef FUNKOTTO_W4
+    storage_tests(&p);
+#endif
     puts("PASS: actual WLAN service init, scan bounds/cancel/timeout, mailbox wiping, link loss/retry and SDK failure recovery");
 }
