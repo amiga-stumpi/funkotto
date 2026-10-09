@@ -1,6 +1,6 @@
 # FunkOtto: Plan für die erste funktionale Firmware v0.1
 
-Stand: 08.10.2026 · Status: M1 gebaut, CI erfolgreich, USB/Kaltstart am Pico bestätigt; M0 offen
+Stand: 09.10.2026 · Status: M1 und WLAN W1–W4 umgesetzt, Grundfunktionen am Pico bestätigt; W5 ausgelassen, M0 offen
 
 ## 1. Ziel und Entscheidung
 
@@ -337,9 +337,16 @@ und Kaltstart ohne geöffnetes Terminal am realen Pico bestätigt. Watchdog-
 Fehlerinjektion und elektrische Musterabnahme bleiben offen.
 Die vorgezogene isolierte M3-Entwicklung beschreibt der
 [WLAN-Entwicklungsplan](wlan-entwicklungsplan.md).
-M3 ist mit W1/W2 begonnen: Scan, RAM-Profil und Verbindung sind implementiert
-und softwareseitig geprüft; reale WLAN-Abnahme und Rohframe-Transport bleiben offen.
-M0, M2 sowie M4–M6 sind offen. [Prüfbericht](results/2026-10-08-firmware-m1.md).
+**Fortschritt am 09.10.2026:** Die isolierte WLAN-Entwicklung W1–W4 ist
+umgesetzt. Rohframe-Transport (1.000/1.000 Pings), Wiederverbindung sowie
+Speichern, Kaltstart-Autoconnect, Löschen und erneutes Speichern sind am Pico
+bestätigt. [W3-Prüfstand](results/2026-10-09-w3.md) ·
+[W4-Prüfstand](results/2026-10-09-w4.md).
+W5 (WLAN-Stabilisierung) wird auf ausdrücklichen Nutzerwunsch ausgelassen;
+dies betrifft nicht M5 (Integration). Nächster Entwicklungsschritt ist M2.
+M0 bleibt vor aktiven Bustests erforderlich. M4 ist durch die vorhandene
+Flashprofil-/Autoconnect-Basis vorbereitet; Amiga-Konfigurationskommandos und
+die weitergehende Abnahme fehlen noch. M2 sowie M5–M6 bleiben offen.
 
 M1 und isolierte M3-Arbeiten können vor Abschluss M0 beginnen. M2-Bustests sind
 von M0 abhängig; M5 benötigt M2–M4. Keine Kalenderzusage ohne verfügbares Muster,

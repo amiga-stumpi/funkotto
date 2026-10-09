@@ -47,7 +47,9 @@ bleibt offen.
 Parallelport-Kommunikation und Amiga-Treiber folgen.
 USB-Diagnose und Kaltstart ohne geöffnetes Terminal wurden am 08.10.2026 vom
 Nutzer auf einem realen Pico bestätigt. Die elektrische M0-Abnahme bleibt offen.
-Nächster Schritt: [WLAN-Entwicklungsplan](docs/wlan-entwicklungsplan.md).
+**W5 wird auf Nutzerwunsch ausgelassen.** Nächster Entwicklungsschritt ist M2
+(Amiga-Link); aktive Bustests folgen nach M0.
+[WLAN-Entwicklungsplan](docs/wlan-entwicklungsplan.md).
 
 Die erste Firmware soll Parallelport-Kommunikation, WLAN-Rohpakete und ein
 dauerhaft gespeichertes WLAN-Profil mit automatischer Wiederverbindung bieten.

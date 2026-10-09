@@ -1,11 +1,20 @@
 # FunkOtto: Entwicklungsplan WLAN
 
-Stand: 08.10.2026. Planung auf Grundlage von M1 (`ae67bce3b2dc`), Pico SDK 2.2.0
+Stand: 09.10.2026. Planung auf Grundlage von M1 (`ae67bce3b2dc`), Pico SDK 2.2.0
 und dem unveränderten Nutzerboard. W1/W2 sind softwareseitig umgesetzt; Scan und erster WPA2-Join am Pico bestätigt.
 Manuelles Wiederverbinden und automatische Erholung nach AP-Ausfall sind ebenfalls
 am Pico bestätigt. Weitere Fehlerfälle und Dauerlauf bleiben offen.
 [Implementierungsbericht](results/2026-10-08-wlan-w12.md) ·
 [Testanleitung](../firmware/WLAN_TEST.md).
+
+**Aktueller Beschluss (09.10.2026): W5 wird auf Wunsch des Nutzers ausgelassen.**
+W1–W4 sind umgesetzt; Rohdatenübertragung und die W4-Grundfunktionen sind am
+Pico bestätigt. W5 wird als übersprungen geführt, nicht als bestandener Test.
+Der separate Stabilisierungsschritt einschließlich 24-h-Lauf und zusätzlicher
+Treiberneustart-/Messarbeiten entfällt aus der aktuellen Umsetzung. Die bislang
+nicht ausgeführten Tests bleiben im Prüfstand als ungetestet nachvollziehbar.
+Nächster Entwicklungsschritt ist M2 (Amiga-Link); aktive Bustests setzen weiterhin
+M0 voraus. Die noch offenen erweiterten W4-Prüfungen werden separat geführt.
 
 ## Ziel und Ausgangspunkt
 
@@ -77,12 +86,12 @@ SDK-Blockierdauer geprüft, bevor sie für WLAN unverändert übernommen wird.
 | W2 – Scan und Verbindung | Asynchroner Scan, RAM-Profil, WPA2-Join, Status, Abbruch und Wiederverbindung | Reales Netz gefunden und authentifiziert; falsches Passwort/fehlender AP führen zu begrenzten Versuchen; AP aus/an erholt sich; USB bleibt bedienbar |
 | W3 – Ethernet-Rohdaten | TX/RX-Adapter, feste Ringe, Längenprüfung, Zähler und USB-Testtransport | Rohframes in beide Richtungen mit LAN-Gegenstelle nachgewiesen; ARP/ICMP über den Testtransport; volle Puffer ohne Korruption |
 | W4 – Dauerhaftes Profil | Zwei Flashsektoren, CRC/Sequenz/Commit, explizites Speichern/Löschen, automatischer Join nach Start | Kaltstart ohne USB-Konsole verbindet; unterbrochene Flashoperationen sind beherrscht; Profil bleibt beim normalen UF2-Update erhalten |
-| W5 – Stabilisierung | Fehlertests, begrenzte Neustarts des WLAN-Treibers, Ressourcen-/Zeitmessungen, Dokumentation | 24-h-Test und definierte Ausfalltests bestanden; WLAN-Modul bereit für spätere M2/M5-Integration |
+| W5 – Stabilisierung (**ausgelassen**) | Auf Nutzerwunsch vom 09.10.2026 kein eigener Umsetzungsschritt | Kein W5-Abnahmenachweis; kein vorgeschaltetes W5-Gate für M2/M5 |
 
 **Erste auszuliefernde Test-UF2: W1 + W2.** Damit kann der Nutzer scan/connect/status
 auf seinem einzelnen Pico prüfen. Zugangsdaten liegen dabei zunächst nur im RAM.
 Erst nach erfolgreichem Rohframe-Nachweis W3 wird die dauerhafte Speicherung W4
-freigegeben. Jede Stufe liefert Quellen, UF2, Manifest, Testanleitung und Bericht.
+freigegeben. Jede umgesetzte Stufe liefert Quellen, UF2, Manifest, Testanleitung und Bericht.
 
 ### W1: reproduzierbare Basis und Ressourcen
 
@@ -218,11 +227,12 @@ WLAN-Initzeit, Joinzeit, Reconnectzeit und USB-Antwortlatenzen getrennt messen;
 W4-Abnahme: 100 Kaltstarts mit gültigem Profil, zusätzliche gezielte
 Stromunterbrechungen in den Flashphasen und normaler BOOTSEL-Update-Test mit
 anschließendem Profilvergleich. Elektrische RUN-/Amiga-Resettests erst am
-abgenommenen Träger nachholen. W5: 24 Stunden bidirektionaler Pakettest,
-Zähler/Paketverluste auswerten, keine Datenkorruption und keine unerklärten Resets.
+abgenommenen Träger nachholen. Der ursprünglich für W5 vorgesehene 24-h-Test
+mit bidirektionalem Paketverkehr, Verlust-/Korruptions- und Reset-Auswertung
+wird gemäß Nutzerentscheidung ausgelassen und gilt nicht als bestanden.
 Realtests werden durch Nutzerprotokolle bestätigt, nicht aus CI-Erfolg abgeleitet.
 
-Nach W5 sind WLAN und USB-Konfiguration separat nutzbar. Zur vollständigen
+Mit W1–W4 sind WLAN und USB-Konfiguration separat nutzbar; W5 wird ausgelassen. Zur vollständigen
 FunkOtto-v0.1 fehlen weiterhin M0, Amiga-Link, dessen Konfigurationsbefehle und
 Integration; SANA-II und OS-1.3-Oberfläche bleiben eigene Folgepakete.
 
