@@ -1,9 +1,10 @@
 # FunkOtto W3 – Ethernet über USB prüfen
 
 Firmware `0.1.0-w3`, Ziel `funkotto_w3`, Pico 2 W. W3 implementiert Roh-Ethernet
-mit je acht festen TX-/RX-Puffern. Der erste reale ARP/ICMP-Test ist am 09.10.2026
-mit 12/12 geprüften Antworten einschließlich MTU 1500 bestanden; Dauerlauf und
-Belastungstests bleiben offen.
+mit je acht festen TX-/RX-Puffern. Reale Tests am 09.10.2026 mit 12/12 und
+anschließend 1.000/1.000 geprüften Antworten einschließlich MTU 1500 bestanden.
+Der 1.000er-Lauf wurde anhand von JSON und PCAP geprüft. Langzeitbetrieb,
+Latenzausreißer und Linkverlust unter Rohdatenlast bleiben offen.
 Der Amiga-Bus bleibt gesperrt; WLAN-Zugangsdaten bleiben ausschließlich im RAM.
 
 ## 1. Flashen und WLAN verbinden

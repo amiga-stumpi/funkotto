@@ -140,8 +140,9 @@ Energiesparen zunächst abschalten; Latenz und Verbrauch später gesondert bewer
 ### W3: Rohframes vor Amiga-Integration nachweisen
 
 Stand 09.10.2026: als `funkotto_w3` implementiert, einschließlich USB-Testmodus,
-PC-ARP/ICMP-Werkzeug und automatisierter Queue-/Protokolltests. **Erster realer
-ARP/ICMP-Test bestanden (12/12, MTU 1500, keine Verluste)**; Dauerlauf und
+PC-ARP/ICMP-Werkzeug und automatisierter Queue-/Protokolltests. **Reale ARP/ICMP-Tests
+bestanden (12/12 und 1.000/1.000, MTU 1500, keine Verluste; JSON/PCAP geprüft)**.
+Langzeitbetrieb, einzelne Latenzausreißer und
 Linkverlust unter Rohdatenlast bleiben offen: [Testablauf](../firmware/W3_TEST.md),
 [Prüfstand](results/2026-10-09-w3.md). W4 beginnt nach dem realen Rohframe-Nachweis.
 
