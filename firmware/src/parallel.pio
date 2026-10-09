@@ -1,0 +1,48 @@
+; GP8 = automatic CIA PC/STROBE. GP0..7 = data, GP10 = BUSY.
+; RX y = block size - 1, x = 0. Left shift, explicit PUSH resets ISR.
+.program fo_parallel_rx
+.wrap_target
+    wait 1 gpio 8
+    wait 0 gpio 8
+    in pins, 8
+    wait 1 gpio 8
+    push block
+    mov x, ~x
+    mov pins, x
+    jmp y-- 0
+    irq 1
+hold:
+    jmp hold
+.wrap
+
+; TX y = block size - 1. First byte is preloaded before IRQ0/driver release.
+; BUSY changes only AFTER the next byte is valid (last byte: after STROBE).
+.program fo_parallel_tx
+.side_set 1 opt
+    pull block
+    out pins, 8
+    irq 0 side 0
+even:
+    wait 0 gpio 8
+    wait 1 gpio 8
+    jmp y-- next_odd
+    jmp done_odd
+next_odd:
+    pull block
+    out pins, 8
+odd:
+    wait 0 gpio 8 side 1
+    wait 1 gpio 8
+    jmp y-- next_even
+    jmp done_even
+next_even:
+    pull block
+    out pins, 8
+    jmp even side 0
+done_odd:
+    irq 1 side 1
+    jmp hold
+done_even:
+    irq 1 side 0
+hold:
+    jmp hold

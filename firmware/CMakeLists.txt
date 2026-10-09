@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.31)
 
-# Pico 2 W / Arm only; all targets keep the parallel bus locked.
+# Pico 2 W / Arm only. M2 is locked unless a laboratory build is explicitly armed.
 set(PICO_BOARD pico2_w CACHE STRING "Board")
 set(PICO_PLATFORM rp2350-arm-s CACHE STRING "Platform")
 if(NOT PICO_BOARD STREQUAL "pico2_w" OR NOT PICO_PLATFORM STREQUAL "rp2350-arm-s")
@@ -105,6 +105,13 @@ function(fo_target NAME VERSION)
     pico_add_extra_outputs(${NAME})
 endfunction()
 fo_target(funkotto_m1 "0.1.0-m1" src/main.c src/console.c)
+option(FUNKOTTO_M2_ACTIVE "Laboratory M2 bus access; requires M0 measurements and explicit USB arm" OFF)
+fo_target(funkotto_m2 "0.1.0-m2" src/main_m2.c src/parallel.c ../protocol/m2.c)
+target_include_directories(funkotto_m2 PRIVATE ../protocol)
+target_link_libraries(funkotto_m2 PRIVATE hardware_pio hardware_dma pico_rand)
+target_compile_definitions(funkotto_m2 PRIVATE FUNKOTTO_M2_ACTIVE=$<BOOL:${FUNKOTTO_M2_ACTIVE}> PICO_STACK_SIZE=0x1000)
+pico_generate_pio_header(funkotto_m2 ${CMAKE_CURRENT_LIST_DIR}/src/parallel.pio)
+
 if(FUNKOTTO_BUILD_WIFI)
     # SDK 2.2.0 gates its convenience poll target on lwIP availability. Compose
     # the same libraries explicitly, without a TCP/IP stack or SDK source edits.

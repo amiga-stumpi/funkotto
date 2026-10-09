@@ -5,6 +5,17 @@ import subprocess
 import tempfile
 
 ROOT = Path(__file__).resolve().parents[1]
+with tempfile.TemporaryDirectory(prefix="funkotto-m2-tests-") as tmp:
+    binary = str(Path(tmp) / "test_m2")
+    subprocess.run([
+        os.environ.get("CC", "cc"), "-std=c11", "-Wall", "-Wextra", "-Werror",
+        "-Wconversion", "-Wshadow", "-g", "-fno-omit-frame-pointer",
+        "-fsanitize=address,undefined", "-I" + str(ROOT / "protocol"),
+        str(ROOT / "tests/test_m2.c"), str(ROOT / "protocol/m2.c"),
+        str(ROOT / "protocol/m2_host.c"), "-o", binary,
+    ], check=True)
+    subprocess.run([binary], check=True)
+
 with tempfile.TemporaryDirectory(prefix="funkotto-tests-") as tmp:
     binary = str(Path(tmp) / "test_m1")
     subprocess.run([

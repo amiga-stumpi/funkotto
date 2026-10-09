@@ -1,9 +1,9 @@
-name: Pico firmware M1 and WLAN
+name: Pico firmware M1 M2 and WLAN
 on:
   push:
-    paths: ['firmware/**', 'tools/**', 'tests/**', 'hardware/**', '.github/workflows/firmware.yml']
+    paths: ['firmware/**', 'tools/**', 'tests/**', 'protocol/**', 'amiga/**', 'hardware/**', '.github/workflows/firmware.yml']
   pull_request:
-    paths: ['firmware/**', 'tools/**', 'tests/**', 'hardware/**', '.github/workflows/firmware.yml']
+    paths: ['firmware/**', 'tools/**', 'tests/**', 'protocol/**', 'amiga/**', 'hardware/**', '.github/workflows/firmware.yml']
   workflow_dispatch:
 permissions:
   contents: read
@@ -21,9 +21,11 @@ jobs:
             binutils-arm-none-eabi=2.42-1ubuntu1+23 \
             libnewlib-arm-none-eabi=4.4.0.20231231-2 \
             libnewlib-dev=4.4.0.20231231-2 \
-            libstdc++-arm-none-eabi-dev=15:13.2.rel1-2+26
+            libstdc++-arm-none-eabi-dev=15:13.2.rel1-2+26 \
+            gcc-13-m68k-linux-gnu=13.3.0-6ubuntu2~24.04cross1 \
+            binutils-m68k-linux-gnu=2.42-4ubuntu2.10
           python3 -m venv .venv
-          .venv/bin/python -m pip install cmake==3.31.6 ninja==1.11.1.4
+          .venv/bin/python -m pip install cmake==3.31.6 ninja==1.11.1.4 unicorn==2.1.4
           echo "$GITHUB_WORKSPACE/.venv/bin" >> "$GITHUB_PATH"
       - name: Hardware contract and host tests
         run: |
@@ -42,15 +44,30 @@ jobs:
           python tools/check_firmware_artifacts.py build/m1 --target funkotto_w12
           python tools/check_firmware_artifacts.py build/m1 --target funkotto_w3
           python tools/check_firmware_artifacts.py build/m1 --target funkotto_w4
+          python tools/check_firmware_artifacts.py build/m1 --target funkotto_m2
+          python tests/run_m2_transport_tests.py build/m1
+      - name: Build and emulate the 68000 HUNK diagnostic
+        run: |
+          python tools/build_amiga_diag.py --source-id "$(git rev-parse --short=12 HEAD)"
+          python tests/run_m2_amiga_emulation.py build/amiga-m2/FunkOttoDiag
+      - name: Compile gated M2 laboratory target
+        run: |
+          cmake -S firmware -B build/m2-lab -G Ninja \
+            -DPICO_SDK_PATH="$GITHUB_WORKSPACE/.deps/pico-sdk" \
+            -DCMAKE_BUILD_TYPE=Release -DFUNKOTTO_BUILD_WIFI=OFF \
+            -DFUNKOTTO_M2_ACTIVE=ON -DFUNKOTTO_SOURCE_ID="$(git rev-parse --short=12 HEAD)"
+          cmake --build build/m2-lab --target funkotto_m2 --parallel 4
+          python tools/check_firmware_artifacts.py build/m2-lab --target funkotto_m2
       - name: Package WLAN firmware with instructions and notices
         run: |
           python tools/package_firmware.py build/m1 .deps/pico-sdk build/m1/funkotto-w12.zip
           python tools/package_firmware.py build/m1 .deps/pico-sdk build/m1/funkotto-w3.zip --target funkotto_w3
           python tools/package_firmware.py build/m1 .deps/pico-sdk build/m1/funkotto-w4.zip --target funkotto_w4
+          python tools/package_m2.py build/m1 build/amiga-m2 .deps/pico-sdk build/m1/funkotto-m2.zip
       - name: Upload firmware and build manifest
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          name: funkotto-m1-w12-w3-w4-pico2w
+          name: funkotto-m1-m2-w12-w3-w4-pico2w
           if-no-files-found: error
           path: |
             build/m1/funkotto_m1.uf2
@@ -76,3 +93,8 @@ jobs:
             build/m1/funkotto_w4.bin
             build/m1/funkotto_w4-manifest.json
             build/m1/funkotto-w4.zip
+            build/m1/funkotto-m2.zip
+            build/m1/funkotto_m2.uf2
+            build/m1/funkotto_m2-manifest.json
+            build/amiga-m2/FunkOttoDiag
+            build/amiga-m2/manifest.json

@@ -13,8 +13,8 @@ Pico bestätigt. W5 wird als übersprungen geführt, nicht als bestandener Test.
 Der separate Stabilisierungsschritt einschließlich 24-h-Lauf und zusätzlicher
 Treiberneustart-/Messarbeiten entfällt aus der aktuellen Umsetzung. Die bislang
 nicht ausgeführten Tests bleiben im Prüfstand als ungetestet nachvollziehbar.
-Nächster Entwicklungsschritt ist M2 (Amiga-Link); aktive Bustests setzen weiterhin
-M0 voraus. Die noch offenen erweiterten W4-Prüfungen werden separat geführt.
+M2 (Amiga-Link) ist inzwischen softwareseitig umgesetzt;
+[Prüfstand](results/2026-10-09-m2.md). Aktive Bustests setzen weiterhin M0 voraus. Die noch offenen erweiterten W4-Prüfungen werden separat geführt.
 
 ## Ziel und Ausgangspunkt
 

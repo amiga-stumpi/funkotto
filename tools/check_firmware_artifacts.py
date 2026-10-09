@@ -54,7 +54,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("build_dir", type=Path)
     parser.add_argument("--tool-prefix", default="arm-none-eabi-")
-    parser.add_argument("--target", choices=["funkotto_m1", "funkotto_w12", "funkotto_w3", "funkotto_w4"], default="funkotto_m1")
+    parser.add_argument("--target", choices=["funkotto_m1", "funkotto_m2", "funkotto_w12", "funkotto_w3", "funkotto_w4"], default="funkotto_m1")
     args = parser.parse_args()
     build = args.build_dir.resolve()
     elf = build / (args.target + ".elf")
@@ -94,7 +94,7 @@ def main():
                 raise SystemExit("Missing W4 symbol: " + name)
     header = (build / ("generated/" + args.target + "/funkotto/build_info.h")).read_text()
     defines = dict(re.findall(r'#define\s+(\w+)\s+"([^"\n]*)"', header))
-    source_paths = [p for d in ("firmware", "tools", "tests") for p in (ROOT / d).rglob("*")
+    source_paths = [p for d in ("firmware", "protocol", "amiga", "tools", "tests") for p in (ROOT / d).rglob("*")
                     if p.is_file() and "__pycache__" not in p.parts]
     sources = {str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest()
                for p in sorted(source_paths)}
@@ -104,7 +104,8 @@ def main():
         artifacts[p.name] = {"size": p.stat().st_size, "sha256": hashlib.sha256(p.read_bytes()).hexdigest()}
     manifest = {
         "version": defines["FUNKOTTO_VERSION"], "source_id": defines["FUNKOTTO_SOURCE_ID"],
-        "stage": ("W4 persistent WLAN journal and autoconnect; raw Ethernet via USB; parallel bus disabled"
+        "stage": ("M2 standalone Amiga diagnostic; WLAN disabled; boot locked; laboratory activation gated"
+                  if args.target == "funkotto_m2" else "W4 persistent WLAN journal and autoconnect; raw Ethernet via USB; parallel bus disabled"
                   if args.target == "funkotto_w4" else "W3 raw Ethernet via USB; RAM profile only; parallel bus disabled"
                   if args.target == "funkotto_w3" else "W1/W2 WLAN; RAM profile only; no parallel or Ethernet transport"
                   if args.target == "funkotto_w12" else "M1 USB diagnostics; no active parallel bus or WLAN"),
@@ -135,6 +136,19 @@ def main():
         manifest["profile_schema"] = 1
         manifest["flash_critical_functions_in_sram"] = True
         manifest["profile_note"] = "Two 4096-byte sectors, CRC32 and separate commit page; credentials unencrypted"
+    if args.target == "funkotto_m2":
+        cache = (build / "CMakeCache.txt").read_text()
+        match = re.search(r'^FUNKOTTO_M2_ACTIVE:BOOL=(ON|OFF)$', cache, re.M)
+        if not match:
+            raise SystemExit('Missing explicit M2 active-build gate')
+        manifest['active_build'] = match[1] == 'ON'
+        manifest['boot_locked'] = True
+        manifest['parallel_block_bytes'] = 1536
+        manifest['activation'] = 'M0 measurements, active laboratory build and explicit USB arm required'
+        if symbols.get('__StackTop', 0) - symbols.get('__StackBottom', 0) != 4096:
+            raise SystemExit('Unexpected M2 stack reservation')
+        if 'cyw43_arch_init' in symbols:
+            raise SystemExit('M2 must remain standalone before integration')
     manifest_name = "manifest.json" if args.target == "funkotto_m1" else args.target + "-manifest.json"
     (build / manifest_name).write_text(json.dumps(manifest, indent=2) + "\n")
     print(json.dumps({"uf2": info, "elf_flash_end": hex(symbols["__flash_binary_end"]),

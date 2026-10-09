@@ -1,6 +1,6 @@
 # FunkOtto: Plan für die erste funktionale Firmware v0.1
 
-Stand: 09.10.2026 · Status: M1 und WLAN W1–W4 umgesetzt, Grundfunktionen am Pico bestätigt; W5 ausgelassen, M0 offen
+Stand: 09.10.2026 · Status: M1 und WLAN W1–W4 umgesetzt, Grundfunktionen am Pico bestätigt; M2 softwareseitig umgesetzt, W5 ausgelassen, M0 offen
 
 ## 1. Ziel und Entscheidung
 
@@ -191,8 +191,9 @@ nicht nur einen regelmäßig laufenden Timer.
 
 ## 5. Parallelport-Protokoll v1
 
-Die folgenden Angaben sind ein Entwurfsrahmen. M2 liefert erst die verbindliche
-Signal-/Timing-Spezifikation mit Oszillogrammen und Host-Registerfolge.
+Die folgenden Angaben bleiben der Integrationsrahmen. M2 implementiert das
+[Diagnoseprofil B1536](../protocol/M2.md) mit konkreter Host-Registerfolge,
+PIO/DMA und Fehlerrückkehr. Reale Oszillogramme und Timingabnahme fehlen noch.
 
 - Halbduplex, Amiga als Transaktionsmaster. Pico sendet Daten ausschließlich
   innerhalb eines ausdrücklich angeforderten Lesevorgangs.
@@ -343,10 +344,12 @@ Speichern, Kaltstart-Autoconnect, Löschen und erneutes Speichern sind am Pico
 bestätigt. [W3-Prüfstand](results/2026-10-09-w3.md) ·
 [W4-Prüfstand](results/2026-10-09-w4.md).
 W5 (WLAN-Stabilisierung) wird auf ausdrücklichen Nutzerwunsch ausgelassen;
-dies betrifft nicht M5 (Integration). Nächster Entwicklungsschritt ist M2.
+dies betrifft nicht M5 (Integration). M2 ist softwareseitig umgesetzt: eigener
+PIO/DMA-Build, gemeinsame Protokolldefinitionen und 68000-HUNK-Diagnose.
+[Prüfstand](results/2026-10-09-m2.md). Reale M2-/OS-1.3-Abnahme steht noch aus.
 M0 bleibt vor aktiven Bustests erforderlich. M4 ist durch die vorhandene
 Flashprofil-/Autoconnect-Basis vorbereitet; Amiga-Konfigurationskommandos und
-die weitergehende Abnahme fehlen noch. M2 sowie M5–M6 bleiben offen.
+die weitergehende Abnahme fehlen noch. M2-Hardwareabnahme sowie M5–M6 bleiben offen.
 
 M1 und isolierte M3-Arbeiten können vor Abschluss M0 beginnen. M2-Bustests sind
 von M0 abhängig; M5 benötigt M2–M4. Keine Kalenderzusage ohne verfügbares Muster,
@@ -389,9 +392,9 @@ Oszilloskop nötig; eine digitale 24-MHz-Abtastung beweist keine analoge Signalg
 
 Später: `amiga/device/` für SANA-II und `amiga/prefs/` für die OS-1.3-GUI.
 Es werden keine Dummy-Treiber oder leeren Tests als fertige Funktionen ausgegeben.
-Implementiert sind bisher `firmware/` mit M1-Grundstart/USB-Diagnose, passende
-Hosttests und Build-/Prüfwerkzeuge. Protokoll, WLAN, Profile und Amiga-Software
-sind weiterhin geplante Arbeitspakete.
+Implementiert sind M1, WLAN W1–W4 sowie M2-Diagnoseprotokoll, PIO/DMA und
+Amiga-CLI. SANA-II, Amiga-WLAN-Konfiguration, gemeinsame Integration und
+weitergehende Hardwareabnahmen bleiben ausstehend.
 
 ## 10. Quellen und Referenzen
 
