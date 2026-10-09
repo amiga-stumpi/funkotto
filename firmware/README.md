@@ -1,5 +1,5 @@
 > **M2 softwareseitig umgesetzt:** [Amiga-Diagnose und Laborablauf](M2_TEST.md).
-> Nutzer-SELFTEST mit 64 ECHOs bestanden; Testsystem noch nicht angegeben.
+> Nutzer-SELFTEST mit 64 ECHOs auf Amiga 500 / 68020 / Kickstart 1.3 / Workbench 1.3 bestanden.
 > Standard-Build gesperrt, aktive M2-Abnahme offen; WLAN separat in W4.
 
 > Neu: **W4** als Ziel `funkotto_w4`: dauerhaftes Profil und Autoconnect.

@@ -19,7 +19,8 @@ Erwartet: `HELLO session=...`, `ECHO verified count=0x00000040`, anschließend
 Adapter und greift nicht auf den Parallelport zu. Die 8-KiB-Stackeinstellung lässt
 Reserve für Betriebssystemaufrufe. Bitte Amiga-Modell, CPU,
 Kickstart-/Workbench-Version und Ausgabe festhalten. Ein erfolgreicher Nutzerlauf
-mit 64 ECHOs ist bereits dokumentiert; die genaue Testumgebung fehlt noch.
+mit 64 ECHOs ist auf Amiga 500 mit 68020, Kickstart 1.3 und Workbench 1.3
+dokumentiert. Ein realer 68000-Lauf bleibt offen.
 Die separate 68000-Emulation verwendet simulierte OS-Aufrufe.
 
 Die mitgelieferte `funkotto_m2.uf2` ist ein **gesperrter Standard-Build**:

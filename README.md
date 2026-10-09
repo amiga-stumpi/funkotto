@@ -51,8 +51,8 @@ Nutzer auf einem realen Pico bestätigt. Die elektrische M0-Abnahme bleibt offen
 PIO/DMA-Amiga-Link und 68000-Diagnosetool für HELLO/ECHO.
 [M2-Testanleitung](firmware/M2_TEST.md) · [Prüfbericht](docs/results/2026-10-09-m2.md).
 Standard-UF2 gesperrt, aktive Bustests nach M0. Der Nutzer hat den portfreien
-`FunkOttoDiag SELFTEST` mit 64 ECHOs erfolgreich ausgeführt; Angaben zum
-Testsystem stehen noch aus. M2 enthält noch kein WLAN.
+`FunkOttoDiag SELFTEST` mit 64 ECHOs auf einem Amiga 500 mit 68020,
+Kickstart 1.3 und Workbench 1.3 erfolgreich ausgeführt. M2 enthält noch kein WLAN.
 [WLAN-Entwicklungsplan](docs/wlan-entwicklungsplan.md).
 
 Die erste Firmware soll Parallelport-Kommunikation, WLAN-Rohpakete und ein

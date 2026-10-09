@@ -347,7 +347,8 @@ W5 (WLAN-Stabilisierung) wird auf ausdrücklichen Nutzerwunsch ausgelassen;
 dies betrifft nicht M5 (Integration). M2 ist softwareseitig umgesetzt: eigener
 PIO/DMA-Build, gemeinsame Protokolldefinitionen und 68000-HUNK-Diagnose.
 [Prüfstand](results/2026-10-09-m2.md). Nutzer-SELFTEST mit 64 ECHOs bestanden;
-Modell, CPU und OS-Version des Testsystems fehlen noch. Aktive M2-Abnahme offen.
+Testsystem: Amiga 500 mit 68020, Kickstart 1.3 und Workbench 1.3.
+Realer 68000-Lauf und aktive M2-Abnahme bleiben offen.
 M0 bleibt vor aktiven Bustests erforderlich. M4 ist durch die vorhandene
 Flashprofil-/Autoconnect-Basis vorbereitet; Amiga-Konfigurationskommandos und
 die weitergehende Abnahme fehlen noch. M2-Hardwareabnahme sowie M5–M6 bleiben offen.
