@@ -50,8 +50,9 @@ Nutzer auf einem realen Pico bestätigt. Die elektrische M0-Abnahme bleibt offen
 **W5 wird auf Nutzerwunsch ausgelassen. M2 ist softwareseitig umgesetzt:**
 PIO/DMA-Amiga-Link und 68000-Diagnosetool für HELLO/ECHO.
 [M2-Testanleitung](firmware/M2_TEST.md) · [Prüfbericht](docs/results/2026-10-09-m2.md).
-Standard-UF2 gesperrt, aktive Bustests nach M0. Als Nächstes ist der portfreie
-`FunkOttoDiag SELFTEST` auf echtem OS 1.3 möglich. M2 enthält noch kein WLAN.
+Standard-UF2 gesperrt, aktive Bustests nach M0. Der Nutzer hat den portfreien
+`FunkOttoDiag SELFTEST` mit 64 ECHOs erfolgreich ausgeführt; Angaben zum
+Testsystem stehen noch aus. M2 enthält noch kein WLAN.
 [WLAN-Entwicklungsplan](docs/wlan-entwicklungsplan.md).
 
 Die erste Firmware soll Parallelport-Kommunikation, WLAN-Rohpakete und ein

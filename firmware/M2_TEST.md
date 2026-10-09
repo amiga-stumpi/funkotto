@@ -18,8 +18,9 @@ Erwartet: `HELLO session=...`, `ECHO verified count=0x00000040`, anschließend
 `PASS: local protocol selftest; no CIA access.` Dieser Selbsttest benötigt keinen
 Adapter und greift nicht auf den Parallelport zu. Die 8-KiB-Stackeinstellung lässt
 Reserve für Betriebssystemaufrufe. Bitte Amiga-Modell, CPU,
-Kickstart-/Workbench-Version und Ausgabe festhalten. Dies ist der nächste
-OS-1.3-Test; die bisherige 68000-Emulation verwendet simulierte OS-Aufrufe.
+Kickstart-/Workbench-Version und Ausgabe festhalten. Ein erfolgreicher Nutzerlauf
+mit 64 ECHOs ist bereits dokumentiert; die genaue Testumgebung fehlt noch.
+Die separate 68000-Emulation verwendet simulierte OS-Aufrufe.
 
 Die mitgelieferte `funkotto_m2.uf2` ist ein **gesperrter Standard-Build**:
 `active_build=0`. Beim Flashen wie bisher den Pico entnehmen oder DB25 und

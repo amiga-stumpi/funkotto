@@ -1,5 +1,6 @@
 > **M2 softwareseitig umgesetzt:** [Amiga-Diagnose und Laborablauf](M2_TEST.md).
-> Standard-Build gesperrt, noch keine reale M2-/OS-1.3-Abnahme; WLAN separat in W4.
+> Nutzer-SELFTEST mit 64 ECHOs bestanden; Testsystem noch nicht angegeben.
+> Standard-Build gesperrt, aktive M2-Abnahme offen; WLAN separat in W4.
 
 > Neu: **W4** als Ziel `funkotto_w4`: dauerhaftes Profil und Autoconnect.
 > [W4-Bedienung und Kaltstarttest](W4_TEST.md). Gespeichertes Profil und erster Kaltstart mit automatischer Wiederverbindung am Pico bestätigt; Löschtest und erneutes Einrichten/Verbinden/Speichern bestanden. Weitergehende Hardwareabnahme noch offen.
