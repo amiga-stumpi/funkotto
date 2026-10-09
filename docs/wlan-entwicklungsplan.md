@@ -139,6 +139,11 @@ Energiesparen zunächst abschalten; Latenz und Verbrauch später gesondert bewer
 
 ### W3: Rohframes vor Amiga-Integration nachweisen
 
+Stand 09.10.2026: als `funkotto_w3` implementiert, einschließlich USB-Testmodus,
+PC-ARP/ICMP-Werkzeug und automatisierter Queue-/Protokolltests. **Reale
+Hardwareabnahme noch offen**: [Testablauf](../firmware/W3_TEST.md),
+[Prüfstand](results/2026-10-09-w3.md). W4 beginnt nach dem realen Rohframe-Nachweis.
+
 TX über `cyw43_send_ethernet(..., is_pbuf=false)`, RX über den eigenen Callback.
 Die unteren Treiberfunktionen hinsichtlich Kopieren/Übernahmedauer prüfen:
 TX-Puffer erst nach bestätigter Übernahme freigeben; RX-Daten vor Callback-Ende

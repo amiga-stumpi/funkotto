@@ -54,7 +54,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("build_dir", type=Path)
     parser.add_argument("--tool-prefix", default="arm-none-eabi-")
-    parser.add_argument("--target", choices=["funkotto_m1", "funkotto_w12"], default="funkotto_m1")
+    parser.add_argument("--target", choices=["funkotto_m1", "funkotto_w12", "funkotto_w3"], default="funkotto_m1")
     args = parser.parse_args()
     build = args.build_dir.resolve()
     elf = build / (args.target + ".elf")
@@ -73,12 +73,18 @@ def main():
         raise SystemExit("Unexpected UART linked: GP0/GP1 are parallel data pins")
     callback_names = ["cyw43_cb_tcpip_init", "cyw43_cb_tcpip_deinit", "cyw43_cb_tcpip_set_link_up",
                       "cyw43_cb_tcpip_set_link_down", "cyw43_cb_process_ethernet"]
-    if args.target == "funkotto_w12":
+    if args.target in ("funkotto_w12", "funkotto_w3"):
         for name in callback_names:
             if not re.search(r"^[0-9a-fA-F]+ T " + name + r"$", nm, re.M):
                 raise SystemExit("Missing strong WLAN callback: " + name)
         if any(name in symbols for name in ("lwip_init", "tcpip_init", "dhcp_start", "netif_add")):
             raise SystemExit("Unexpected IP stack in WLAN adapter")
+    if args.target == "funkotto_w3":
+        for name in ("cyw43_send_ethernet", "fo_net_submit", "fo_raw_feed", "pbuf_copy_partial"):
+            if name not in symbols:
+                raise SystemExit("Missing W3 symbol: " + name)
+        if symbols.get("__StackTop", 0) - symbols.get("__StackBottom", 0) != 4096:
+            raise SystemExit("Unexpected Core 0 stack reservation")
     header = (build / ("generated/" + args.target + "/funkotto/build_info.h")).read_text()
     defines = dict(re.findall(r'#define\s+(\w+)\s+"([^"\n]*)"', header))
     source_paths = [p for d in ("firmware", "tools", "tests") for p in (ROOT / d).rglob("*")
@@ -91,7 +97,8 @@ def main():
         artifacts[p.name] = {"size": p.stat().st_size, "sha256": hashlib.sha256(p.read_bytes()).hexdigest()}
     manifest = {
         "version": defines["FUNKOTTO_VERSION"], "source_id": defines["FUNKOTTO_SOURCE_ID"],
-        "stage": ("W1/W2 WLAN; RAM profile only; no parallel or Ethernet transport"
+        "stage": ("W3 raw Ethernet via USB; RAM profile only; parallel bus disabled"
+                  if args.target == "funkotto_w3" else "W1/W2 WLAN; RAM profile only; no parallel or Ethernet transport"
                   if args.target == "funkotto_w12" else "M1 USB diagnostics; no active parallel bus or WLAN"),
         "board": "pico2_w", "platform": "rp2350-arm-s", "build_type": "Release",
         "dependencies": json.loads((ROOT / "firmware/dependencies.json").read_text()),
@@ -104,7 +111,7 @@ def main():
         "uart_absent": True, "uf2": info, "sources_sha256": sources, "artifacts": artifacts,
         "hardware_tested": False,
     }
-    if args.target == "funkotto_w12":
+    if args.target in ("funkotto_w12", "funkotto_w3"):
         cache = (build / "CMakeCache.txt").read_text()
         sdk_match = re.search(r"^PICO_SDK_PATH:[^=]+=([^\n]+)$", cache, re.M)
         if not sdk_match:

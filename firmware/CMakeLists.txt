@@ -17,7 +17,7 @@ file(READ "${CMAKE_CURRENT_LIST_DIR}/dependencies.json" FO_DEPS)
 string(JSON FO_SDK_SHA GET "${FO_DEPS}" pico_sdk commit)
 string(JSON FO_USB_SHA GET "${FO_DEPS}" tinyusb commit)
 string(JSON FO_PICOTOOL_SHA GET "${FO_DEPS}" picotool commit)
-option(FUNKOTTO_BUILD_WIFI "Build W1/W2 alongside M1" ON)
+option(FUNKOTTO_BUILD_WIFI "Build W1/W2 and W3 alongside M1" ON)
 set(FO_CHECKS SDK USB)
 if(FUNKOTTO_BUILD_WIFI)
     string(JSON FO_WIFI_SHA GET "${FO_DEPS}" cyw43_driver commit)
@@ -85,10 +85,15 @@ function(fo_target NAME VERSION)
     set_source_files_properties(${ARGN} src/board.c PROPERTIES
         COMPILE_OPTIONS "-Wall;-Wextra;-Werror;-Wconversion;-Wshadow")
     set_target_properties(${NAME} PROPERTIES LINKER_LANGUAGE C)
+    if(NAME STREQUAL "funkotto_w3")
+        set(FO_USB_TIMEOUT 10000)
+    else()
+        set(FO_USB_TIMEOUT 1000)
+    endif()
     target_compile_definitions(${NAME} PRIVATE
         PICO_STDIO_USB_CONNECT_WAIT_TIMEOUT_MS=0
         PICO_STDIO_USB_POST_CONNECT_WAIT_DELAY_MS=0
-        PICO_STDIO_USB_STDOUT_TIMEOUT_US=1000
+        PICO_STDIO_USB_STDOUT_TIMEOUT_US=${FO_USB_TIMEOUT}
         PICO_STDIO_USB_ENABLE_RESET_VIA_BAUD_RATE=0
         PICO_STDIO_USB_ENABLE_RESET_VIA_VENDOR_INTERFACE=0)
     pico_set_linker_script(${NAME} "${CMAKE_CURRENT_BINARY_DIR}/funkotto.ld")
@@ -110,4 +115,7 @@ if(FUNKOTTO_BUILD_WIFI)
     fo_target(funkotto_w12 "0.1.0-w12.1" src/main_wifi.c src/wifi_model.c src/wifi_console.c src/wifi_service.c)
     target_link_libraries(funkotto_w12 PRIVATE fo_cyw43_poll pico_multicore)
     target_compile_definitions(funkotto_w12 PRIVATE PICO_STACK_SIZE=0x1000)
+    fo_target(funkotto_w3 "0.1.0-w3" src/main_wifi.c src/wifi_model.c src/wifi_console.c src/wifi_service.c src/ethernet.c src/raw_wire.c src/cyw43_no_lwip.c)
+    target_link_libraries(funkotto_w3 PRIVATE fo_cyw43_poll pico_multicore pico_rand)
+    target_compile_definitions(funkotto_w3 PRIVATE FUNKOTTO_W3=1 PICO_STACK_SIZE=0x1000)
 endif()

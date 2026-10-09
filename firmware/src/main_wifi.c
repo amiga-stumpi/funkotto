@@ -6,6 +6,27 @@
 #include "funkotto/build_info.h"
 #include "funkotto/wifi_console.h"
 #include "funkotto/wifi_service.h"
+#ifdef FUNKOTTO_W3
+#include "pico/rand.h"
+#include "pico/stdio/driver.h"
+#include "funkotto/raw_wire.h"
+static struct fo_raw raw;
+static uint8_t raw_output[FO_RAW_ENCODED];
+static bool raw_active;
+static void raw_send(size_t n) {
+    if (!n) return;
+    /* SDK stdio holds its USB mutex. A truncated write is detected by CRC;
+     * the host retries the identical request and gets the cached response. */
+    stdio_usb.out_chars("\0", 1);
+    stdio_usb.out_chars((const char *)raw_output, (int)n);
+    stdio_usb.out_chars("\0", 1);
+}
+static void raw_step(void) {
+    char bytes[256]; int n = stdio_usb.in_chars(bytes, (int)sizeof(bytes));
+    for (int i=0; i<n; ++i) raw_send(fo_raw_feed(&raw, (uint8_t)bytes[i], raw_output));
+    raw_send(fo_raw_poll(&raw, raw_output));
+}
+#endif
 static struct fo_wifi_console ui;
 static struct fo_wifi_status snapshot, scan_copy;
 static uint64_t safe_init_us, input_ms;
@@ -24,7 +45,11 @@ static void escaped(const uint8_t *p, size_t n) {
 }
 static void info(void) {
     printf("FunkOtto %s source=%s board=pico2_w sdk=%s\n", FUNKOTTO_VERSION, FUNKOTTO_SOURCE_ID, FUNKOTTO_SDK_COMMIT);
+#ifdef FUNKOTTO_W3
+    puts("stage=W3 parallel=disabled wifi=WPA2_2.4GHz profile=RAM_ONLY raw_ethernet=USB_TEST country=DE");
+#else
     puts("stage=W1W2 parallel=disabled wifi=WPA2_2.4GHz profile=RAM_ONLY raw_ethernet=not_implemented country=DE");
+#endif
 }
 static void wifi_status(void) {
     fo_wifi_snapshot(&snapshot);
@@ -48,7 +73,20 @@ static void submit(enum fo_request r, const struct fo_profile *p) {
 }
 static void dispatch(enum fo_ui_command c) {
     switch(c) {
+    case UI_RAW_ON:
+#ifdef FUNKOTTO_W3
+        puts("RAW v1; close serial port (DTR low) to return to console");
+        fo_raw_start(&raw, get_rand_64()); raw_active = true; print_scan = false;
+        /* Suppress all SDK/console text while the binary transport is active. */
+        stdio_set_driver_enabled(&stdio_usb, false);
+#else
+        puts("NOT_IMPLEMENTED: requires W3");
+#endif
+        break;
     case UI_HELP:
+#ifdef FUNKOTTO_W3
+        puts("raw on: binary Ethernet test mode (tools/wifi_diag.py)");
+#endif
         puts("help | info | status | wifi status | wifi scan | wifi results | wifi set | wifi sethex");
         puts("wifi connect | wifi disconnect | wifi stats; Ctrl-C cancels input; RAM profile only."); break;
     case UI_INFO: info(); break;
@@ -73,11 +111,24 @@ static void dispatch(enum fo_ui_command c) {
     case UI_NOT_IMPLEMENTED: puts("NOT_IMPLEMENTED: flash profiles arrive in W4"); break;
     case UI_STATS:
         fo_wifi_snapshot(&snapshot);
-        printf("init_ms=%lu join_ms=%lu core1_age_ms=%lu rx_dropped_w12=%lu rx_invalid=%lu pio_sm_mask=0x%08lx dma_mask=0x%08lx\n",
+        printf("init_ms=%lu join_ms=%lu core1_age_ms=%lu pio_sm_mask=0x%08lx dma_mask=0x%08lx\n",
             (unsigned long)snapshot.init_ms, (unsigned long)snapshot.join_ms,
             (unsigned long)((uint32_t)now_ms()-snapshot.heartbeat_ms),
-            (unsigned long)snapshot.rx_dropped, (unsigned long)snapshot.rx_invalid,
-            (unsigned long)snapshot.pio_mask, (unsigned long)snapshot.dma_mask); break;
+            (unsigned long)snapshot.pio_mask, (unsigned long)snapshot.dma_mask);
+#ifdef FUNKOTTO_W3
+        {
+            struct fo_eth_status s; fo_net_snapshot(&s);
+            printf("raw_enabled=%u tx_used=%u rx_used=%u tx_ok=%lu tx_error=%lu tx_aborted=%lu rx_queued=%lu rx_full=%lu rx_inactive=%lu rx_invalid=%lu rx_flushed=%lu\n",
+                (unsigned)s.enabled, (unsigned)s.tx_used, (unsigned)s.rx_used,
+                (unsigned long)s.counters.tx_ok, (unsigned long)s.counters.tx_error,
+                (unsigned long)s.counters.tx_aborted, (unsigned long)s.counters.rx_queued,
+                (unsigned long)s.counters.rx_full, (unsigned long)s.counters.rx_inactive,
+                (unsigned long)s.counters.rx_invalid, (unsigned long)s.counters.rx_flushed);
+        }
+#else
+        printf("rx_dropped_w12=%lu rx_invalid=%lu\n", (unsigned long)snapshot.rx_dropped, (unsigned long)snapshot.rx_invalid);
+#endif
+        break;
     case UI_NONE: break;
     }
 }
@@ -89,8 +140,21 @@ int main(void) {
     for (;;) {
         if (!fo_board_is_locked()) { fo_board_safe_init(); for (;;) tight_loop_contents(); }
         bool connected = stdio_usb_connected();
-        if (connected_before && !connected) { fo_ui_cancel(&ui); print_scan = false; }
+        if (connected_before && !connected) {
+            fo_ui_cancel(&ui); print_scan = false;
+#ifdef FUNKOTTO_W3
+            if (raw_active) { fo_net_enable(false); raw_active=false; stdio_set_driver_enabled(&stdio_usb, true); }
+#endif
+        }
         connected_before = connected;
+#ifdef FUNKOTTO_W3
+        if (raw_active) {
+            raw_step(); fo_wifi_snapshot(&snapshot);
+            completed=snapshot.completed; scan_done=snapshot.scan_done;
+            if (fo_wifi_watchdog_healthy(&snapshot, (uint32_t)now_ms())) watchdog_update();
+            sleep_ms(1); continue;
+        }
+#endif
         if ((ui.phase || ui.length || ui.invalid) && now_ms() - input_ms > 60000) { fo_ui_cancel(&ui); puts("Input expired"); }
         for (unsigned n = 0; n < 32; ++n) {
             int b = getchar_timeout_us(0); if (b < 0) break;
@@ -98,6 +162,9 @@ int main(void) {
             enum fo_ui_command c = fo_ui_feed(&ui, (uint8_t)b);
             if (c != UI_NONE) { dispatch(c); break; } /* One response per iteration. */
         }
+#ifdef FUNKOTTO_W3
+        if (raw_active) continue;
+#endif
         fo_wifi_snapshot(&snapshot);
         if (snapshot.completed != completed) {
             completed = snapshot.completed;

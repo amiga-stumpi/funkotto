@@ -40,12 +40,15 @@ jobs:
           cmake --build build/m1 --parallel 4
           python tools/check_firmware_artifacts.py build/m1
           python tools/check_firmware_artifacts.py build/m1 --target funkotto_w12
+          python tools/check_firmware_artifacts.py build/m1 --target funkotto_w3
       - name: Package WLAN firmware with instructions and notices
-        run: python tools/package_firmware.py build/m1 .deps/pico-sdk build/m1/funkotto-w12.zip
+        run: |
+          python tools/package_firmware.py build/m1 .deps/pico-sdk build/m1/funkotto-w12.zip
+          python tools/package_firmware.py build/m1 .deps/pico-sdk build/m1/funkotto-w3.zip --target funkotto_w3
       - name: Upload firmware and build manifest
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:
-          name: funkotto-m1-and-w12-pico2w
+          name: funkotto-m1-w12-w3-pico2w
           if-no-files-found: error
           path: |
             build/m1/funkotto_m1.uf2
@@ -59,3 +62,9 @@ jobs:
             build/m1/funkotto_w12.bin
             build/m1/funkotto_w12-manifest.json
             build/m1/funkotto-w12.zip
+            build/m1/funkotto_w3.uf2
+            build/m1/funkotto_w3.elf
+            build/m1/funkotto_w3.elf.map
+            build/m1/funkotto_w3.bin
+            build/m1/funkotto_w3-manifest.json
+            build/m1/funkotto-w3.zip

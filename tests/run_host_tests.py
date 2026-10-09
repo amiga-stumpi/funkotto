@@ -39,3 +39,24 @@ with tempfile.TemporaryDirectory(prefix="funkotto-service-tests-") as tmp:
         "-o", binary,
     ], check=True)
     subprocess.run([binary], check=True)
+
+with tempfile.TemporaryDirectory(prefix="funkotto-w3-tests-") as tmp:
+    binary = str(Path(tmp) / "test_w3")
+    subprocess.run([
+        os.environ.get("CC", "cc"), "-std=c11", "-Wall", "-Wextra", "-Werror",
+        "-Wconversion", "-Wshadow", "-g", "-fno-omit-frame-pointer",
+        "-fsanitize=address,undefined", "-I" + str(ROOT / "firmware/include"),
+        str(ROOT / "tests/test_w3.c"), str(ROOT / "firmware/src/ethernet.c"),
+        str(ROOT / "firmware/src/raw_wire.c"), "-o", binary,
+    ], check=True)
+    subprocess.run([binary], check=True)
+    binary = str(Path(tmp) / "test_w3_service")
+    subprocess.run([
+        os.environ.get("CC", "cc"), "-std=c11", "-Wall", "-Wextra", "-Werror",
+        "-Wconversion", "-Wshadow", "-g", "-fno-omit-frame-pointer", "-DFUNKOTTO_W3=1",
+        "-fsanitize=address,undefined", "-I" + str(ROOT / "tests/wifi_fakes"),
+        "-I" + str(ROOT / "firmware/include"),
+        str(ROOT / "tests/test_wifi_service.c"), str(ROOT / "firmware/src/wifi_model.c"),
+        str(ROOT / "firmware/src/ethernet.c"), "-o", binary,
+    ], check=True)
+    subprocess.run([binary], check=True)

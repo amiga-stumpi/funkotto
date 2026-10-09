@@ -7,6 +7,11 @@
 #include "hardware/pio.h"
 #include "funkotto/wifi_service.h"
 
+#ifdef FUNKOTTO_W3
+#include "funkotto/ethernet.h"
+static struct fo_eth ethernet;
+static struct fo_frame transmit_frame;
+#endif
 static critical_section_t shared_lock;
 static struct fo_wifi_status shared, status;
 static struct fo_wifi_model model;
@@ -39,6 +44,50 @@ bool fo_wifi_submit(enum fo_request request, const struct fo_profile *profile) {
     }
     critical_section_exit(&shared_lock); return ok;
 }
+#ifdef FUNKOTTO_W3
+void fo_net_enable(bool enabled) {
+    critical_section_enter_blocking(&shared_lock); fo_eth_enable(&ethernet, enabled); critical_section_exit(&shared_lock);
+}
+void fo_net_snapshot(struct fo_eth_status *s) {
+    critical_section_enter_blocking(&shared_lock); *s = ethernet.status; critical_section_exit(&shared_lock);
+}
+enum fo_net_result fo_net_submit(const uint8_t *data, size_t len, uint32_t *ticket) {
+    critical_section_enter_blocking(&shared_lock);
+    enum fo_net_result r = fo_eth_submit(&ethernet, data, len, ticket);
+    critical_section_exit(&shared_lock); return r;
+}
+enum fo_net_result fo_net_result(uint32_t ticket, int32_t *sdk_error) {
+    critical_section_enter_blocking(&shared_lock);
+    enum fo_net_result r = fo_eth_result(&ethernet, ticket, sdk_error);
+    critical_section_exit(&shared_lock); return r;
+}
+enum fo_net_result fo_net_pop(struct fo_frame *frame) {
+    critical_section_enter_blocking(&shared_lock);
+    enum fo_net_result r = fo_eth_pop(&ethernet, frame);
+    critical_section_exit(&shared_lock); return r;
+}
+static void ethernet_link(bool up) {
+    critical_section_enter_blocking(&shared_lock);
+    fo_eth_link(&ethernet, up, model.epoch, status.mac);
+    critical_section_exit(&shared_lock);
+}
+static void ethernet_step(void) {
+    ethernet_link(driver_up && model.state == FO_LINK_UP);
+    uint32_t ticket;
+    critical_section_enter_blocking(&shared_lock);
+    bool have = fo_eth_claim(&ethernet, &transmit_frame, &ticket);
+    critical_section_exit(&shared_lock);
+    if (have) {
+        /* Pinned driver copies the payload before returning. No shared lock
+         * is held across the SDK call (which can invoke RX/link callbacks). */
+        int rc = cyw43_send_ethernet(&cyw43_state, CYW43_ITF_STA,
+            transmit_frame.len, transmit_frame.data, false);
+        critical_section_enter_blocking(&shared_lock);
+        fo_eth_complete(&ethernet, ticket, rc);
+        critical_section_exit(&shared_lock);
+    }
+}
+#endif
 /* These callbacks run only on Core 1 in the selected poll context. They must
  * never print, wait, reset the driver or call back into the driver. */
 void cyw43_cb_tcpip_init(cyw43_t *self, int itf) { (void)self; (void)itf; }
@@ -47,12 +96,25 @@ void cyw43_cb_tcpip_set_link_up(cyw43_t *self, int itf) {
     (void)self; if (itf == CYW43_ITF_STA && accept_links) pending_up = true;
 }
 void cyw43_cb_tcpip_set_link_down(cyw43_t *self, int itf) {
-    (void)self; if (itf == CYW43_ITF_STA && accept_links) pending_down = true;
+    (void)self; if (itf == CYW43_ITF_STA && accept_links) {
+        pending_down = true;
+#ifdef FUNKOTTO_W3
+        ethernet_link(false);
+#endif
+    }
 }
 void cyw43_cb_process_ethernet(void *data, int itf, size_t len, const uint8_t *buf) {
-    (void)data; (void)buf;
+    (void)data;
+#ifdef FUNKOTTO_W3
+    critical_section_enter_blocking(&shared_lock);
+    if (itf != CYW43_ITF_STA) ++ethernet.status.counters.rx_invalid;
+    else fo_eth_receive(&ethernet, buf, len);
+    critical_section_exit(&shared_lock);
+#else
+    (void)buf;
     if (itf != CYW43_ITF_STA || len < 14 || len > 1514) ++status.rx_invalid;
-    else ++status.rx_dropped; /* Deliberately no packet transport until W3. */
+    else ++status.rx_dropped;
+#endif
 }
 static void resources(void) {
     status.pio_mask = 0; status.dma_mask = 0;
@@ -63,6 +125,9 @@ static void resources(void) {
         if (dma_channel_is_claimed(c)) status.dma_mask |= 1u << c;
 }
 static void driver_stop(void) {
+#ifdef FUNKOTTO_W3
+    ethernet_link(false);
+#endif
     accept_links = false; pending_up = false; pending_down = false;
     status.rssi_valid = false;
     if (status.scanning) { status.scanning = false; status.scan_done = status.scan_generation; }
@@ -185,6 +250,9 @@ static void service_step(void) {
             status.rssi_valid = cyw43_wifi_get_rssi(&cyw43_state, &status.rssi) == 0;
             rssi_due = now_ms() + 2000;
         }
+#ifdef FUNKOTTO_W3
+        ethernet_step();
+#endif
         publish();
         if (driver_up) cyw43_arch_wait_for_work_until(make_timeout_time_ms(2));
         else sleep_ms(2);
@@ -195,6 +263,9 @@ static void core1_main(void) {
 }
 
 void fo_wifi_launch(void) {
+#ifdef FUNKOTTO_W3
+    fo_eth_init(&ethernet);
+#endif
     critical_section_init(&shared_lock); shared.state = FO_INITIALIZING;
     shared.sdk_busy = true; shared.heartbeat_ms = (uint32_t)now_ms();
     multicore_launch_core1_with_stack(core1_main, core1_stack, sizeof(core1_stack));

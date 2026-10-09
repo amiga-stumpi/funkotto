@@ -1,3 +1,7 @@
+> W3 ist als zusätzliches Ziel `funkotto_w3` implementiert:
+> [Roh-Ethernet über USB testen](W3_TEST.md). Der reale Pakettest ist noch offen.
+> M1 und W1/W2 bleiben separat baubar; alle drei Ziele halten den Amiga-Bus gesperrt.
+
 # FunkOtto – Pico-Firmware
 
 **Neu: [W1/W2-WLAN-Testfirmware und Bedienung](WLAN_TEST.md).**

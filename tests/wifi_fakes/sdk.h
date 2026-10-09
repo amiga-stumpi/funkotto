@@ -42,6 +42,7 @@ bool cyw43_wifi_scan_active(cyw43_t *p);
 int cyw43_wifi_join(cyw43_t *p, size_t n, const uint8_t *ssid, size_t k, const uint8_t *key, unsigned auth, const uint8_t *bssid, unsigned channel);
 int cyw43_wifi_link_status(cyw43_t *p, int itf);
 int cyw43_wifi_get_rssi(cyw43_t *p, int32_t *rssi);
+int cyw43_send_ethernet(cyw43_t *p, int itf, size_t len, const void *buf, bool is_pbuf);
 bool pio_sm_is_claimed(unsigned p, unsigned sm);
 bool dma_channel_is_claimed(unsigned c);
 #endif

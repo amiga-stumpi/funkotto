@@ -40,6 +40,16 @@ int cyw43_wifi_link_status(cyw43_t *p, int itf) { (void)itf; return p->join_stat
 int cyw43_wifi_get_rssi(cyw43_t *p, int32_t *rssi) { (void)p; *rssi = -42; return 0; }
 bool pio_sm_is_claimed(unsigned p, unsigned sm) { return cyw43_state.itf_state && p == 1 && sm == 0; }
 bool dma_channel_is_claimed(unsigned c) { return cyw43_state.itf_state && c == 3; }
+#ifdef FUNKOTTO_W3
+static unsigned sends;
+int cyw43_send_ethernet(cyw43_t *p, int itf, size_t len, const void *buf, bool is_pbuf) {
+    assert(p == &cyw43_state && itf == 0 && !is_pbuf && len == 60 && !lock_depth);
+    ++sends;
+    /* SDK can reenter receive while sending: verify lock isn't held. */
+    cyw43_cb_process_ethernet(NULL, 0, len, buf);
+    return 0;
+}
+#endif
 int main(void) {
     fo_wifi_launch(); service_init();
     assert(model.state == FO_UNCONFIGURED && driver_up && status.mac_valid);
@@ -63,10 +73,28 @@ int main(void) {
     assert(fo_wifi_submit(REQ_CONNECT, NULL)); service_step(); assert(joins == 1 && model.state == FO_CONNECTING);
     link_event = true; service_step(); assert(model.state == FO_LINK_UP && status.rssi_valid);
     assert(fo_wifi_submit(REQ_SCAN, NULL)); service_step(); assert(status.reply == REPLY_BUSY);
+#ifdef FUNKOTTO_W3
+    fo_net_enable(true);
+    uint8_t packet[60] = {0}; memcpy(packet+6, status.mac, 6); packet[12]=8;
+    uint32_t ticket; int32_t sdk_error; struct fo_frame received;
+    assert(fo_net_submit(packet, 14, &ticket)==NET_OK);
+    service_step(); assert(sends==1 && fo_net_result(ticket, &sdk_error)==NET_OK);
+    assert(fo_net_pop(&received)==NET_OK && received.len==60 && !memcmp(packet,received.data,60));
+    cyw43_cb_process_ethernet(NULL, 0, 60, packet); packet[14]=0xff;
+    assert(fo_net_pop(&received)==NET_OK && received.data[14]==0);
+    cyw43_cb_process_ethernet(NULL, 1, 60, packet);
+    assert(ethernet.status.counters.rx_invalid==1);
+    assert(fo_net_submit(packet,60,&ticket)==NET_OK);
+#else
     cyw43_cb_process_ethernet(NULL, 0, 64, NULL); cyw43_cb_process_ethernet(NULL, 0, 2000, NULL);
     assert(status.rx_dropped == 1 && status.rx_invalid == 1);
+#endif
     cyw43_cb_tcpip_set_link_down(&cyw43_state, 0); service_step();
     assert(model.state == FO_RETRY_WAIT && !driver_up);
+#ifdef FUNKOTTO_W3
+    assert(fo_net_result(ticket,&sdk_error)==NET_ABORTED && sends==1);
+    assert(!ethernet.status.rx_used && !ethernet.status.link);
+#endif
     cyw43_cb_tcpip_set_link_up(&cyw43_state, 0); service_step(); assert(model.state == FO_RETRY_WAIT);
     clock_ms += 1000; service_step(); assert(joins == 2 && model.state == FO_CONNECTING);
     cyw43_state.join_state = CYW43_LINK_BADAUTH; service_step(); assert(model.error == FO_BAD_AUTH && !driver_up);

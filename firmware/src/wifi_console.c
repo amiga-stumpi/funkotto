@@ -33,6 +33,9 @@ static enum fo_ui_command line(struct fo_wifi_console *u) {
         u->phase = 0; return UI_PROFILE;
     }
     if (!u->length) return UI_NONE;
+#ifdef FUNKOTTO_W3
+    if (!strcmp(u->line, "raw on")) return UI_RAW_ON;
+#endif
     if (!strcmp(u->line, "help")) return UI_HELP;
     if (!strcmp(u->line, "info")) return UI_INFO;
     if (!strcmp(u->line, "status")) return UI_STATUS;
