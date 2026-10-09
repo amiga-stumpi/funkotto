@@ -1,5 +1,5 @@
 > Neu: **W4** als Ziel `funkotto_w4`: dauerhaftes Profil und Autoconnect.
-> [W4-Bedienung und Kaltstarttest](W4_TEST.md). Gespeichertes Profil und erster Kaltstart mit automatischer Wiederverbindung am Pico bestätigt; Löschtest und erneutes Einrichten/Verbinden bestanden. Weitergehende Hardwareabnahme noch offen.
+> [W4-Bedienung und Kaltstarttest](W4_TEST.md). Gespeichertes Profil und erster Kaltstart mit automatischer Wiederverbindung am Pico bestätigt; Löschtest und erneutes Einrichten/Verbinden/Speichern bestanden. Weitergehende Hardwareabnahme noch offen.
 
 > W3 ist als zusätzliches Ziel `funkotto_w3` implementiert:
 > [Roh-Ethernet über USB testen](W3_TEST.md). Die realen ARP/ICMP-Tests sind bestanden

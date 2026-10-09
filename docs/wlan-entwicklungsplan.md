@@ -177,7 +177,7 @@ Löschdatensatz/Bereinigung, SDK-Flashsperre und Boot-Autoconnect.
 Ein realer Status bestätigt ein gültiges gespeichertes Profil und `LINK_UP`.
 Der erste Kaltstart mit automatischer Wiederverbindung wurde vom Nutzer
 ausdrücklich als bestanden bestätigt. Auch der Löschtest im beschriebenen
-Neustartablauf und die erneute Einrichtung/Verbindung sind durch Nutzerstatus
+Neustartablauf und die erneute Einrichtung/Verbindung/Speicherung sind durch Nutzerstatus
 belegt. Wiederholte Kaltstarts und die übrige Hardwareabnahme bleiben offen.
 
 Bestehendes Layout behalten: Profil A bei Flashoffset `0x003FE000`, Profil B

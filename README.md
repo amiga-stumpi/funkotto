@@ -42,7 +42,7 @@ Langzeitbetrieb und die Ursache einzelner Latenzausreißer bleiben offen.
 Autoconnect nach Stromverlust. [W4-Anleitung](firmware/W4_TEST.md) ·
 [W4-Prüfstand](docs/results/2026-10-09-w4.md). Gespeichertes Profil und erster
 Kaltstart mit automatischer Wiederverbindung sind am Pico bestätigt. Auch Löschtest
-und erneutes Einrichten/Verbinden sind bestanden; die weitergehende Hardwareabnahme
+und erneutes Einrichten/Verbinden/Speichern sind bestanden; die weitergehende Hardwareabnahme
 bleibt offen.
 Parallelport-Kommunikation und Amiga-Treiber folgen.
 USB-Diagnose und Kaltstart ohne geöffnetes Terminal wurden am 08.10.2026 vom
