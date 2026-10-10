@@ -51,6 +51,11 @@ jobs:
         run: |
           python tools/build_amiga_diag.py --source-id "$(git rev-parse --short=12 HEAD)"
           python tests/run_m2_amiga_emulation.py build/amiga-m2/FunkOttoDiag
+      - name: Build and emulate the OS 1.3 configuration simulator
+        run: |
+          python tools/build_amiga_config.py --source-id "$(git rev-parse --short=12 HEAD)"
+          python tests/run_config_amiga_emulation.py build/amiga-config/FunkOttoConfig
+          python tools/package_amiga_config.py build/amiga-config build/funkotto-amiga-config.zip
       - name: Compile gated M2 laboratory target
         run: |
           cmake -S firmware -B build/m2-lab -G Ninja \
@@ -106,3 +111,6 @@ jobs:
             build/m1/funkotto_m4_usb.bin
             build/m1/funkotto_m4_usb-manifest.json
             build/m1/funkotto-m4-usb.zip
+            build/amiga-config/FunkOttoConfig
+            build/amiga-config/manifest.json
+            build/funkotto-amiga-config.zip

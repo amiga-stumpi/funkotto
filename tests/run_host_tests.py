@@ -16,6 +16,19 @@ with tempfile.TemporaryDirectory(prefix="funkotto-m2-tests-") as tmp:
     ], check=True)
     subprocess.run([binary], check=True)
 
+with tempfile.TemporaryDirectory(prefix="funkotto-amiga-config-tests-") as tmp:
+    binary = str(Path(tmp) / "test_amiga_config")
+    subprocess.run([
+        os.environ.get("CC", "cc"), "-std=c11", "-Wall", "-Wextra", "-Werror",
+        "-Wconversion", "-Wshadow", "-g", "-fno-omit-frame-pointer",
+        "-fsanitize=address,undefined", "-I" + str(ROOT / "firmware/include"),
+        "-I" + str(ROOT / "amiga/config"),
+        *[str(ROOT / p) for p in ("tests/test_amiga_config.c", "amiga/config/client.c",
+          "amiga/config/sim.c", "amiga/config/selftest.c", "firmware/src/config_protocol.c",
+          "firmware/src/wifi_model.c")], "-o", binary,
+    ], check=True)
+    subprocess.run([binary], check=True)
+
 with tempfile.TemporaryDirectory(prefix="funkotto-tests-") as tmp:
     binary = str(Path(tmp) / "test_m1")
     subprocess.run([

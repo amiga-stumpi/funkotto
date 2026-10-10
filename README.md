@@ -61,6 +61,14 @@ versionierte Konfigurationsbefehle und PC-Werkzeug `tools/wifi_config.py`.
 [Protokoll](protocol/CONFIG.md) · [Prüfstand](docs/results/2026-10-10-m4-usb.md).
 Trägerplatine noch nicht verfügbar; M0 und aktive M2-Abnahme bleiben offen.
 
+**Amiga-Konfiguration vorbereitet:** `FunkOttoConfig SELFTEST` und `SIM` bieten
+einen lokalen FOC1-Selbsttest und eine interaktive Adapter-Simulation mit
+verdeckter Passworteingabe. Für 68000 / OS 1.3 gebaut, mit OS-Mocks geprüft;
+realer A500-Test und Paralleltransport noch offen. Kein Firmwareupdate nötig.
+[Umsetzungsplan](docs/amiga-konfiguration-plan.md) ·
+[Amiga-Testanleitung](amiga/config/README.md) ·
+[Prüfstand](docs/results/2026-10-10-amiga-config.md).
+
 
 Die erste Firmware soll Parallelport-Kommunikation, WLAN-Rohpakete und ein
 dauerhaft gespeichertes WLAN-Profil mit automatischer Wiederverbindung bieten.
