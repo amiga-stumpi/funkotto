@@ -38,7 +38,9 @@ Die gegenseitig exklusiven USB-Modi besitzen die WLAN-Kommandos jeweils allein.
 
 Schritte 1–4 sind softwareseitig umgesetzt, lokal geprüft und in der GitHub-CI
 bestanden. Schritt 5 begonnen: realer HELLO-/Statustest mit LINK_UP, gespeichertem
-Profil (Sequenz 3) und fehlerfreiem USB-Austausch bestanden. Scan und Änderungen
+Profil (Sequenz 3) und fehlerfreiem USB-Austausch bestanden. Disconnect und
+vollständiger Scan mit fünf Einträgen ebenfalls bestanden. Reconnect-Auftrag
+ausgeführt, abschließendes LINK_UP noch offen. Profiländerungen/Speicherbefehle
 über das neue Werkzeug sowie separater M4_USB-Kaltstart stehen noch aus. [Prüfbericht](results/2026-10-10-m4-usb.md).
 
 ## Danach
