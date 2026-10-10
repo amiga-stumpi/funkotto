@@ -42,9 +42,11 @@ Profil (Sequenz 3) und fehlerfreiem USB-Austausch bestanden. Disconnect und
 vollständiger Scan mit fünf Einträgen und anschließender Reconnect bis LINK_UP
 ebenfalls bestanden. SET mit verdeckter Passworteingabe und anschließender
 Verbindung ebenfalls bestätigt (`attempts=3`, `links=3`, keine USB-Fehler).
-Das eingegebene Profil entspricht dem gespeicherten (Sequenz 3). SAVE/ERASE
-über das neue Werkzeug, ein neuer persistenter Schreibvorgang und ein separater
-M4_USB-Kaltstart stehen noch aus. [Prüfbericht](results/2026-10-10-m4-usb.md).
+Das eingegebene Profil entspricht dem gespeicherten (Sequenz 3). Idempotentes
+SAVE und anschließender Wiederanlauf mit Autoconnect im angeforderten Kaltstartablauf
+sind ebenfalls bestätigt (`attempts=1`, `links=1`, `epoch=2`, Sequenz 3).
+ERASE/Neuanlage über den neuen USB-Zugang sowie erweiterte Flash-/Resetprüfungen
+bleiben offen; keine vollständige M4-Hardwareabnahme. [Prüfbericht](results/2026-10-10-m4-usb.md).
 
 ## Danach
 
