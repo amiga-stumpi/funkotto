@@ -40,8 +40,11 @@ Schritte 1–4 sind softwareseitig umgesetzt, lokal geprüft und in der GitHub-C
 bestanden. Schritt 5 begonnen: realer HELLO-/Statustest mit LINK_UP, gespeichertem
 Profil (Sequenz 3) und fehlerfreiem USB-Austausch bestanden. Disconnect und
 vollständiger Scan mit fünf Einträgen und anschließender Reconnect bis LINK_UP
-ebenfalls bestanden (`attempts=2`, `links=2`, weiterhin keine USB-Fehler). Profiländerungen/Speicherbefehle
-über das neue Werkzeug sowie separater M4_USB-Kaltstart stehen noch aus. [Prüfbericht](results/2026-10-10-m4-usb.md).
+ebenfalls bestanden. SET mit verdeckter Passworteingabe und anschließender
+Verbindung ebenfalls bestätigt (`attempts=3`, `links=3`, keine USB-Fehler).
+Das eingegebene Profil entspricht dem gespeicherten (Sequenz 3). SAVE/ERASE
+über das neue Werkzeug, ein neuer persistenter Schreibvorgang und ein separater
+M4_USB-Kaltstart stehen noch aus. [Prüfbericht](results/2026-10-10-m4-usb.md).
 
 ## Danach
 
