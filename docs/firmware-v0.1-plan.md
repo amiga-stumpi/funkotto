@@ -1,6 +1,6 @@
 # FunkOtto: Plan für die erste funktionale Firmware v0.1
 
-Stand: 09.10.2026 · Status: M1 und WLAN W1–W4 umgesetzt, Grundfunktionen am Pico bestätigt; M2 softwareseitig umgesetzt, W5 ausgelassen, M0 offen
+Stand: 10.10.2026 · Status: M1 und WLAN W1–W4 umgesetzt, Grundfunktionen am Pico bestätigt; M2 softwareseitig umgesetzt, W5 ausgelassen, M0 offen
 
 ## 1. Ziel und Entscheidung
 
@@ -363,6 +363,50 @@ Es läuft zunächst exklusiv ohne SANA-II-Treiber; später greift das Prefs-Tool
 dessen Device-Schnittstelle zu. Beide dürfen nie gleichzeitig die CIA steuern.
 Ein kleiner ARP/ICMP-Test verwendet eine explizit gewählte, freie Test-IP; ein
 vollständiger TCP/IP-Stack wird nicht in das Diagnoseprogramm eingebaut.
+
+### Vorbereitung ohne Trägerplatine (10.10.2026)
+
+Der Nutzer hat noch keine FunkOtto-Trägerplatine zur Verfügung. M0-Messungen
+sind deshalb noch nicht möglich; die zuvor beschriebene Messfolge ist eine
+Anleitung, kein durchgeführter Test. Der einzelne Pico 2 W und der Amiga 500
+mit 68020, Kickstart 1.3 und Workbench 1.3 stehen für getrennte Softwaretests
+zur Verfügung. W5 bleibt ausgelassen.
+
+Empfohlene Reihenfolge für die weitere Softwarearbeit; die folgenden Erweiterungen
+sind **geplant, noch nicht implementiert**:
+
+1. **M4-Konfigurationsbefehle vorbereiten.** Gemeinsame Operationen für Status,
+   Scan/Ergebnisse, RAM-Profil, Verbinden/Trennen sowie explizites Speichern/Löschen
+   auf die bestehende W4-Basis aufsetzen. Binärformate, Versions-/Fähigkeitskennung,
+   Auftragskennung und asynchrone Abschlussmeldung festlegen. Wiederholte
+   Übertragung desselben Auftrags darf insbesondere keine erneute Flashoperation
+   auslösen. M2-Diagnoseprotokoll und bestehende USB-Diagnose versioniert erhalten;
+   neue Funktionen nur bei passender gemeldeter Fähigkeit verwenden.
+2. **USB-Prüfzugang am einzelnen Pico.** Dieselben Kommandohandler über einen
+   ausdrücklich aktivierten PC-Testtransport ansprechen, ohne Parallelportfreigabe.
+   Vorhandene Konsole und WLAN-Profile erhalten. Längen-/Statusfehler, besetzte
+   Auftragsqueue, Wiederholungen und veraltete Sitzungen prüfen. Passwörter niemals
+   in Antworten, Konsolenlogs, Reports oder Testmitschnitten ausgeben; für
+   Protokollmitschnitte ausschließlich synthetische Zugangsdaten verwenden.
+3. **Amiga-Konfiguration zuerst als Shellprogramm.** 68000-/V34-kompatiblen Client
+   mit austauschbarem Transport entwickeln. Ein expliziter Simulationsmodus
+   erlaubt auf dem A500 Eingabe, SSIDs mit Leerzeichen, verdeckte Passworteingabe,
+   Statusanzeige, Fehlerbehandlung und Abbruch zu testen, ohne CIA-Zugriffe.
+   Er simuliert einen Adapter im Programm; damit ist noch keine Verbindung
+   zwischen Amiga und USB-Pico hergestellt. Speichern/Löschen nur ausdrücklich.
+   Danach kann die Intuition-Oberfläche auf derselben Clientlogik aufbauen.
+4. **M5 und SANA-II vorbereiten.** Paket-/Konfigurationsschnittstelle, Pufferbesitz,
+   Rückdruck und Fehlerabbildung mit simuliertem Transport prüfen. Anschließend
+   Device-Grundgerüst und Request-/Abort-/Close-Lebenszyklen vorbereiten.
+   Paketbenachrichtigung über ACK/CIA-Interrupt konzeptionell und in Simulation
+   prüfen; die M2-Pollingdiagnose legt den späteren Treiberbetrieb nicht fest.
+   Kein Durchsatz- oder Interrupt-Timingnachweis ohne Trägerplatine.
+
+Abnahme dieser Vorarbeiten: PC/Pico-USB-Test und portfreier Amiga-Test werden
+getrennt dokumentiert. M0 und die aktive M2-Abnahme bleiben offen. Sobald die
+Platine vorliegt: Versorgung/Reset/Sperrzustände messen, danach kontrollierte
+M2-Transfers und erst anschließend den vorbereiteten Konfigurationsclient über
+den echten Parallelport testen. Diese Vorarbeiten ersetzen keine M5-Hardwareabnahme.
 
 ### Prüfmatrix
 
