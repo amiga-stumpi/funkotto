@@ -1,4 +1,4 @@
-> **M4_USB:** [WLAN-Konfiguration über USB testen](M4_USB_TEST.md). Eigenes Ziel auf W4-Basis, Parallelport gesperrt; reale Nutzerprüfung steht aus.
+> **M4_USB:** [WLAN-Konfiguration über USB testen](M4_USB_TEST.md). Eigenes Ziel auf W4-Basis, Parallelport gesperrt; erster realer HELLO-/Statustest mit gespeichertem Profil und LINK_UP bestanden; weitere Konfigurationsprüfungen offen.
 
 > **M2 softwareseitig umgesetzt:** [Amiga-Diagnose und Laborablauf](M2_TEST.md).
 > Nutzer-SELFTEST mit 64 ECHOs auf Amiga 500 / 68020 / Kickstart 1.3 / Workbench 1.3 bestanden.
