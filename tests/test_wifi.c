@@ -11,6 +11,11 @@ static enum fo_ui_command feed(struct fo_wifi_console *u, const char *s) {
 }
 static void parser(void) {
     struct fo_wifi_console u; fo_ui_init(&u);
+#ifdef FUNKOTTO_CONFIG_USB
+    assert(feed(&u, "config on\n") == UI_CONFIG_ON);
+#else
+    assert(feed(&u, "config on\n") == UI_INVALID);
+#endif
     assert(feed(&u, "wifi set\r\n") == UI_PROMPT_SSID && u.phase == 1);
     assert(feed(&u, " SSID with spaces \r\n") == UI_PROMPT_KEY && u.phase == 2);
     assert(feed(&u, " a test key \r\n") == UI_PROFILE && !u.phase);

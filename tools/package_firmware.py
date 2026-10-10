@@ -48,7 +48,7 @@ def main():
     parser.add_argument('build_dir', type=Path)
     parser.add_argument('sdk', type=Path)
     parser.add_argument('output', type=Path)
-    parser.add_argument('--target', choices=['funkotto_w12', 'funkotto_w3', 'funkotto_w4'], default='funkotto_w12')
+    parser.add_argument('--target', choices=['funkotto_w12', 'funkotto_w3', 'funkotto_w4', 'funkotto_m4_usb'], default='funkotto_w12')
     parser.add_argument('--toolchain-docs', type=Path, default=Path('/usr/share/doc'))
     args = parser.parse_args()
     entries = {}
@@ -62,18 +62,22 @@ def main():
             raise ValueError('Artifact differs from manifest: ' + name)
         entries[name] = data
     entries['manifest.json'] = manifest_path.read_bytes()
-    entries['ANLEITUNG.md'] = (ROOT / 'firmware' / ('W4_TEST.md' if args.target == 'funkotto_w4' else 'W3_TEST.md' if args.target == 'funkotto_w3' else 'WLAN_TEST.md')).read_bytes()
+    entries['ANLEITUNG.md'] = (ROOT / 'firmware' / ('M4_USB_TEST.md' if args.target == 'funkotto_m4_usb' else 'W4_TEST.md' if args.target == 'funkotto_w4' else 'W3_TEST.md' if args.target == 'funkotto_w3' else 'WLAN_TEST.md')).read_bytes()
     entries['dependencies.json'] = (ROOT / 'firmware/dependencies.json').read_bytes()
-    if args.target in ('funkotto_w3', 'funkotto_w4'):
+    if args.target in ('funkotto_w3', 'funkotto_w4', 'funkotto_m4_usb'):
         entries['WLAN_TEST.md'] = (ROOT / 'firmware/WLAN_TEST.md').read_bytes()
         entries['USB_PROTOCOL.md'] = (ROOT / 'firmware/USB_PROTOCOL.md').read_bytes()
         entries['tools/wifi_diag.py'] = (ROOT / 'tools/wifi_diag.py').read_bytes()
-        entries['PRUEFBERICHT.md'] = (ROOT / ('docs/results/2026-10-09-w4.md' if args.target == 'funkotto_w4' else 'docs/results/2026-10-09-w3.md')).read_bytes()
-        if args.target == 'funkotto_w4':
+        entries['PRUEFBERICHT.md'] = (ROOT / ('docs/results/2026-10-10-m4-usb.md' if args.target == 'funkotto_m4_usb' else 'docs/results/2026-10-09-w4.md' if args.target == 'funkotto_w4' else 'docs/results/2026-10-09-w3.md')).read_bytes()
+        if args.target in ('funkotto_w4', 'funkotto_m4_usb'):
             entries['W3_TEST.md'] = (ROOT / 'firmware/W3_TEST.md').read_bytes()
             entries['PROFILE_FORMAT.md'] = (ROOT / 'firmware/PROFILE_FORMAT.md').read_bytes()
     else:
         entries['PRUEFBERICHT.md'] = (ROOT / 'docs/results/2026-10-08-wlan-w12.md').read_bytes()
+    if args.target == 'funkotto_m4_usb':
+        entries['CONFIG_PROTOCOL.md'] = (ROOT / 'protocol/CONFIG.md').read_bytes()
+        entries['tools/wifi_config.py'] = (ROOT / 'tools/wifi_config.py').read_bytes()
+        entries['W4_TEST.md'] = (ROOT / 'firmware/W4_TEST.md').read_bytes()
     for name, path in {
         'pico-sdk.txt': 'LICENSE.TXT',
         'tinyusb.txt': 'lib/tinyusb/LICENSE',

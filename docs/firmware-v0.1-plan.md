@@ -373,7 +373,10 @@ mit 68020, Kickstart 1.3 und Workbench 1.3 stehen für getrennte Softwaretests
 zur Verfügung. W5 bleibt ausgelassen.
 
 Empfohlene Reihenfolge für die weitere Softwarearbeit; die folgenden Erweiterungen
-sind **geplant, noch nicht implementiert**:
+waren zunächst geplant. Die Konfigurationsbefehle und der USB-Prüfzugang sind
+inzwischen als eigenes Ziel `funkotto_m4_usb` softwareseitig umgesetzt;
+[Umsetzungsplan](konfigurationsprotokoll-plan.md),
+[Prüfstand](results/2026-10-10-m4-usb.md). Amiga-Client und SANA-II sind weiter offen:
 
 1. **M4-Konfigurationsbefehle vorbereiten.** Gemeinsame Operationen für Status,
    Scan/Ergebnisse, RAM-Profil, Verbinden/Trennen sowie explizites Speichern/Löschen

@@ -30,6 +30,32 @@ static void raw_step(void) {
     raw_send(fo_raw_poll(&raw, raw_output));
 }
 #endif
+#ifdef FUNKOTTO_CONFIG_USB
+#include "funkotto/config_wire.h"
+static struct fo_config_wire config_wire;
+static uint8_t config_output[FO_CFG_ENCODED];
+static bool config_active;
+static uint64_t config_input_ms;
+static void config_close(void) {
+    fo_config_wire_close(&config_wire); fo_wipe(config_output,sizeof(config_output));
+    config_active=false; stdio_set_driver_enabled(&stdio_usb,true);
+}
+static void config_step(uint64_t now) {
+    char bytes[256]; int n=stdio_usb.in_chars(bytes,(int)sizeof(bytes));
+    if (n>0) config_input_ms=now;
+    for (int i=0;i<n;++i) {
+        size_t count=fo_config_wire_feed(&config_wire,(uint8_t)bytes[i],config_output);
+        if (count) {
+            stdio_usb.out_chars("\0",1);
+            stdio_usb.out_chars((const char *)config_output,(int)count);
+            stdio_usb.out_chars("\0",1);
+        }
+    }
+    fo_wipe(bytes,sizeof(bytes));
+    if (now-config_input_ms>2000 && config_wire.used) fo_config_wire_expire_partial(&config_wire);
+    if (now-config_input_ms>60000) config_close();
+}
+#endif
 static struct fo_wifi_console ui;
 static struct fo_wifi_status snapshot, scan_copy;
 static uint64_t safe_init_us, input_ms;
@@ -48,7 +74,9 @@ static void escaped(const uint8_t *p, size_t n) {
 }
 static void info(void) {
     printf("FunkOtto %s source=%s board=pico2_w sdk=%s\n", FUNKOTTO_VERSION, FUNKOTTO_SOURCE_ID, FUNKOTTO_SDK_COMMIT);
-#ifdef FUNKOTTO_W4
+#ifdef FUNKOTTO_CONFIG_USB
+    puts("stage=M4_USB parallel=disabled config=FOC1 usb_wire=2 profile=FLASH_JOURNAL country=DE");
+#elif defined(FUNKOTTO_W4)
     puts("stage=W4 parallel=disabled wifi=WPA2_2.4GHz profile=FLASH_JOURNAL raw_ethernet=USB_TEST country=DE");
 #elif defined(FUNKOTTO_W3)
     puts("stage=W3 parallel=disabled wifi=WPA2_2.4GHz profile=RAM_ONLY raw_ethernet=USB_TEST country=DE");
@@ -83,6 +111,18 @@ static void submit(enum fo_request r, const struct fo_profile *p) {
 }
 static void dispatch(enum fo_ui_command c) {
     switch(c) {
+    case UI_CONFIG_ON:
+#ifdef FUNKOTTO_CONFIG_USB
+        if (fo_wifi_command_busy()) { puts("BUSY: command still running"); break; }
+        fo_net_enable(false);
+        puts("CONFIG v1 wire=2; close serial port (DTR low) to return to console");
+        fo_config_wire_start(&config_wire,get_rand_64());
+        config_active=true; config_input_ms=now_ms(); print_scan=false;
+        stdio_set_driver_enabled(&stdio_usb,false);
+#else
+        puts("NOT_IMPLEMENTED: requires M4_USB");
+#endif
+        break;
     case UI_SAVE: submit(REQ_SAVE,NULL); break;
     case UI_ERASE: submit(REQ_ERASE,NULL); break;
     case UI_RAW_ON:
@@ -97,6 +137,9 @@ static void dispatch(enum fo_ui_command c) {
 #endif
         break;
     case UI_HELP:
+#ifdef FUNKOTTO_CONFIG_USB
+        puts("config on: binary configuration mode (tools/wifi_config.py)");
+#endif
 #ifdef FUNKOTTO_W3
         puts("raw on: binary Ethernet test mode (tools/wifi_diag.py)");
 #endif
@@ -161,6 +204,9 @@ int main(void) {
         bool connected = stdio_usb_connected();
         if (connected_before && !connected) {
             fo_ui_cancel(&ui); print_scan = false;
+#ifdef FUNKOTTO_CONFIG_USB
+            if (config_active) config_close();
+#endif
 #ifdef FUNKOTTO_W3
             if (raw_active) { fo_net_enable(false); raw_active=false; stdio_set_driver_enabled(&stdio_usb, true); }
 #endif
@@ -174,6 +220,14 @@ int main(void) {
             sleep_ms(1); continue;
         }
 #endif
+#ifdef FUNKOTTO_CONFIG_USB
+        if (config_active) {
+            config_step(now_ms()); fo_wifi_snapshot(&snapshot);
+            completed=snapshot.completed; scan_done=snapshot.scan_done;
+            if (fo_wifi_watchdog_healthy(&snapshot,(uint32_t)now_ms())) watchdog_update();
+            sleep_ms(1); continue;
+        }
+#endif
         if ((ui.phase || ui.length || ui.invalid) && now_ms() - input_ms > 60000) { fo_ui_cancel(&ui); puts("Input expired"); }
         for (unsigned n = 0; n < 32; ++n) {
             int b = getchar_timeout_us(0); if (b < 0) break;
@@ -183,6 +237,9 @@ int main(void) {
         }
 #ifdef FUNKOTTO_W3
         if (raw_active) continue;
+#ifdef FUNKOTTO_CONFIG_USB
+        if (config_active) continue;
+#endif
 #endif
         fo_wifi_snapshot(&snapshot);
         if (snapshot.completed != completed) {

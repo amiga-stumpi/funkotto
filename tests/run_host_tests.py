@@ -82,7 +82,20 @@ with tempfile.TemporaryDirectory(prefix="funkotto-w4-tests-") as tmp:
         ("test_w4_service", ["tests/test_wifi_service.c", "firmware/src/wifi_model.c", "firmware/src/ethernet.c", "firmware/src/profile_store.c"],
          ["-DFUNKOTTO_W3=1", "-DFUNKOTTO_W4=1", "-I" + str(ROOT / "tests/wifi_fakes")]),
         ("test_w4_console", ["tests/test_wifi.c", "firmware/src/wifi_console.c", "firmware/src/wifi_model.c"], ["-DFUNKOTTO_W4=1"]),
+        ("test_m4_console", ["tests/test_wifi.c", "firmware/src/wifi_console.c", "firmware/src/wifi_model.c"], ["-DFUNKOTTO_W4=1", "-DFUNKOTTO_CONFIG_USB=1"]),
     ]:
         binary = str(Path(tmp) / name)
         subprocess.run(common + includes + [str(ROOT / s) for s in sources] + ["-o", binary], check=True)
         subprocess.run([binary], check=True)
+
+with tempfile.TemporaryDirectory(prefix="funkotto-config-tests-") as tmp:
+    binary = str(Path(tmp) / "test_config")
+    subprocess.run([
+        os.environ.get("CC", "cc"), "-std=c11", "-Wall", "-Wextra", "-Werror",
+        "-Wconversion", "-Wshadow", "-g", "-fno-omit-frame-pointer",
+        "-fsanitize=address,undefined", "-I" + str(ROOT / "firmware/include"),
+        *[str(ROOT / p) for p in ("tests/test_config.c", "tests/config_backend.c",
+          "firmware/src/config_protocol.c", "firmware/src/config_wire.c",
+          "firmware/src/raw_wire.c", "firmware/src/wifi_model.c")], "-o", binary,
+    ], check=True)
+    subprocess.run([binary], check=True)

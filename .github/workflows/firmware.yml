@@ -44,6 +44,7 @@ jobs:
           python tools/check_firmware_artifacts.py build/m1 --target funkotto_w12
           python tools/check_firmware_artifacts.py build/m1 --target funkotto_w3
           python tools/check_firmware_artifacts.py build/m1 --target funkotto_w4
+          python tools/check_firmware_artifacts.py build/m1 --target funkotto_m4_usb
           python tools/check_firmware_artifacts.py build/m1 --target funkotto_m2
           python tests/run_m2_transport_tests.py build/m1
       - name: Build and emulate the 68000 HUNK diagnostic
@@ -63,6 +64,7 @@ jobs:
           python tools/package_firmware.py build/m1 .deps/pico-sdk build/m1/funkotto-w12.zip
           python tools/package_firmware.py build/m1 .deps/pico-sdk build/m1/funkotto-w3.zip --target funkotto_w3
           python tools/package_firmware.py build/m1 .deps/pico-sdk build/m1/funkotto-w4.zip --target funkotto_w4
+          python tools/package_firmware.py build/m1 .deps/pico-sdk build/m1/funkotto-m4-usb.zip --target funkotto_m4_usb
           python tools/package_m2.py build/m1 build/amiga-m2 .deps/pico-sdk build/m1/funkotto-m2.zip
       - name: Upload firmware and build manifest
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
@@ -98,3 +100,9 @@ jobs:
             build/m1/funkotto_m2-manifest.json
             build/amiga-m2/FunkOttoDiag
             build/amiga-m2/manifest.json
+            build/m1/funkotto_m4_usb.uf2
+            build/m1/funkotto_m4_usb.elf
+            build/m1/funkotto_m4_usb.elf.map
+            build/m1/funkotto_m4_usb.bin
+            build/m1/funkotto_m4_usb-manifest.json
+            build/m1/funkotto-m4-usb.zip

@@ -55,6 +55,13 @@ Standard-UF2 gesperrt, aktive Bustests nach M0. Der Nutzer hat den portfreien
 Kickstart 1.3 und Workbench 1.3 erfolgreich ausgeführt. M2 enthält noch kein WLAN.
 [WLAN-Entwicklungsplan](docs/wlan-entwicklungsplan.md).
 
+**M4-USB-Konfiguration:** eigenes Ziel `funkotto_m4_usb` auf W4-Basis,
+versionierte Konfigurationsbefehle und PC-Werkzeug `tools/wifi_config.py`.
+[Plan](docs/konfigurationsprotokoll-plan.md) · [Testanleitung](firmware/M4_USB_TEST.md) ·
+[Protokoll](protocol/CONFIG.md) · [Prüfstand](docs/results/2026-10-10-m4-usb.md).
+Trägerplatine noch nicht verfügbar; M0 und aktive M2-Abnahme bleiben offen.
+
+
 Die erste Firmware soll Parallelport-Kommunikation, WLAN-Rohpakete und ein
 dauerhaft gespeichertes WLAN-Profil mit automatischer Wiederverbindung bieten.
 Firmwareinstallation und Updates erfolgen vorerst über USB/BOOTSEL am Pico.
