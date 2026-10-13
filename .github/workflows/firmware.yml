@@ -56,6 +56,8 @@ jobs:
           python tools/build_amiga_config.py --source-id "$(git rev-parse --short=12 HEAD)"
           python tests/run_config_amiga_emulation.py build/amiga-config/FunkOttoConfig
           python tools/package_amiga_config.py build/amiga-config build/funkotto-amiga-config.zip
+      - name: Check Ethernet protocol on a 68000
+        run: python tests/run_etherlink_m68k.py
       - name: Compile gated M2 laboratory target
         run: |
           cmake -S firmware -B build/m2-lab -G Ninja \

@@ -69,6 +69,13 @@ realer A500-Test und Paralleltransport noch offen. Kein Firmwareupdate nötig.
 [Amiga-Testanleitung](amiga/config/README.md) ·
 [Prüfstand](docs/results/2026-10-10-amiga-config.md).
 
+**Ethernet-Transport vorbereitet (M5a):** FOE1 mit variablen Paketlängen,
+asynchronen TX-Tickets, RX, Replay-Schutz und Ereignissen für den späteren
+Interruptbetrieb. Portabler Kern mit echten WLAN-Queues in Hosttests und unter
+68000-Emulation geprüft; Pico-/Parallelportintegration und SANA-II noch offen.
+[Plan](docs/ethernet-transport-plan.md) · [Protokoll](protocol/ETHERNET.md) ·
+[Prüfstand](docs/results/2026-10-13-etherlink.md).
+
 
 Die erste Firmware soll Parallelport-Kommunikation, WLAN-Rohpakete und ein
 dauerhaft gespeichertes WLAN-Profil mit automatischer Wiederverbindung bieten.

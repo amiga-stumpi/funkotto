@@ -376,7 +376,12 @@ Empfohlene Reihenfolge für die weitere Softwarearbeit; die folgenden Erweiterun
 waren zunächst geplant. Die Konfigurationsbefehle und der USB-Prüfzugang sind
 inzwischen als eigenes Ziel `funkotto_m4_usb` softwareseitig umgesetzt;
 [Umsetzungsplan](konfigurationsprotokoll-plan.md),
-[Prüfstand](results/2026-10-10-m4-usb.md). Amiga-Client und SANA-II sind weiter offen:
+[Prüfstand](results/2026-10-10-m4-usb.md). Der Amiga-Konfigurationsclient ist als
+portfreie Simulation umgesetzt ([Plan](amiga-konfiguration-plan.md));
+sein echter Paralleltransport und SANA-II sind weiter offen. Seit 13.10.2026
+ist außerdem die FOE1-Ethernet-Protokollbasis mit Host-/68000-Tests vorbereitet
+([M5a-Plan](ethernet-transport-plan.md)). Die folgende Reihenfolge beschreibt
+auch die noch ausstehende Integration:
 
 1. **M4-Konfigurationsbefehle vorbereiten.** Gemeinsame Operationen für Status,
    Scan/Ergebnisse, RAM-Profil, Verbinden/Trennen sowie explizites Speichern/Löschen
