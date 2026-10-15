@@ -75,7 +75,7 @@ python tools/etherlink_diag.py --port COM6 --config-action save --report m5-save
 CONNECT bestätigt zunächst den Konfigurationsjob; LINK_UP kann später folgen.
 SAVE darf die Verbindung kurz anhalten und neu aufbauen. `completion.result=OK`
 ist die Jobbestätigung. Ein anschließender Status- und Pinglauf prüft die
-Wiederverbindung. Zugangsdaten und Passwort erscheinen nicht im Report.
+Wiederverbindung. Der Report enthält die SSID, aber kein Passwort.
 Für Set/Scan/Erase bleibt `wifi_config.py` verfügbar; dessen explizite
 Löschbestätigung wird nicht durch dieses Diagnoseprogramm ersetzt.
 
