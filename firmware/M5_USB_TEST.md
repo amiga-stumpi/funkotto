@@ -2,8 +2,8 @@
 
 Stand: 15.10.2026. Eigenes Ziel `funkotto_m5_usb.uf2`, Pico 2 W.
 Softwaretests und Build bestanden; die reale Abnahme ist teilweise erfolgt.
-Status, Kurztests und Vierer-Dauerlauf bestanden. Achter-Dauerlauf mit dem
-korrigierten Client sowie Konfigurations-/Abbruchtests stehen noch aus.
+Status, Kurztests sowie Vierer- und Achter-Dauerlauf bestanden; beim Achterlauf
+wurde der korrigierte Client verwendet. Konfigurations-/Abbruchtests stehen aus.
 Die Trägerplatine wird nicht benötigt. Der Parallelport bleibt gesperrt.
 
 ## Installation und erster Test

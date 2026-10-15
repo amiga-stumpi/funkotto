@@ -46,9 +46,10 @@ Am realen Pico bestanden: Status/FOC1, 12 Pings, 32 Pings mit Fenster 4/8 und
 1000 Pings mit Fenster 4. Der Achter-Dauerlauf mit altem Client verlor 23/1000
 Antworten. Der Client bedient deshalb jetzt RX zwischen TX-Anfragen und
 TX-Abschlüssen; alle acht Tickets bleiben dabei weiterhin belegbar.
+Die Wiederholung mit korrigiertem Client bestand mit 1000/1000 Antworten,
+ohne abgeleiteten RX-Überlauf oder USB-Fehler, einschließlich PCAP-Nutzdatenprüfung.
 [Clientkorrektur und Messauswertung](results/2026-10-15-m5-rx-client.md).
-Offen: Achter-Dauerlauf mit korrigiertem Client, Konfigurationsjobs,
-Wiederverbindung und USB-Abbruch am einzelnen Pico.
+Offen: Konfigurationsjobs, Wiederverbindung und USB-Abbruch am einzelnen Pico.
 
 ## 4. Amiga-Client und portfreie Diagnose – nächster Software-Schritt
 
