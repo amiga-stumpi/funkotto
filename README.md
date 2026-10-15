@@ -9,6 +9,8 @@ ein Amiga-Konfigurationsprogramm.
 **Aktuelle Hardwarebasis seit 15.10.2026:** Nutzerarchiv `AmiWiFi_Pico2W(1).zip`
 mit korrigierten Footprint-Bibliothekskopien und Schaltplan-/Board-Zuordnungen.
 [Änderungs- und Prüfbericht](docs/results/2026-10-15-footprint-korrektur.md).
+F8-Nachtrag: Alle 58 Symbolpfade korrigiert; native Pfadsuche jetzt 58/58 Treffer.
+[Ursache und Nachprüfung](docs/results/2026-10-15-f8-verknuepfung.md).
 KiCad 10.0.7: 58 konsistente Footprints, 238 übereinstimmende Pad-Netze,
 0 Bibliotheksabweichungen und 0 Schaltplanabgleich-Probleme.
 **D2 und R18 stehen noch neben dem Board: Platzierung und drei Verbindungen

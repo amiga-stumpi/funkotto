@@ -1,5 +1,9 @@
 # Footprint-Abgleich vom 15.10.2026
 
+**Korrektur zum F8-Abgleich:** Die vollständigen Symbolpfade waren in dieser
+Prüfung noch falsch. Der nachfolgende Bericht zur F8-Verknüpfung dokumentiert
+Ursache, Pfadkorrektur und die zusätzliche native Zuordnungsprüfung.
+
 Grundlage: Nutzerarchiv `AmiWiFi_Pico2W(1).zip`, nicht der ältere GitHub-Boardstand.
 
 ## Korrekturen
