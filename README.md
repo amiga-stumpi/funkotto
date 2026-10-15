@@ -6,15 +6,16 @@ ein Amiga-Konfigurationsprogramm.
 
 ## Aktueller Stand
 
-**Aktuelle Hardwarebasis seit 08.10.2026:** Die KiCad-Dateien unter
-[hardware/](hardware/) entsprechen bytegenau dem vom Nutzer bearbeiteten
-`AmiWiFi_Pico2W.zip`. Dieser Stand ersetzt das zuvor importierte Rev-B2-Board.
-[Importnachweis und Prüfsummen](docs/results/2026-10-08-nutzer-kicad-import.md).
-
-Die vorhandenen Vorschauen, Bestückungsdaten und DRC-/ERC-Berichte beziehen sich
-auf den vorherigen Rev-B2-Stand. Für diesen Dateiimport wurden sie nicht neu
-erzeugt; die frühere DRC-Freigängigkeit ist damit kein Prüfnachweis für das
-geänderte Board.
+**Aktuelle Hardwarebasis seit 15.10.2026:** Nutzerarchiv `AmiWiFi_Pico2W(1).zip`
+mit korrigierten Footprint-Bibliothekskopien und Schaltplan-/Board-Zuordnungen.
+[Änderungs- und Prüfbericht](docs/results/2026-10-15-footprint-korrektur.md).
+KiCad 10.0.7: 58 konsistente Footprints, 238 übereinstimmende Pad-Netze,
+0 Bibliotheksabweichungen und 0 Schaltplanabgleich-Probleme.
+**D2 und R18 stehen noch neben dem Board: Platzierung und drei Verbindungen
+sind offen.** ERC: zwei bereits vorhandene Warnungen zu offenen Drahtenden.
+Die ursprünglichen 56 Board-Footprints und das bestehende Routing bleiben erhalten.
+Aktuelle Berichte: [validation/2026-10-15-footprints/](validation/2026-10-15-footprints/).
+Die sonstigen älteren Vorschauen und Prüfberichte sind historische Daten.
 
 [Vorheriger Hardwarestand vom 07.10.2026](docs/results/2026-10-07-revb2.md):
 Rev B2 mit U8 SN74LVC2G07DCKR (SC70-6), angepasstem Lötbild und
@@ -82,7 +83,7 @@ dauerhaft gespeichertes WLAN-Profil mit automatischer Wiederverbindung bieten.
 Firmwareinstallation und Updates erfolgen vorerst über USB/BOOTSEL am Pico.
 Firmwareupdates über den Amiga sind zurückgestellt.
 
-Die Hardwarebasis ist der Nutzerstand vom 08.10.2026 unter [hardware/](hardware/),
+Die Hardwarebasis ist der Nutzerstand vom 15.10.2026 mit Footprint-Korrektur unter [hardware/](hardware/),
 auf Grundlage von Rev B2 und der zuvor bearbeiteten Rev-A-Datei. Ein zusätzlicher
 Open-Drain-Resetpfad setzt den Pico bei Amiga-Reset oder fehlender Hostversorgung
 über RUN zurück. Für v0.1 ist vorgesehen: Nach Reset startet die Firmware neu und verbindet WLAN
@@ -119,6 +120,6 @@ Die Bibliotheken in `hardware/` gehören zum Projekt.
 - [Stückliste](docs/BOM.csv) und [Pinbelegung](docs/PINOUT.csv)
 - [Vorschauen](preview/) und [Prüfberichte](validation/)
 
-Am 08.10.2026 durch die KiCad-Dateien aus dem Nutzerarchiv ersetzt.
-Die Dateien wurden beim Import nicht bearbeitet. Elektrische Musterprüfung
+Am 15.10.2026 aus dem aktuellen Nutzerarchiv übernommen und die Footprint-Zuordnungen korrigiert.
+D2/R18 müssen noch platziert und geroutet werden. Elektrische Musterprüfung
 und Fertigungsfreigabe bleiben offen.

@@ -11,6 +11,7 @@ C9,100nF,C0603_C9,
 C10,100nF,C0603_C10,
 C11,100nF,C0603_C11,
 D1,SS14,SOD123_D1,External USB to VSYS diode; Pico VBUS is not connected to carrier USB.
+D2,LED,LED_0603_HandSolder_D2,"LCSC C2909774; noch neben dem Board, Platzierung/Routing offen"
 J1,TYPE-C 6P,USB_C_MAS_Original_J1,
 J2,DB25 MALE / MAS original,DB25_MAS_Original_J2,
 R6,5.1k,R0603_MAS_R6,
@@ -23,6 +24,7 @@ R14,100,R0402_R14,
 R15,100,R0402_R15,
 R16,100,R0402_R16,
 R17,100,R0402_R17,
+R18,330,R0402_R18,Vorwiderstand D2; Platzierung/Routing offen
 R20,100,R0402_R20,
 R21,100,R0402_R21,
 R22,330,R0402_R22,

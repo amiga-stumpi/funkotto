@@ -5,7 +5,7 @@
     "footprint": "C0603_MAS_C1",
     "x": 138.9506,
     "y": 94.9021,
-    "angle": 180,
+    "angle": 180.0,
     "pins": {
       "1": "/GND",
       "2": "/+5V_USB"
@@ -28,7 +28,7 @@
     "footprint": "C0603_MAS_C2",
     "x": 138.9506,
     "y": 97.8231,
-    "angle": 180,
+    "angle": 180.0,
     "pins": {
       "1": "/GND",
       "2": "/+3V3_IF"
@@ -49,9 +49,9 @@
     "ref": "C3",
     "value": "10uF 10V",
     "footprint": "C0805_C3",
-    "x": 142,
+    "x": 142.0,
     "y": 92.5,
-    "angle": 90,
+    "angle": 90.0,
     "pins": {
       "1": "/PICO_VSYS",
       "2": "/GND"
@@ -72,9 +72,9 @@
     "ref": "C4",
     "value": "100nF",
     "footprint": "C0603_C4",
-    "x": 160,
-    "y": 110,
-    "angle": 90,
+    "x": 160.0,
+    "y": 110.0,
+    "angle": 90.0,
     "pins": {
       "1": "/+5V_USB",
       "2": "/GND"
@@ -95,9 +95,9 @@
     "ref": "C5",
     "value": "100nF",
     "footprint": "C0603_C5",
-    "x": 160,
+    "x": 160.0,
     "y": 114.5,
-    "angle": 90,
+    "angle": 90.0,
     "pins": {
       "1": "/+3V3_IF",
       "2": "/GND"
@@ -118,9 +118,9 @@
     "ref": "C6",
     "value": "100nF",
     "footprint": "C0603_C6",
-    "x": 160,
+    "x": 160.0,
     "y": 104.5,
-    "angle": 90,
+    "angle": 90.0,
     "pins": {
       "1": "/+3V3_IF",
       "2": "/GND"
@@ -141,9 +141,9 @@
     "ref": "C7",
     "value": "100nF",
     "footprint": "C0603_C7",
-    "x": 149,
+    "x": 149.0,
     "y": 88.5,
-    "angle": 90,
+    "angle": 90.0,
     "pins": {
       "1": "/+5V_USB",
       "2": "/GND"
@@ -164,9 +164,9 @@
     "ref": "C8",
     "value": "100nF",
     "footprint": "C0603_C8",
-    "x": 137,
+    "x": 137.0,
     "y": 116.5,
-    "angle": 90,
+    "angle": 90.0,
     "pins": {
       "1": "/+3V3_IF",
       "2": "/GND"
@@ -187,9 +187,9 @@
     "ref": "C9",
     "value": "100nF",
     "footprint": "C0603_C9",
-    "x": 138,
+    "x": 138.0,
     "y": 103.8352,
-    "angle": 90,
+    "angle": 90.0,
     "pins": {
       "1": "/+3V3_IF",
       "2": "/GND"
@@ -210,9 +210,9 @@
     "ref": "C10",
     "value": "100nF",
     "footprint": "C0603_C10",
-    "x": 160,
+    "x": 160.0,
     "y": 88.5,
-    "angle": 90,
+    "angle": 90.0,
     "pins": {
       "1": "/+3V3_IF",
       "2": "/GND"
@@ -233,7 +233,7 @@
     "ref": "C11",
     "value": "100nF",
     "footprint": "C0603_C11",
-    "x": 134,
+    "x": 134.0,
     "y": 100.15,
     "angle": 0,
     "pins": {
@@ -276,12 +276,29 @@
     "uuid": "3fcb8f6a-f582-4b07-ba24-c96f9fbe83df"
   },
   {
+    "kind": "LED",
+    "notes": "Placement/routing pending",
+    "names": {},
+    "types": {},
+    "ref": "D2",
+    "value": "LED",
+    "footprint": "LED_0603_HandSolder_D2",
+    "x": 182.0,
+    "y": 102.0,
+    "angle": 0,
+    "pins": {
+      "1": "/GND",
+      "2": "Net-(D2-A)"
+    },
+    "uuid": "57a7c2e9-fad8-4c87-8018-048532a8cb0c"
+  },
+  {
     "ref": "J1",
     "value": "TYPE-C 6P",
     "footprint": "USB_C_MAS_Original_J1",
     "x": 136.1,
     "y": 86.98775,
-    "angle": 180,
+    "angle": 180.0,
     "pins": {
       "1": "/GND",
       "2": "/GND",
@@ -328,7 +345,7 @@
     "footprint": "DB25_MAS_Original_J2",
     "x": 148.4756,
     "y": 131.0971,
-    "angle": 180,
+    "angle": 180.0,
     "pins": {
       "1": "/AM_STROBE_N",
       "2": "/AM_D0",
@@ -465,8 +482,8 @@
     "value": "100",
     "footprint": "R0402_R10",
     "x": 132.5,
-    "y": 120,
-    "angle": 90,
+    "y": 120.0,
+    "angle": 90.0,
     "pins": {
       "1": "/AM_D0",
       "2": "/BUS_D0"
@@ -488,8 +505,8 @@
     "value": "100",
     "footprint": "R0402_R11",
     "x": 135.5,
-    "y": 120,
-    "angle": 90,
+    "y": 120.0,
+    "angle": 90.0,
     "pins": {
       "1": "/AM_D1",
       "2": "/BUS_D1"
@@ -511,8 +528,8 @@
     "value": "100",
     "footprint": "R0402_R12",
     "x": 138.5,
-    "y": 120,
-    "angle": 90,
+    "y": 120.0,
+    "angle": 90.0,
     "pins": {
       "1": "/AM_D2",
       "2": "/BUS_D2"
@@ -533,9 +550,9 @@
     "ref": "R13",
     "value": "100",
     "footprint": "R0402_R13",
-    "x": 142,
-    "y": 120,
-    "angle": 90,
+    "x": 142.0,
+    "y": 120.0,
+    "angle": 90.0,
     "pins": {
       "1": "/AM_D3",
       "2": "/BUS_D3"
@@ -556,9 +573,9 @@
     "ref": "R14",
     "value": "100",
     "footprint": "R0402_R14",
-    "x": 148,
-    "y": 120,
-    "angle": 90,
+    "x": 148.4884,
+    "y": 120.0,
+    "angle": 90.0,
     "pins": {
       "1": "/AM_D4",
       "2": "/BUS_D4"
@@ -579,9 +596,9 @@
     "ref": "R15",
     "value": "100",
     "footprint": "R0402_R15",
-    "x": 151,
-    "y": 120,
-    "angle": 90,
+    "x": 151.0,
+    "y": 120.0,
+    "angle": 90.0,
     "pins": {
       "1": "/AM_D5",
       "2": "/BUS_D5"
@@ -602,9 +619,9 @@
     "ref": "R16",
     "value": "100",
     "footprint": "R0402_R16",
-    "x": 154,
-    "y": 120,
-    "angle": 90,
+    "x": 154.0,
+    "y": 120.0,
+    "angle": 90.0,
     "pins": {
       "1": "/AM_D6",
       "2": "/BUS_D6"
@@ -625,9 +642,9 @@
     "ref": "R17",
     "value": "100",
     "footprint": "R0402_R17",
-    "x": 157,
-    "y": 120,
-    "angle": 90,
+    "x": 157.0,
+    "y": 120.0,
+    "angle": 90.0,
     "pins": {
       "1": "/AM_D7",
       "2": "/BUS_D7"
@@ -645,12 +662,29 @@
     "uuid": "cd1a2513-df2d-485f-a96f-b081590ef319"
   },
   {
+    "kind": "R",
+    "notes": "Placement/routing pending",
+    "names": {},
+    "types": {},
+    "ref": "R18",
+    "value": "330",
+    "footprint": "R0402_R18",
+    "x": 177.0,
+    "y": 102.0,
+    "angle": 0,
+    "pins": {
+      "1": "/+3V3_IF",
+      "2": "Net-(D2-A)"
+    },
+    "uuid": "676639f8-798a-49b8-ac5e-6ee565c5b43d"
+  },
+  {
     "ref": "R20",
     "value": "100",
     "footprint": "R0402_R20",
     "x": 132.5,
-    "y": 117,
-    "angle": 90,
+    "y": 117.0,
+    "angle": 90.0,
     "pins": {
       "1": "/AM_STROBE_N",
       "2": "/STROBE_IN"
@@ -672,8 +706,8 @@
     "value": "100",
     "footprint": "R0402_R21",
     "x": 165.5,
-    "y": 120,
-    "angle": 90,
+    "y": 120.0,
+    "angle": 90.0,
     "pins": {
       "1": "/AM_SEL",
       "2": "/SEL_IN"
@@ -695,8 +729,8 @@
     "value": "330",
     "footprint": "R0402_R22",
     "x": 159.5,
-    "y": 120,
-    "angle": 90,
+    "y": 120.0,
+    "angle": 90.0,
     "pins": {
       "1": "/AM_ACK_N",
       "2": "/ACK_OUT"
@@ -719,7 +753,7 @@
     "footprint": "R0402_R23",
     "x": 161.5,
     "y": 117.5,
-    "angle": 90,
+    "angle": 90.0,
     "pins": {
       "1": "/AM_BUSY",
       "2": "/BUSY_OUT"
@@ -742,7 +776,7 @@
     "footprint": "R0402_R24",
     "x": 165.5,
     "y": 116.5,
-    "angle": 90,
+    "angle": 90.0,
     "pins": {
       "1": "/AM_POUT",
       "2": "/POUT_OUT"
@@ -764,7 +798,7 @@
     "value": "10k",
     "footprint": "R0402_R25",
     "x": 133.5,
-    "y": 122,
+    "y": 122.0,
     "angle": 0,
     "pins": {
       "1": "/AM_5V_SENSE",
@@ -787,8 +821,8 @@
     "value": "100k",
     "footprint": "R0402_R26",
     "x": 138.5,
-    "y": 113,
-    "angle": 90,
+    "y": 113.0,
+    "angle": 90.0,
     "pins": {
       "1": "/HOST_PRESENT",
       "2": "/GND"
@@ -809,9 +843,9 @@
     "ref": "R27",
     "value": "100",
     "footprint": "R0402_R27",
-    "x": 140,
-    "y": 120,
-    "angle": 90,
+    "x": 140.0,
+    "y": 120.0,
+    "angle": 90.0,
     "pins": {
       "1": "/AM_RESET_N",
       "2": "/RESET_IN"
@@ -832,8 +866,8 @@
     "ref": "R28",
     "value": "4.7k",
     "footprint": "R0402_R28",
-    "x": 142,
-    "y": 112,
+    "x": 142.0,
+    "y": 112.0,
     "angle": 0,
     "pins": {
       "1": "/FW_DATA_EN",
@@ -855,8 +889,8 @@
     "ref": "R29",
     "value": "4.7k",
     "footprint": "R0402_R29",
-    "x": 142,
-    "y": 103,
+    "x": 142.0,
+    "y": 103.0,
     "angle": 0,
     "pins": {
       "1": "/FW_CTRL_EN",
@@ -879,7 +913,7 @@
     "value": "10k",
     "footprint": "R0402_R30",
     "x": 157.5,
-    "y": 108,
+    "y": 108.0,
     "angle": 0,
     "pins": {
       "1": "/DATA_DIR",
@@ -902,7 +936,7 @@
     "value": "10k",
     "footprint": "R0402_R31",
     "x": 148.5,
-    "y": 117,
+    "y": 117.0,
     "angle": 0,
     "pins": {
       "1": "/DATA_OE_N",
@@ -925,7 +959,7 @@
     "value": "10k",
     "footprint": "R0402_R32",
     "x": 148.5,
-    "y": 107,
+    "y": 107.0,
     "angle": 0,
     "pins": {
       "1": "/CTRL_OE_N",
@@ -947,7 +981,7 @@
     "ref": "R33",
     "value": "10k",
     "footprint": "R0402_R33",
-    "x": 149,
+    "x": 149.0,
     "y": 96.5,
     "angle": 0,
     "pins": {
@@ -970,8 +1004,8 @@
     "ref": "R34",
     "value": "10k",
     "footprint": "R0402_R34",
-    "x": 153,
-    "y": 97,
+    "x": 153.0,
+    "y": 97.0,
     "angle": 0,
     "pins": {
       "1": "/PIO_BUSY",
@@ -993,8 +1027,8 @@
     "ref": "R35",
     "value": "10k",
     "footprint": "R0402_R35",
-    "x": 157,
-    "y": 97,
+    "x": 157.0,
+    "y": 97.0,
     "angle": 0,
     "pins": {
       "1": "/PIO_POUT",
@@ -1017,7 +1051,7 @@
     "value": "100k",
     "footprint": "R0402_R36",
     "x": 133.5,
-    "y": 108,
+    "y": 108.0,
     "angle": 0,
     "pins": {
       "1": "/RESET_IN",
@@ -1039,8 +1073,8 @@
     "ref": "TP1",
     "value": "+3V3_IF",
     "footprint": "TP1_TP1",
-    "x": 143,
-    "y": 97,
+    "x": 143.0,
+    "y": 97.0,
     "angle": 0,
     "pins": {
       "1": "/+3V3_IF"
@@ -1059,7 +1093,7 @@
     "ref": "TP2",
     "value": "GND",
     "footprint": "TP1_TP2",
-    "x": 148,
+    "x": 148.0,
     "y": 98.5,
     "angle": 0,
     "pins": {
@@ -1079,7 +1113,7 @@
     "ref": "TP3",
     "value": "PIO_STROBE_N",
     "footprint": "TP1_TP3",
-    "x": 148,
+    "x": 148.0,
     "y": 102.5,
     "angle": 0,
     "pins": {
@@ -1099,7 +1133,7 @@
     "ref": "TP4",
     "value": "PIO_SEL",
     "footprint": "TP1_TP4",
-    "x": 159,
+    "x": 159.0,
     "y": 98.7,
     "angle": 0,
     "pins": {
@@ -1119,7 +1153,7 @@
     "ref": "TP5",
     "value": "DATA_OE_N",
     "footprint": "TP1_TP5",
-    "x": 149,
+    "x": 149.0,
     "y": 108.7,
     "angle": 0,
     "pins": {
@@ -1139,8 +1173,8 @@
     "ref": "TP6",
     "value": "DATA_DIR",
     "footprint": "TP1_TP6",
-    "x": 152,
-    "y": 108,
+    "x": 152.0,
+    "y": 108.0,
     "angle": 0,
     "pins": {
       "1": "/DATA_DIR"
@@ -1159,8 +1193,8 @@
     "ref": "TP7",
     "value": "PICO_RUN_N",
     "footprint": "TP1_TP7",
-    "x": 133.5,
-    "y": 112,
+    "x": 136.0424,
+    "y": 107.95,
     "angle": 0,
     "pins": {
       "1": "/PICO_RUN_N"
@@ -1181,7 +1215,7 @@
     "footprint": "SOT89_MAS_Original_U1",
     "x": 134.124599,
     "y": 96.4261,
-    "angle": 90,
+    "angle": 90.0,
     "pins": {
       "1": "/+3V3_IF",
       "2": "/GND",
@@ -1298,7 +1332,7 @@
     "value": "SN74LVC125APWR",
     "footprint": "TSSOP14_U3",
     "x": 154.5,
-    "y": 103,
+    "y": 103.0,
     "angle": 0,
     "pins": {
       "1": "/CTRL_OE_N",
@@ -1357,7 +1391,7 @@
     "value": "SN74LVC4245APWR",
     "footprint": "TSSOP24_U4",
     "x": 154.5,
-    "y": 92,
+    "y": 92.0,
     "angle": 0,
     "pins": {
       "1": "/+5V_USB",
@@ -1445,7 +1479,7 @@
     "ref": "U5",
     "value": "SN74LVC1G10DBVR",
     "footprint": "SOT23_6_U5",
-    "x": 140,
+    "x": 140.0,
     "y": 116.5,
     "angle": 0,
     "pins": {
@@ -1480,8 +1514,8 @@
     "ref": "U6",
     "value": "SN74LVC1G10DBVR",
     "footprint": "SOT23_6_U6",
-    "x": 140,
-    "y": 108,
+    "x": 140.0,
+    "y": 108.0,
     "angle": 0,
     "pins": {
       "1": "/FW_CTRL_EN",
@@ -1516,7 +1550,7 @@
     "value": "Raspberry Pi Pico 2 W",
     "footprint": "Pico2W_PartialSocket_15x2_U7",
     "x": 154.5,
-    "y": 97,
+    "y": 97.0,
     "angle": 0,
     "pins": {
       "1": "/PIO_D0",
@@ -1622,8 +1656,8 @@
     "ref": "U8",
     "value": "SN74LVC2G07DCKR",
     "footprint": "SC70_6_DCK_U8",
-    "x": 134,
-    "y": 104,
+    "x": 134.0,
+    "y": 104.0,
     "angle": 0,
     "pins": {
       "1": "/RESET_IN",

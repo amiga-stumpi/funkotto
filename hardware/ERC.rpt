@@ -1,0 +1,18 @@
+ERC report (2026-10-15T08:39:01, Encoding UTF8)
+Report includes: Errors, Warnings
+
+***** Sheet /
+[unconnected_wire_endpoint]: Unconnected wire endpoint
+    ; warning
+    @(91.44 mm, 33.02 mm): Horizontal Wire, length 7.62 mm
+[unconnected_wire_endpoint]: Unconnected wire endpoint
+    ; warning
+    @(137.16 mm, 33.02 mm): Horizontal Wire, length 6.35 mm
+
+ ** ERC messages: 2  Errors 0  Warnings 2
+
+ ** Ignored checks:
+    - Global label only appears once in the schematic
+    - Four connection points are joined together
+    - SPICE model issue
+    - Assigned footprint doesn't match footprint filters

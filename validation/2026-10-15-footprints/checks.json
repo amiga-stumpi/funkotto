@@ -1,0 +1,18 @@
+{
+  "source_archive": "AmiWiFi_Pico2W(1).zip",
+  "kicad_version": "10.0.7",
+  "symbols_with_footprint": 58,
+  "board_footprints": 58,
+  "matching_pad_nets": 238,
+  "unchanged_existing_footprints": 56,
+  "existing_board_elements_unchanged": true,
+  "schematic_nets_unchanged": true,
+  "library_mismatch_check": "warning (previously ignore)",
+  "library_mismatches": 0,
+  "schematic_parity_issues": 0,
+  "unconnected_items": 3,
+  "erc_errors": 0,
+  "erc_warnings": 2,
+  "pending": "D2 and R18 placement/routing; two pre-existing dangling wire endpoints",
+  "hardware_measurements_performed": false
+}

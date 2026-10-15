@@ -1,0 +1,36 @@
+** Drc report for AmiWiFi.kicad_pcb **
+** Created on 2026-10-15T08:39:01 **
+** Report includes: Errors, Warnings **
+
+** Found 0 DRC violations **
+
+** Found 3 unconnected pads **
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(181.1250 mm, 102.0000 mm): Pad 1 [/GND] of D2 on F.Cu
+    @(130.5052 mm, 82.9564 mm): Zone [/GND] on F.Cu, priority 0
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(163.8189 mm, 94.5281 mm): Track [/+3V3_IF] on F.Cu, length 1.1509 mm
+    @(176.4900 mm, 102.0000 mm): Pad 1 [/+3V3_IF] of R18 on F.Cu
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(177.5100 mm, 102.0000 mm): Pad 2 [Net-(D2-A)] of R18 on F.Cu
+    @(182.8750 mm, 102.0000 mm): Pad 2 [Net-(D2-A)] of D2 on F.Cu
+
+** Found 0 Footprint errors **
+
+** Ignored checks **
+    - Footprint has no courtyard defined
+    - Track endpoint not centered on via
+    - Tuning profile track geometries
+    - Footprint doesn't match symbol's footprint filters
+    - Silkscreen clearance
+    - Silkscreen clipped by solder mask
+    - Silkscreen clipped by board edge
+    - Text height out of range
+    - PTH inside courtyard
+    - NPTH inside courtyard
+    - Footprint component type doesn't match footprint pads
+
+** End of Report **
