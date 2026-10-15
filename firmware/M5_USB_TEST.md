@@ -1,9 +1,11 @@
 # M5-USB: FOE1 mit dem echten WLAN-Dienst testen
 
 Stand: 15.10.2026. Eigenes Ziel `funkotto_m5_usb.uf2`, Pico 2 W.
-Softwaretests und Build bestanden; die reale Abnahme ist teilweise erfolgt.
+Softwaretests, Build und die unten dokumentierte reale Grundprüfung bestanden.
 Status, Kurztests sowie Vierer- und Achter-Dauerlauf bestanden; beim Achterlauf
-wurde der korrigierte Client verwendet. Konfigurations-/Abbruchtests stehen aus.
+wurde der korrigierte Client verwendet. DISCONNECT/CONNECT, SAVE des vorhandenen
+Profils und Wiederanlauf nach Strg+C einschließlich Ping bestanden.
+Grenzen der Abnahme: docs/results/2026-10-15-m5-rx-client.md.
 Die Trägerplatine wird nicht benötigt. Der Parallelport bleibt gesperrt.
 
 ## Installation und erster Test

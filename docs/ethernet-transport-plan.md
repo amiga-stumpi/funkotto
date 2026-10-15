@@ -38,7 +38,7 @@ COBS, begrenzten Puffern, Teilpaket-/Idle-Timeout, DTR-Abbruch und Boot-Seed.
 Die Konsole bedient jeweils nur einen der RAW-/FOC1-/FOE1-Modi.
 
 PC-Testwerkzeug mit Status, FOC1, ARP/ICMP, bis zu acht TX-Tickets und JSON/PCAP.
-Host-/Clienttests und Pico-Build bestanden; reale Hardwareabnahme **offen**.
+Host-/Clienttests und Pico-Build bestanden; **M5-USB-Grundprüfung am Pico bestanden**.
 [Prüfbericht](results/2026-10-15-m5-usb.md) ·
 [Testablauf](../firmware/M5_USB_TEST.md).
 
@@ -49,7 +49,11 @@ TX-Abschlüssen; alle acht Tickets bleiben dabei weiterhin belegbar.
 Die Wiederholung mit korrigiertem Client bestand mit 1000/1000 Antworten,
 ohne abgeleiteten RX-Überlauf oder USB-Fehler, einschließlich PCAP-Nutzdatenprüfung.
 [Clientkorrektur und Messauswertung](results/2026-10-15-m5-rx-client.md).
-Offen: Konfigurationsjobs, Wiederverbindung und USB-Abbruch am einzelnen Pico.
+Ebenfalls bestanden: DISCONNECT/CONNECT, SAVE des bereits gespeicherten Profils,
+Wiederverbindung und 32 Pings danach sowie Strg+C mit anschließenden 32 Pings
+ohne angeforderten Pico-Neustart. Alle TX-Slots wurden freigegeben.
+Die Messgrenzen und weiteren Fehlerfallprüfungen stehen im Prüfbericht;
+die Grundprüfung ist keine vollständige Fehlerfall- oder Parallelportabnahme.
 
 ## 4. Amiga-Client und portfreie Diagnose – nächster Software-Schritt
 
