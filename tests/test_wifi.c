@@ -11,6 +11,11 @@ static enum fo_ui_command feed(struct fo_wifi_console *u, const char *s) {
 }
 static void parser(void) {
     struct fo_wifi_console u; fo_ui_init(&u);
+#ifdef FUNKOTTO_ETHERLINK_USB
+    assert(feed(&u, "etherlink on\n") == UI_ETHERLINK_ON);
+#else
+    assert(feed(&u, "etherlink on\n") == UI_INVALID);
+#endif
 #ifdef FUNKOTTO_CONFIG_USB
     assert(feed(&u, "config on\n") == UI_CONFIG_ON);
 #else

@@ -8,12 +8,21 @@ cyw43_t cyw43_state;
 static uint64_t clock_ms;
 static unsigned inits, stops, joins, lock_depth;
 static bool init_fail, link_event;
+#ifdef FUNKOTTO_ETHERLINK_USB
+static void (*lock_hook)(void);
+#endif
 static int (*scan_cb)(void *, const cyw43_ev_scan_result_t *);
 uint64_t time_us_64(void) { return clock_ms * 1000; }
 void sleep_ms(unsigned n) { clock_ms += n; }
 absolute_time_t make_timeout_time_ms(unsigned n) { return clock_ms + n; }
 void critical_section_init(critical_section_t *p) { *p = 0; }
-void critical_section_enter_blocking(critical_section_t *p) { (void)p; assert(!lock_depth); ++lock_depth; }
+void critical_section_enter_blocking(critical_section_t *p) {
+    (void)p; assert(!lock_depth);
+#ifdef FUNKOTTO_ETHERLINK_USB
+    if(lock_hook) { void (*hook)(void)=lock_hook; lock_hook=NULL; hook(); }
+#endif
+    ++lock_depth;
+}
 void critical_section_exit(critical_section_t *p) { (void)p; assert(lock_depth == 1); --lock_depth; }
 void multicore_launch_core1_with_stack(void (*fn)(void), uint32_t *p, size_t n) { assert(fn && p && n == 8192); }
 int cyw43_arch_init_with_country(unsigned country) {
@@ -43,7 +52,12 @@ bool dma_channel_is_claimed(unsigned c) { return cyw43_state.itf_state && c == 3
 #ifdef FUNKOTTO_W3
 static unsigned sends;
 int cyw43_send_ethernet(cyw43_t *p, int itf, size_t len, const void *buf, bool is_pbuf) {
-    assert(p == &cyw43_state && itf == 0 && !is_pbuf && len == 60 && !lock_depth);
+    assert(p == &cyw43_state && itf == 0 && !is_pbuf && !lock_depth);
+#ifdef FUNKOTTO_ETHERLINK_USB
+    assert(len>=60 && len<=FO_ETH_MAX);
+#else
+    assert(len==60);
+#endif
     ++sends;
     /* SDK can reenter receive while sending: verify lock isn't held. */
     cyw43_cb_process_ethernet(NULL, 0, len, buf);
@@ -172,4 +186,5 @@ int main(void) {
     storage_tests(&p);
 #endif
     puts("PASS: actual WLAN service init, scan bounds/cancel/timeout, mailbox wiping, link loss/retry and SDK failure recovery");
+    return 0;
 }

@@ -1,3 +1,24 @@
+Fortschrittsnachtrag 15.10.2026 – FunkOtto
+
+Der nachstehende Entwurf vom 07.10.2026 bleibt als ursprünglicher Gesamtplan
+lesbar. Für aktuellen Softwarestand und verbindliche Paketformate gelten:
+README.md, docs/firmware-v0.1-plan.md, docs/ethernet-transport-plan.md und
+protocol/ETHERNET.md. Die dortige Firmware-Etappenbezeichnung M5-USB ist die
+USB-Vorbereitung für Ethernet/SANA-II, keine erfolgte Leistungsabnahme.
+
+Neu umgesetzt: Pico-Integration von FOE1 mit WLAN-Queues, FOC1-Konfiguration,
+USB-Testmodus und PC-Diagnose. C-/Python-Tests und Pico-Build bestanden.
+Realer M5-USB-Test offen: firmware/M5_USB_TEST.md.
+Nächster Software-Schritt: Amiga-FOE1-Client und portfreie Diagnose.
+M0, aktive M2-Transfers, SANA-II und Durchsatzmessungen bleiben offen.
+W5 wird wie vereinbart ausgelassen.
+Hardware: Nutzerstand vom 15.10.2026 mit F8-Pfadkorrektur; D2/R18 noch zu
+platzieren/routen, keine Fertigungsfreigabe. Aktuelle Hardwareberichte unter
+validation/2026-10-15-f8/. Die Firmwarearbeit verändert kein Layout.
+
+--------------------------------------------------------------------------
+Ursprünglicher Gesamtentwurf (historischer Stand):
+
 AmiWiFi – Pico 2 W am Amiga-Parallelport
 Revision B2 · Entwicklungsentwurf · 07.10.2026
 

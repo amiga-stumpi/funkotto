@@ -1,3 +1,7 @@
+> **M5_USB:** FOE1-Ethernet und FOC1 über den produktiven WLAN-Dienst.
+> [Testanleitung](M5_USB_TEST.md), eigenes Ziel `funkotto_m5_usb`, Parallelport gesperrt.
+> Softwaretests und Pico-Build bestanden; reale Abnahme dieser Version noch offen.
+
 > **M4_USB:** [WLAN-Konfiguration über USB testen](M4_USB_TEST.md). Eigenes Ziel auf W4-Basis, Parallelport gesperrt; erster realer HELLO-/Statustest mit gespeichertem Profil und LINK_UP bestanden; weitere Konfigurationsprüfungen offen.
 
 > **M2 softwareseitig umgesetzt:** [Amiga-Diagnose und Laborablauf](M2_TEST.md).

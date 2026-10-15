@@ -80,6 +80,36 @@ enum fo_net_result fo_net_pop(struct fo_frame *frame) {
     enum fo_net_result r = fo_eth_pop(&ethernet, frame);
     critical_section_exit(&shared_lock); return r;
 }
+#ifdef FUNKOTTO_ETHERLINK_USB
+#include "funkotto/etherlink_usb.h"
+void fo_net_el_snapshot(struct fo_el_status *out) {
+    critical_section_enter_blocking(&shared_lock);
+    memset(out,0,sizeof(*out));
+    const struct fo_eth_status *e=&ethernet.status;
+    memcpy(out->mac,e->mac,6); out->link=e->link; out->epoch=e->epoch;
+    out->tx_free=(uint8_t)(FO_ETH_SLOTS-e->tx_used); out->rx_count=e->rx_used;
+    for(unsigned i=0;i<FO_ETH_SLOTS;++i) if(ethernet.tx[i].state==TX_DONE) ++out->tx_done;
+    out->rx_serial=e->counters.rx_queued+e->counters.rx_full;
+    out->tx_serial=e->counters.tx_ok+e->counters.tx_error+e->counters.tx_aborted;
+    out->config_serial=shared.completed;
+    critical_section_exit(&shared_lock);
+}
+uint8_t fo_net_el_submit(uint32_t epoch, const uint8_t *data, size_t len, uint32_t *ticket) {
+    critical_section_enter_blocking(&shared_lock);
+    uint8_t r=epoch!=ethernet.status.epoch ? EL_EPOCH :
+        (uint8_t)fo_eth_submit(&ethernet,data,len,ticket);
+    critical_section_exit(&shared_lock); return r;
+}
+uint8_t fo_net_el_pop(uint32_t epoch, uint8_t *data, uint16_t *len) {
+    /* Static Core-0 workspace, protected by the same queue lock. */
+    static struct fo_frame received;
+    critical_section_enter_blocking(&shared_lock);
+    uint8_t r=epoch!=ethernet.status.epoch ? EL_EPOCH :
+        (uint8_t)fo_eth_pop(&ethernet,&received);
+    if(r==EL_OK) { *len=received.len; memcpy(data,received.data,received.len); }
+    critical_section_exit(&shared_lock); return r;
+}
+#endif
 static void ethernet_link(bool up) {
     critical_section_enter_blocking(&shared_lock);
     fo_eth_link(&ethernet, up, model.epoch, status.mac);
@@ -190,7 +220,12 @@ static enum fo_reply persistent_command(bool erase) {
     if (!status.flash_ready) { profile_store.error=STORE_NOT_READY; return REPLY_FLASH; }
     bool reconnect=model.wanted && !erase;
     status.sdk_busy=true; publish();
-    fo_model_disconnect(&model); driver_stop(); fo_net_enable(false);
+    fo_model_disconnect(&model); driver_stop();
+#ifndef FUNKOTTO_ETHERLINK_USB
+    fo_net_enable(false);
+#endif
+    /* FOE1 keeps queue ownership and ABORTED completions during flash jobs.
+     * driver_stop has already quiesced WLAN and flushed RX under the lock. */
     if (erase) {
         fo_wipe(&model.profile,sizeof(model.profile)); model.configured=false; model.state=FO_UNCONFIGURED;
     }

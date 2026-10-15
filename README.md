@@ -72,12 +72,13 @@ realer A500-Test und Paralleltransport noch offen. Kein Firmwareupdate nötig.
 [Amiga-Testanleitung](amiga/config/README.md) ·
 [Prüfstand](docs/results/2026-10-10-amiga-config.md).
 
-**Ethernet-Transport vorbereitet (M5a):** FOE1 mit variablen Paketlängen,
-asynchronen TX-Tickets, RX, Replay-Schutz und Ereignissen für den späteren
-Interruptbetrieb. Portabler Kern mit echten WLAN-Queues in Hosttests und unter
-68000-Emulation geprüft; Pico-/Parallelportintegration und SANA-II noch offen.
+**Ethernet-Transport am Pico vorbereitet (M5-USB):** FOE1 ist jetzt an den
+WLAN-Dienst angebunden: asynchrone TX-Tickets, RX, FOC1, atomare Epochprüfung
+und eigener USB-Testmodus. PC-Werkzeug für ARP/ICMP und 1–8 ausstehende Aufträge.
+C-/Python-Tests und Pico-Build bestanden; **reale M5-USB-Abnahme offen**.
+Parallelport bleibt gesperrt. Nächster Software-Schritt: Amiga-FOE1-Client.
 [Plan](docs/ethernet-transport-plan.md) · [Protokoll](protocol/ETHERNET.md) ·
-[Prüfstand](docs/results/2026-10-13-etherlink.md).
+[Testanleitung](firmware/M5_USB_TEST.md) · [Prüfstand](docs/results/2026-10-15-m5-usb.md).
 
 
 Die erste Firmware soll Parallelport-Kommunikation, WLAN-Rohpakete und ein

@@ -1,6 +1,6 @@
 # Ethernet-Transport entwickeln, bevor die Platine verfügbar ist
 
-Stand: 13.10.2026. Das ist M5a als Softwarevorbereitung; M0 und die aktive
+Stand: 15.10.2026. Das ist M5a als Softwarevorbereitung; M0 und die aktive
 M2-Abnahme bleiben Voraussetzung für die reale Parallelportintegration.
 W5 bleibt wie vereinbart ausgelassen und ist nicht mit M5 gleichzusetzen.
 
@@ -28,18 +28,24 @@ Kein automatischer Netzwerkzugriff, keine Hardwarefreigabe und kein Firmwarewech
 
 [Prüfstand](results/2026-10-13-etherlink.md).
 
-## 3. Pico-Integration und USB-Testzugang – nächster Schritt
+## 3. Pico-Integration und USB-Testzugang – softwareseitig umgesetzt
 
-Ein eigenes gesperrtes Testziel verbindet den Backend-Vertrag mit dem laufenden
-WLAN-Dienst. TX/RX benötigen neue atomare Epoch-Prüfungen unter dem Queue-Lock;
-die derzeitigen `fo_net_*`-Funktionen allein reichen dafür noch nicht aus.
-FOC1-Dispatcher anbinden, Jobzustand bei Sessionverlust erhalten, exklusiven
-Besitz gegenüber USB-RAW und Konsole prüfen. Session-Seed pro Boot initialisieren.
-FOE1 über einen expliziten USB-Testmodus mit klarer Paketabgrenzung testen:
-ARP, ICMP, mehrere ausstehende TX-Aufträge, voller RX-Puffer, Link-/Resetfälle.
-Der Parserkern selbst besitzt bewusst keine unbeschränkte Bytesuche/Streamsitzung.
+Eigenes gesperrtes Ziel `funkotto_m5_usb` mit echten WLAN-Queues und FOC1.
+TX/RX prüfen die Epoche unter demselben Lock wie die Queueoperation. Flashjobs
+lassen die FOE1-Sitzung bestehen und halten abgebrochene TX-Abschlüsse abholbar.
+FOC1-Jobzustand bleibt über FOE1-Sitzungswechsel erhalten. USB-Testmodus mit
+COBS, begrenzten Puffern, Teilpaket-/Idle-Timeout, DTR-Abbruch und Boot-Seed.
+Die Konsole bedient jeweils nur einen der RAW-/FOC1-/FOE1-Modi.
 
-## 4. Amiga-Client und portfreie Diagnose – danach
+PC-Testwerkzeug mit Status, FOC1, ARP/ICMP, bis zu acht TX-Tickets und JSON/PCAP.
+Host-/Clienttests und Pico-Build bestanden; reale Hardwareabnahme **offen**.
+[Prüfbericht](results/2026-10-15-m5-usb.md) ·
+[Testablauf](../firmware/M5_USB_TEST.md).
+
+Noch vom Nutzer zu prüfen: Status, 12 Pings, Fenster 4/8, Konfigurationsjobs,
+Wiederverbindung, USB-Abbruch und anschließend Dauerlauf am einzelnen Pico.
+
+## 4. Amiga-Client und portfreie Diagnose – nächster Software-Schritt
 
 Host-Zustandsautomat mit Zeitgrenzen, begrenzten identischen Retries und strikter
 Reply-Zuordnung entwickeln. Tickets, RX-Pufferbesitz und Epochwechsel verwalten;

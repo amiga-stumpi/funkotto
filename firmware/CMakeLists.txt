@@ -85,7 +85,7 @@ function(fo_target NAME VERSION)
     set_source_files_properties(${ARGN} src/board.c PROPERTIES
         COMPILE_OPTIONS "-Wall;-Wextra;-Werror;-Wconversion;-Wshadow")
     set_target_properties(${NAME} PROPERTIES LINKER_LANGUAGE C)
-    if(NAME STREQUAL "funkotto_w3" OR NAME STREQUAL "funkotto_w4" OR NAME STREQUAL "funkotto_m4_usb")
+    if(NAME STREQUAL "funkotto_w3" OR NAME STREQUAL "funkotto_w4" OR NAME STREQUAL "funkotto_m4_usb" OR NAME STREQUAL "funkotto_m5_usb")
         set(FO_USB_TIMEOUT 10000)
     else()
         set(FO_USB_TIMEOUT 1000)
@@ -133,6 +133,12 @@ if(FUNKOTTO_BUILD_WIFI)
     fo_target(funkotto_m4_usb "0.1.0-m4-usb" src/main_wifi.c src/wifi_model.c src/wifi_console.c src/wifi_service.c src/ethernet.c src/raw_wire.c src/cyw43_no_lwip.c src/profile_store.c src/profile_flash.c src/config_protocol.c src/config_wire.c)
     target_link_libraries(funkotto_m4_usb PRIVATE fo_cyw43_poll pico_multicore pico_rand pico_flash hardware_flash)
     target_compile_definitions(funkotto_m4_usb PRIVATE FUNKOTTO_W3=1 FUNKOTTO_W4=1 FUNKOTTO_CONFIG_USB=1 PICO_STACK_SIZE=0x1000
+        PICO_FLASH_SAFE_EXECUTE_PICO_SUPPORT_MULTICORE_LOCKOUT=1 PICO_FLASH_ASSERT_ON_UNSAFE=0
+        PICO_FLASH_ASSUME_CORE0_SAFE=0 PICO_FLASH_ASSUME_CORE1_SAFE=0)
+    fo_target(funkotto_m5_usb "0.1.0-m5-usb" src/main_wifi.c src/wifi_model.c src/wifi_console.c src/wifi_service.c src/ethernet.c src/raw_wire.c src/cyw43_no_lwip.c src/profile_store.c src/profile_flash.c src/config_protocol.c src/config_wire.c src/etherlink_backend.c src/etherlink_usb.c ../protocol/etherlink.c)
+    target_include_directories(funkotto_m5_usb PRIVATE ../protocol)
+    target_link_libraries(funkotto_m5_usb PRIVATE fo_cyw43_poll pico_multicore pico_rand pico_flash hardware_flash)
+    target_compile_definitions(funkotto_m5_usb PRIVATE FUNKOTTO_W3=1 FUNKOTTO_W4=1 FUNKOTTO_CONFIG_USB=1 FUNKOTTO_ETHERLINK_USB=1 PICO_STACK_SIZE=0x1000
         PICO_FLASH_SAFE_EXECUTE_PICO_SUPPORT_MULTICORE_LOCKOUT=1 PICO_FLASH_ASSERT_ON_UNSAFE=0
         PICO_FLASH_ASSUME_CORE0_SAFE=0 PICO_FLASH_ASSUME_CORE1_SAFE=0)
 endif()

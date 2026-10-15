@@ -1,6 +1,6 @@
 # FunkOtto: Plan für die erste funktionale Firmware v0.1
 
-Stand: 10.10.2026 · Status: M1 und WLAN W1–W4 umgesetzt, Grundfunktionen am Pico bestätigt; M2 softwareseitig umgesetzt, W5 ausgelassen, M0 offen
+Stand: 15.10.2026 · Status: M5-USB softwareseitig umgesetzt und gebaut, realer Test offen; M1 und WLAN W1–W4 umgesetzt, Grundfunktionen am Pico bestätigt; M2 softwareseitig umgesetzt, W5 ausgelassen, M0 offen
 
 ## 1. Ziel und Entscheidung
 
@@ -40,11 +40,11 @@ Der Start unter 100 ms bis zur Parallelport-Bereitschaft ist ein **zu messendes
 Optimierungsziel**, keine bestätigte Eigenschaft. WLAN-Verbindungszeit wird
 separat gemessen. Höherer Durchsatz als eine Plipbox ist ein späteres Vergleichsziel.
 
-## 3. Verbindliche Hardwarebasis: Nutzerstand vom 08.10.2026
+## 3. Verbindliche Hardwarebasis: Nutzerstand vom 15.10.2026
 
-Basis ist das vom Nutzer bearbeitete `AmiWiFi_Pico2W.zip`, unverändert importiert
-mit Commit `d47ea64065e99507edfb3ae9dc4aa1727e00eb0b`. Es ersetzt den bisherigen
-Rev-B2-Stand. [Importnachweis](results/2026-10-08-nutzer-kicad-import.md).
+Basis ist `AmiWiFi_Pico2W(1).zip` mit Bibliotheks- und F8-Verknüpfungskorrektur
+(Commit `51b81f8077fdab9da2fc254d7e03a4c22fbded60`).
+[Hardware-Nachtrag](results/2026-10-15-f8-verknuepfung.md).
 M1 prüft die folgende GPIO-Zuordnung und die Reset-/Freigabenetze direkt gegen
 das aktuelle PCB. Dieser Netzabgleich ersetzt weder DRC/ERC noch Messungen.
 Die Firmwarearbeit verändert keine KiCad-Dateien.
@@ -380,7 +380,11 @@ inzwischen als eigenes Ziel `funkotto_m4_usb` softwareseitig umgesetzt;
 portfreie Simulation umgesetzt ([Plan](amiga-konfiguration-plan.md));
 sein echter Paralleltransport und SANA-II sind weiter offen. Seit 13.10.2026
 ist außerdem die FOE1-Ethernet-Protokollbasis mit Host-/68000-Tests vorbereitet
-([M5a-Plan](ethernet-transport-plan.md)). Die folgende Reihenfolge beschreibt
+([M5a-Plan](ethernet-transport-plan.md)). Seit 15.10.2026 ist zusätzlich das
+Pico-Ziel `funkotto_m5_usb` mit FOE1/WLAN/FOC1 und PC-Diagnose gebaut und
+softwareseitig geprüft; der reale Pico-Test steht aus.
+[Testablauf](../firmware/M5_USB_TEST.md). Nächster Software-Schritt ist der
+Amiga-FOE1-Client mit portfreier Diagnose. Die folgende Reihenfolge beschreibt
 auch die noch ausstehende Integration:
 
 1. **M4-Konfigurationsbefehle vorbereiten.** Gemeinsame Operationen für Status,

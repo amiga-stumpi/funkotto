@@ -1,8 +1,9 @@
 # FOE1 – Ethernet-Transport, erste Softwarebasis (M5a)
 
-Stand: 13.10.2026. Implementiert als portabler C-Codec und Server mit Backend-
-Rückrufen. Hosttests verwenden die bestehenden produktiven W3-Ethernet-Queues.
-Noch kein Pico-Firmwareziel, kein CIA-/PIO-Transport und kein SANA-II-Treiber.
+Stand: 15.10.2026. Portabler C-Codec/Server und Pico-USB-Testziel
+`funkotto_m5_usb` mit produktivem WLAN-Backend implementiert; Softwaretests
+bestanden, echter Pico-Test offen. Kein CIA-/PIO-Transport oder SANA-II-Treiber.
+USB-Abgrenzung und Testablauf: [M5_USB_TEST.md](../firmware/M5_USB_TEST.md).
 Das Format wird vor der ersten Hardwareintegration gemeinsam versioniert;
 es ersetzt weder M2/B1536 noch die vorhandenen USB-Protokolle stillschweigend.
 
@@ -201,6 +202,6 @@ Das Konfigurationstool soll später über das Device gehen statt selbst die CIA
 parallel zum Treiber zu bedienen.
 
 CRC ist zunächst eine einfache Referenzimplementierung. Optimierter CRC-Code,
-Paketbündelung, Burst-Profil, integriertes Pico-Backend, USB-FOE1-Testzugang und
-SANA-II-Hostzustandsautomat sind nächste Schritte. Variable Längen sparen
+Paketbündelung, Burst-Profil und SANA-II-Hostzustandsautomat sind nächste Schritte.
+Pico-Backend und USB-FOE1-Testzugang sind implementiert, realer Pico-Test offen. Variable Längen sparen
 Übertragungsvolumen, sind aber keine Durchsatzmessung oder Geschwindigkeitszusage.

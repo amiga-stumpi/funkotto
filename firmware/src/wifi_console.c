@@ -33,6 +33,9 @@ static enum fo_ui_command line(struct fo_wifi_console *u) {
         u->phase = 0; return UI_PROFILE;
     }
     if (!u->length) return UI_NONE;
+#ifdef FUNKOTTO_ETHERLINK_USB
+    if (!strcmp(u->line, "etherlink on")) return UI_ETHERLINK_ON;
+#endif
 #ifdef FUNKOTTO_CONFIG_USB
     if (!strcmp(u->line, "config on")) return UI_CONFIG_ON;
 #endif

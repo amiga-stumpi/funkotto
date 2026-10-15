@@ -56,6 +56,36 @@ static void config_step(uint64_t now) {
     if (now-config_input_ms>60000) config_close();
 }
 #endif
+#ifdef FUNKOTTO_ETHERLINK_USB
+#include "funkotto/etherlink_usb.h"
+static struct fo_el_server etherlink;
+static struct fo_el_stream etherlink_wire;
+static struct fo_config etherlink_config;
+static uint8_t etherlink_output[FO_EL_ENCODED];
+static bool etherlink_active;
+static uint64_t etherlink_input_ms;
+static void etherlink_close(void) {
+    fo_el_reset(&etherlink); fo_el_stream_clear(&etherlink_wire);
+    fo_wipe(etherlink_output,sizeof(etherlink_output));
+    etherlink_active=false; stdio_set_driver_enabled(&stdio_usb,true);
+}
+static void etherlink_step(uint64_t now) {
+    char bytes[256]; int n=stdio_usb.in_chars(bytes,(int)sizeof(bytes));
+    if(n>0) etherlink_input_ms=now;
+    for(int i=0;i<n;++i) {
+        size_t count=fo_el_stream_feed(&etherlink_wire,&etherlink,(uint8_t)bytes[i],etherlink_output);
+        if(count) {
+            stdio_usb.out_chars("\0",1);
+            stdio_usb.out_chars((const char *)etherlink_output,(int)count);
+            stdio_usb.out_chars("\0",1);
+            fo_wipe(etherlink_output,sizeof(etherlink_output));
+        }
+    }
+    fo_wipe(bytes,sizeof(bytes)); fo_el_poll(&etherlink);
+    if(now-etherlink_input_ms>2000 && etherlink_wire.used) fo_el_stream_expire(&etherlink_wire);
+    if(now-etherlink_input_ms>60000) etherlink_close();
+}
+#endif
 static struct fo_wifi_console ui;
 static struct fo_wifi_status snapshot, scan_copy;
 static uint64_t safe_init_us, input_ms;
@@ -74,7 +104,9 @@ static void escaped(const uint8_t *p, size_t n) {
 }
 static void info(void) {
     printf("FunkOtto %s source=%s board=pico2_w sdk=%s\n", FUNKOTTO_VERSION, FUNKOTTO_SOURCE_ID, FUNKOTTO_SDK_COMMIT);
-#ifdef FUNKOTTO_CONFIG_USB
+#ifdef FUNKOTTO_ETHERLINK_USB
+    puts("stage=M5_USB parallel=disabled ethernet=FOE1 config=FOC1 profile=FLASH_JOURNAL country=DE");
+#elif defined(FUNKOTTO_CONFIG_USB)
     puts("stage=M4_USB parallel=disabled config=FOC1 usb_wire=2 profile=FLASH_JOURNAL country=DE");
 #elif defined(FUNKOTTO_W4)
     puts("stage=W4 parallel=disabled wifi=WPA2_2.4GHz profile=FLASH_JOURNAL raw_ethernet=USB_TEST country=DE");
@@ -111,6 +143,17 @@ static void submit(enum fo_request r, const struct fo_profile *p) {
 }
 static void dispatch(enum fo_ui_command c) {
     switch(c) {
+    case UI_ETHERLINK_ON:
+#ifdef FUNKOTTO_ETHERLINK_USB
+        if (fo_wifi_command_busy()) { puts("BUSY: command still running"); break; }
+        puts("ETHERLINK FOE1 COBS; close serial port (DTR low) to return to console");
+        fo_el_reset(&etherlink); fo_el_stream_clear(&etherlink_wire);
+        etherlink_active=true; etherlink_input_ms=now_ms(); print_scan=false;
+        stdio_set_driver_enabled(&stdio_usb,false);
+#else
+        puts("NOT_IMPLEMENTED: requires M5_USB");
+#endif
+        break;
     case UI_CONFIG_ON:
 #ifdef FUNKOTTO_CONFIG_USB
         if (fo_wifi_command_busy()) { puts("BUSY: command still running"); break; }
@@ -137,6 +180,9 @@ static void dispatch(enum fo_ui_command c) {
 #endif
         break;
     case UI_HELP:
+#ifdef FUNKOTTO_ETHERLINK_USB
+        puts("etherlink on: FOE1 binary Ethernet/config test mode (tools/etherlink_diag.py)");
+#endif
 #ifdef FUNKOTTO_CONFIG_USB
         puts("config on: binary configuration mode (tools/wifi_config.py)");
 #endif
@@ -196,7 +242,15 @@ static void dispatch(enum fo_ui_command c) {
 }
 int main(void) {
     fo_board_safe_init(); safe_init_us = time_us_64(); watchdog_boot = watchdog_caused_reboot();
-    watchdog_enable(8000, true); stdio_init_all(); fo_ui_init(&ui); fo_wifi_launch(); info();
+    watchdog_enable(8000, true); stdio_init_all(); fo_ui_init(&ui); fo_wifi_launch();
+#ifdef FUNKOTTO_ETHERLINK_USB
+    struct fo_el_backend backend;
+    fo_config_init(&etherlink_config); fo_el_wifi_backend(&backend,&etherlink_config);
+    uint64_t seed=get_rand_64();
+    if(!seed || seed==UINT64_MAX) seed=1;
+    fo_el_init(&etherlink,&backend,seed);
+#endif
+    info();
     uint32_t completed = 0, scan_done = 0;
     bool connected_before = false;
     for (;;) {
@@ -204,6 +258,9 @@ int main(void) {
         bool connected = stdio_usb_connected();
         if (connected_before && !connected) {
             fo_ui_cancel(&ui); print_scan = false;
+#ifdef FUNKOTTO_ETHERLINK_USB
+            if (etherlink_active) etherlink_close();
+#endif
 #ifdef FUNKOTTO_CONFIG_USB
             if (config_active) config_close();
 #endif
@@ -212,6 +269,14 @@ int main(void) {
 #endif
         }
         connected_before = connected;
+#ifdef FUNKOTTO_ETHERLINK_USB
+        if (etherlink_active) {
+            etherlink_step(now_ms()); fo_wifi_snapshot(&snapshot);
+            completed=snapshot.completed; scan_done=snapshot.scan_done;
+            if (fo_wifi_watchdog_healthy(&snapshot,(uint32_t)now_ms())) watchdog_update();
+            sleep_ms(1); continue;
+        }
+#endif
 #ifdef FUNKOTTO_W3
         if (raw_active) {
             raw_step(); fo_wifi_snapshot(&snapshot);
@@ -236,6 +301,9 @@ int main(void) {
             if (c != UI_NONE) { dispatch(c); break; } /* One response per iteration. */
         }
 #ifdef FUNKOTTO_W3
+#ifdef FUNKOTTO_ETHERLINK_USB
+        if (etherlink_active) continue;
+#endif
         if (raw_active) continue;
 #ifdef FUNKOTTO_CONFIG_USB
         if (config_active) continue;
