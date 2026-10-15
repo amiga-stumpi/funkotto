@@ -22,6 +22,7 @@ MAX_PACKET = 1543
 MAX_ENCODED = 1551
 RESULTS = ('OK', 'EMPTY', 'BUSY', 'NO_LINK', 'INVALID', 'ABORTED', 'DRIVER',
            'PENDING', 'SESSION', 'SEQUENCE', 'UNSUPPORTED', 'EPOCH', 'STALE', 'INTERNAL')
+CLIENT_REVISION = 'm5-rx-interleave-1'
 
 
 def packet(op, session, seq, epoch, payload=b''):
@@ -146,12 +147,16 @@ class Client:
             raise TransportError(f'TX_RESULT {RESULTS[p[0]]} sdk_error={struct.unpack_from("!i", p, 1)[0]}')
         return True
 
-    def wait_tx(self, tickets):
+    def wait_tx(self, tickets, service_rx=None):
         waiting = set(tickets); end = time.monotonic()+max(5.0, self.timeout)
         while waiting:
             for ticket in sorted(waiting):
+                if service_rx:
+                    service_rx()
                 if self.tx_result(ticket):
                     waiting.remove(ticket)
+                if time.monotonic() >= end and waiting:
+                    self.failed = True; raise TransportError('TX completion timeout; do not resubmit')
             if waiting:
                 if time.monotonic() >= end:
                     self.failed = True; raise TransportError('TX completion timeout; do not resubmit')
@@ -187,6 +192,53 @@ class ConfigOverEtherlink(ConfigClient):
         return p[1:]
 
 
+class WindowNetworkTest(NetworkTest):
+    """Process RX during a batch without submitting a ninth TX for an ARP reply."""
+    def __init__(self, *args):
+        super().__init__(*args)
+        self.frames_read = 0
+        self.deferred = []
+
+    def send(self, frame):
+        if self.client.outstanding:
+            if frame not in self.deferred:
+                if len(self.deferred) >= 8:
+                    raise TransportError('Deferred ARP reply queue full')
+                self.deferred.append(frame)
+        else:
+            super().send(frame)
+
+    def receive(self):
+        frame = super().receive()
+        if frame is not None:
+            self.frames_read += 1
+        return frame
+
+    def flush_deferred(self, service_rx):
+        if self.client.outstanding:
+            raise TransportError('Cannot flush ARP replies with TX tickets outstanding')
+        while self.deferred:
+            super().send(self.deferred.pop(0))
+            service_rx()
+
+
+def rx_accounting(before, after, frames_read):
+    """Infer drops from the existing FOE1 counter, only within one link epoch.
+
+    rx_serial = rx_queued + rx_full. No queue flush is allowed between snapshots.
+    This is deliberately labelled inferred; it is not a direct rx_full read.
+    """
+    if before['epoch'] != after['epoch']:
+        raise TransportError('WLAN epoch changed during test; repeat explicitly')
+    delta = (after['rx_serial']-before['rx_serial']) & 0xffffffff
+    dropped = delta-frames_read-after['rx_count']+before['rx_count']
+    if dropped < 0:
+        raise TransportError('Inconsistent RX accounting')
+    return dict(serial_delta=delta, frames_read=frames_read,
+                initial_queued=before['rx_count'], final_queued=after['rx_count'],
+                overflow_inferred=dropped)
+
+
 def enter_mode(port):
     port.dtr = False; time.sleep(0.2); port.reset_input_buffer()
     port.dtr = True; time.sleep(0.2)
@@ -212,6 +264,22 @@ def ping_window(network, peer, count, sizes, timeout, window):
     rtts = []; lost = 0; min_free = 8; maximum_outstanding = 0
     for base in range(0, count, window):
         batch = {}; tickets = []
+
+        def service_rx():
+            # Bounded work keeps TX completion timeouts effective under RX load.
+            # Do not wait for EMPTY forever on a busy LAN.
+            for _ in range(8):
+                frame = network.receive()
+                if frame is None:
+                    break
+                for seq, (payload, start) in list(batch.items()):
+                    if echo_reply(frame, network.mac, peer, network.source, network.target, identifier, seq, payload):
+                        elapsed = (time.monotonic()-start)*1000
+                        rtts.append(elapsed); del batch[seq]
+                        print(f'echo seq={seq} payload={len(payload)} bytes rtt_ms={elapsed:.2f} verified=1', flush=True)
+                        break
+
+        service_rx()
         for index in range(base, min(base+window, count)):
             seq = index+1; size = sizes[index % len(sizes)]
             payload = bytes((nonce[i % 32]+i+seq) & 255 for i in range(size))
@@ -220,19 +288,16 @@ def ping_window(network, peer, count, sizes, timeout, window):
             tickets.append(network.client.tx_submit(frame))
             if network.capture:
                 network.capture.write(frame)
+            service_rx()
         maximum_outstanding = max(maximum_outstanding, len(tickets))
         min_free = min(min_free, network.client.stats()['tx_free'])
-        network.client.wait_tx(tickets)
+        # Hold all tickets until the batch is submitted, so window=8 still
+        # verifies full TX-slot occupancy while RX is drained independently.
+        network.client.wait_tx(tickets, service_rx=service_rx)
+        network.flush_deferred(service_rx)
         end = time.monotonic()+timeout
         while batch and time.monotonic() < end:
-            frame = network.receive()
-            if frame is None:
-                continue
-            for seq, (payload, start) in list(batch.items()):
-                if echo_reply(frame, network.mac, peer, network.source, network.target, identifier, seq, payload):
-                    elapsed = (time.monotonic()-start)*1000; rtts.append(elapsed); del batch[seq]
-                    print(f'echo seq={seq} payload={len(payload)} bytes rtt_ms={elapsed:.2f} verified=1', flush=True)
-                    break
+            service_rx()
         for seq in batch:
             lost += 1; print(f'echo seq={seq} TIMEOUT', flush=True)
     return dict(sent=count, received=len(rtts), lost=lost, window=window,
@@ -280,7 +345,7 @@ def main():
         import serial
     except ImportError:
         parser.error('Install pyserial: python -m pip install pyserial==3.5')
-    report = dict(stage='M5_USB', passed=False); capture = None
+    report = dict(stage='M5_USB', client_revision=CLIENT_REVISION, passed=False); capture = None
     try:
         if args.pcap:
             capture = Pcap(args.pcap)
@@ -297,13 +362,16 @@ def main():
                     state = client.stats(); epoch = state['epoch']; mac = bytes.fromhex(state['mac'].replace(':', ''))
                     if not state['link'] or not any(mac) or mac[0] & 1:
                         raise TransportError('WLAN not ready; configure/connect and wait for LINK_UP')
-                    network = NetworkTest(client, mac, source.ip.packed, args.target_ip.packed, capture)
+                    network = WindowNetworkTest(client, mac, source.ip.packed, args.target_ip.packed, capture)
                     network.probe_address(); peer = network.resolve(); report['peer_mac'] = peer.hex(':')
                     report['ping'] = ping_window(network, peer, args.count, sizes, args.timeout, args.window)
                     report['after'] = client.stats()
                     if report['after']['epoch'] != epoch:
                         raise TransportError('WLAN epoch changed during test; repeat explicitly')
-                    report['passed'] = report['ping']['lost'] == 0
+                    report['rx_accounting'] = rx_accounting(state, report['after'], network.frames_read)
+                    report['passed'] = (report['ping']['lost'] == 0 and
+                                        report['rx_accounting']['overflow_inferred'] == 0 and
+                                        report['after']['tx_free'] == 8 and report['after']['tx_done'] == 0)
                 else:
                     report['after'] = client.stats(); report['passed'] = True
                 report['usb_retries'] = client.retries_used; report['usb_bad_frames'] = client.bad_frames

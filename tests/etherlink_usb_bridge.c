@@ -10,7 +10,7 @@ void bridge_init(void) {
     if(driver_up) driver_stop();
     memset(&status,0,sizeof(status));memset(&shared,0,sizeof(shared));memset(&mailbox,0,sizeof(mailbox));
     memset(flash_bytes,255,sizeof(flash_bytes));clock_ms=0;init_fail=false;link_event=false;
-    flash_allowed=true;lock_depth=0;lock_hook=NULL;
+    flash_allowed=true;lock_depth=0;lock_hook=NULL;send_hook=NULL;
     fo_wifi_launch();service_init();
     struct fo_profile p={.ssid={'T'},.ssid_len=1,.key={'1','2','3','4','5','6','7','8'},.key_len=8};
     assert(fo_wifi_submit(REQ_SET,&p));service_step();
@@ -27,4 +27,7 @@ size_t bridge_exchange(const uint8_t *p, size_t n, uint8_t *out) {
     return written;
 }
 uint32_t bridge_tx_queued(void) { return ethernet.status.counters.tx_queued; }
+uint32_t bridge_rx_full(void) { return ethernet.status.counters.rx_full; }
+void bridge_set_send_hook(void (*hook)(size_t,const void *)) { send_hook=hook; }
+void bridge_receive(const uint8_t *data,size_t len) { cyw43_cb_process_ethernet(NULL,0,len,data); }
 void bridge_drop_session(void) { fo_el_reset(&bridge_server);fo_el_stream_clear(&bridge_stream); }

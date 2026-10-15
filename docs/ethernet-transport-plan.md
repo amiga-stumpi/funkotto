@@ -42,8 +42,13 @@ Host-/Clienttests und Pico-Build bestanden; reale Hardwareabnahme **offen**.
 [Prüfbericht](results/2026-10-15-m5-usb.md) ·
 [Testablauf](../firmware/M5_USB_TEST.md).
 
-Noch vom Nutzer zu prüfen: Status, 12 Pings, Fenster 4/8, Konfigurationsjobs,
-Wiederverbindung, USB-Abbruch und anschließend Dauerlauf am einzelnen Pico.
+Am realen Pico bestanden: Status/FOC1, 12 Pings, 32 Pings mit Fenster 4/8 und
+1000 Pings mit Fenster 4. Der Achter-Dauerlauf mit altem Client verlor 23/1000
+Antworten. Der Client bedient deshalb jetzt RX zwischen TX-Anfragen und
+TX-Abschlüssen; alle acht Tickets bleiben dabei weiterhin belegbar.
+[Clientkorrektur und Messauswertung](results/2026-10-15-m5-rx-client.md).
+Offen: Achter-Dauerlauf mit korrigiertem Client, Konfigurationsjobs,
+Wiederverbindung und USB-Abbruch am einzelnen Pico.
 
 ## 4. Amiga-Client und portfreie Diagnose – nächster Software-Schritt
 

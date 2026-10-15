@@ -1,7 +1,9 @@
 # M5-USB: FOE1 mit dem echten WLAN-Dienst testen
 
 Stand: 15.10.2026. Eigenes Ziel `funkotto_m5_usb.uf2`, Pico 2 W.
-Softwaretests und Build bestanden; der reale Pico-Test dieser Version steht aus.
+Softwaretests und Build bestanden; die reale Abnahme ist teilweise erfolgt.
+Status, Kurztests und Vierer-Dauerlauf bestanden. Achter-Dauerlauf mit dem
+korrigierten Client sowie Konfigurations-/Abbruchtests stehen noch aus.
 Die Trägerplatine wird nicht benötigt. Der Parallelport bleibt gesperrt.
 
 ## Installation und erster Test
@@ -54,14 +56,32 @@ python tools/etherlink_diag.py --port COM6 --source-ip 192.168.25.234/24 --targe
 laufender USB-Anfragen. Auch ein bereits gesendetes Paket hält seinen Slot bis
 zur Abholung des Abschlusses. Bei window=8 muss `maximum_outstanding=8` und
 `minimum_tx_free=0` erscheinen, danach werden alle Slots wieder freigegeben.
+Ab Clientrevision `m5-rx-interleave-1` wird RX bereits zwischen den TX-Anfragen
+und vor einzelnen TX_RESULT-Abfragen bedient. Frühe Pingantworten werden sofort
+geprüft und im PCAP gespeichert. Die Tickets werden trotzdem erst nach dem
+Einreichen des Blocks freigegeben. ARP-Antworten warten bei belegten Tickets in
+einer begrenzten Liste, damit sie keinen neunten Sendeauftrag erzeugen.
 Ein voller RX-Puffer kann in einem stark mit Broadcasts belegten WLAN zu Verlusten
 führen; der Test meldet sie als Fehler. JSON-Reports zur Auswertung zurückgeben.
+Der neue Report enthält `client_revision` und `rx_accounting.overflow_inferred`.
+Letzteres ist aus `rx_serial`, gelesenen Frames und Queuefüllständen berechnet,
+kein direkt ausgelesener Überlaufzähler. Es gilt nur bei unveränderter Epoche
+ohne Queue-Reset. Auch ein Überlauf ohne Pingverlust lässt den Test fehlschlagen.
 
 Anschließend kann der bewährte Dauerlauf wiederholt werden:
 
 ```bat
 python tools/etherlink_diag.py --port COM6 --source-ip 192.168.25.234/24 --target-ip 192.168.25.1 --count 1000 --report m5-1000.json --pcap m5-1000.pcap
 ```
+
+Zur Abnahme der Clientkorrektur bitte mit `--window 8` wiederholen:
+
+```bat
+python tools/etherlink_diag.py --port COM6 --source-ip 192.168.25.234/24 --target-ip 192.168.25.1 --count 1000 --window 8 --report m5-rx-window8.json --pcap m5-rx-window8.pcap
+```
+
+Das separate Client-Update benötigt kein erneutes Flashen; die Firmware
+`87c327818d9e` bleibt verwendbar. [Details](../docs/results/2026-10-15-m5-rx-client.md).
 
 ## Konfiguration durch dieselbe FOE1-Schnittstelle
 

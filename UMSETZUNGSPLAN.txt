@@ -8,7 +8,9 @@ USB-Vorbereitung für Ethernet/SANA-II, keine erfolgte Leistungsabnahme.
 
 Neu umgesetzt: Pico-Integration von FOE1 mit WLAN-Queues, FOC1-Konfiguration,
 USB-Testmodus und PC-Diagnose. C-/Python-Tests und Pico-Build bestanden.
-Realer M5-USB-Test offen: firmware/M5_USB_TEST.md.
+Realer M5-USB-Test: Status, Kurztests Fenster 1/4/8 und 1000 Pings Fenster 4
+bestanden. Achter-Dauerlauf: 23 Verluste mit altem Client; RX-Bedienung im
+Client korrigiert, Wiederholung offen. Siehe docs/results/2026-10-15-m5-rx-client.md.
 Nächster Software-Schritt: Amiga-FOE1-Client und portfreie Diagnose.
 M0, aktive M2-Transfers, SANA-II und Durchsatzmessungen bleiben offen.
 W5 wird wie vereinbart ausgelassen.

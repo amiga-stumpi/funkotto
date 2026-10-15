@@ -51,6 +51,9 @@ bool pio_sm_is_claimed(unsigned p, unsigned sm) { return cyw43_state.itf_state &
 bool dma_channel_is_claimed(unsigned c) { return cyw43_state.itf_state && c == 3; }
 #ifdef FUNKOTTO_W3
 static unsigned sends;
+#ifdef FUNKOTTO_ETHERLINK_USB
+static void (*send_hook)(size_t, const void *);
+#endif
 int cyw43_send_ethernet(cyw43_t *p, int itf, size_t len, const void *buf, bool is_pbuf) {
     assert(p == &cyw43_state && itf == 0 && !is_pbuf && !lock_depth);
 #ifdef FUNKOTTO_ETHERLINK_USB
@@ -60,6 +63,9 @@ int cyw43_send_ethernet(cyw43_t *p, int itf, size_t len, const void *buf, bool i
 #endif
     ++sends;
     /* SDK can reenter receive while sending: verify lock isn't held. */
+#ifdef FUNKOTTO_ETHERLINK_USB
+    if(send_hook) { send_hook(len,buf); return 0; }
+#endif
     cyw43_cb_process_ethernet(NULL, 0, len, buf);
     return 0;
 }
